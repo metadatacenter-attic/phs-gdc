@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import AppHeader from "./components/AppHeader";
+import AppContent from "./components/AppContent";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import AppFooter from "./components/AppFooter";
 
-function App() {
+export default function App() {
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      backgroundColor: "lightGray",
+      minHeight: "100vh",
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.root}>
+      <AppHeader/>
+      <AppContent/>
+      <AppFooter/>
     </div>
   );
 }
-
-export default App;
