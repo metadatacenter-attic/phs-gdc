@@ -1,0 +1,18 @@
+[
+  {
+    "id": "demographics",
+    "name": "Demographics",
+    "children": [
+      {
+        "id": "demographics-person",
+        "name": "Person",
+        "children": [
+          {
+            "id": "demographics-person-count_person",
+            "name": "Count_Person"
+          }
+        ]
+      }
+    ]
+  }
+]

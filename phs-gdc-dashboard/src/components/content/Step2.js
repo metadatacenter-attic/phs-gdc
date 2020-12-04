@@ -1,5 +1,6 @@
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import TopicsTree from "./TopicsTree";
 
 export default function Step1(props) {
 
@@ -15,7 +16,8 @@ export default function Step1(props) {
   return (
     <div>
       <h2>{props.title}</h2>
-      <h4>Enter or select the variables (topics) for which you want to retrieve contextual values</h4>
+      <h4>Select the variables (topics) for which you want to retrieve contextual values</h4>
+      <TopicsTree/>
     </div>
   );
 }
