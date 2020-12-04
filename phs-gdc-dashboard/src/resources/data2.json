@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Person Count",
+    "variable": "Count_Person",
+    "category": "Demographics"
+  },
+  {
+    "name": "Median Income (per person)",
+    "variable": "Median_Income_Person",
+    "category": "Demographics"
+  }
+]

@@ -53,7 +53,7 @@ export default function AppHeader() {
           </Menu>
 
           <Typography variant="h6" className={classes.title}>
-            PHS-GDC Dashboard
+            PHS-DC Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
