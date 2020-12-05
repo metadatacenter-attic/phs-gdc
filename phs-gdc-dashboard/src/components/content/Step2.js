@@ -22,7 +22,7 @@ export default function Step1(props) {
   return (
     <div>
       <h2>{props.title}</h2>
-      <h4>Select the variables (topics) for which you want to retrieve contextual values</h4>
+      <h4>Select the Data Commons variables you want to retrieve values from</h4>
       {/*<TopicsTree/>*/}
       <div className={classes.topics}>
         <TopicsSelection/>

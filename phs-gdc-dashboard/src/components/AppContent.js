@@ -30,17 +30,17 @@ export default function AppContent() {
       <Grid container spacing={3}>
         <Grid item md={4}>
           <Paper className={classes.paper}>
-            <Step1 title={"1. PHS Variable Selection"} setPhsVariableValues={setPhsVariableValues}/>
+            <Step1 title={"1. PHS Index Variable"} setPhsVariableValues={setPhsVariableValues}/>
           </Paper>
         </Grid>
         <Grid item md={4}>
           <Paper className={classes.paper}>
-            <Step2 title={"2. Topics Search"}/>
+            <Step2 title={"2. Data Commons Variables"}/>
           </Paper>
         </Grid>
         <Grid item md={4}>
           <Paper className={classes.paper}>
-            <Step3 title={"3. Attributes Selection"} phsVariableValues={phsVariableValues}/>
+            <Step3 title={"3. Export Data"} phsVariableValues={phsVariableValues}/>
           </Paper>
         </Grid>
       </Grid>

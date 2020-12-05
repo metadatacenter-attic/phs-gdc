@@ -10,7 +10,8 @@
  * @param jsonData
  * @param placeVarName Name of the place variable. It will be used as the column name for the place data in the output
  */
-export function toTabularJsonData(jsonData, placeVarName) {
+export function toTabularJsonData(jsonData, placeVarName, phsVariableValues) {
+
   let tabularJsonData = [];
   let statVars = {};
 
@@ -22,7 +23,9 @@ export function toTabularJsonData(jsonData, placeVarName) {
     statVars[varName] = year;
   }
 
-  // Extract values
+
+  let rows = {}
+  // Generate rows and index them by phsVariableValue (placeId)
   for (let placeId in jsonData['placeData']) {
     let placeValue = placeId;  // TODO: extract value
     let row = {[placeVarName] : placeValue};
@@ -30,8 +33,14 @@ export function toTabularJsonData(jsonData, placeVarName) {
       let year = statVars[statVarName];
       row[statVarName] = jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"][0]["val"][year];
     }
-    tabularJsonData.push(row);
+    rows[placeId] = row;
   }
+
+  // Generate the final tabular data (it may contain duplicated rows)
+  phsVariableValues.forEach(placeId => {
+    tabularJsonData.push(rows[placeId]);
+  });
+
   return tabularJsonData;
 }
 

@@ -40,10 +40,14 @@ export default function Step1(props) {
   };
 
   const handleChangeValuesField = (event) => {
+    console.log('on change invoked')
     setValues(event.target.value);
     if (values != null && values.trim().length > 0) {
       let valuesArray = values.split(/\r?\n/);
-      console.log(valuesArray);
+      props.setPhsVariableValues(valuesArray);
+    }
+    else {
+      props.setPhsVariableValues([]);
     }
   };
 
@@ -52,8 +56,7 @@ export default function Step1(props) {
   return (
     <div>
       <h2>{props.title}</h2>
-      <h4>Enter or select the variable that you want to use to expand your original data with data from Data
-        Commons</h4>
+      <h4>Select the variable that will connect your data to Data Commons data</h4>
       <FormControl className={classes.formControl} variant="outlined" /* if the variant is omitted here, the label of the select field is misaligned */>
         <InputLabel id="demo-simple-select-outlined-label">Variable</InputLabel>
         <Select
@@ -78,6 +81,7 @@ export default function Step1(props) {
           rows={6}
           value={values}
           variant="outlined"
+          onBlur={handleChangeValuesField}
           onChange={handleChangeValuesField}/>
         <FormHelperText>Paste the values of the selected variable (one per line)</FormHelperText>
       </FormControl>

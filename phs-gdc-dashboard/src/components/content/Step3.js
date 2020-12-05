@@ -35,8 +35,11 @@ export default function Step1(props) {
   };
 
   function getCsvData() {
-    return getPlaceStatistics(["zip/94306", "zip/45202"], ["Count_Person", "Median_Income_Person"]).then((data) => {
-      let tabJsonData = toTabularJsonData(data, "zip code");
+    console.log(props.phsVariableValues);
+    let uniquePhsVariableValues = [...new Set(props.phsVariableValues)];
+    console.log(uniquePhsVariableValues)
+    return getPlaceStatistics(uniquePhsVariableValues, ["Count_Person", "Median_Income_Person"]).then((data) => {
+      let tabJsonData = toTabularJsonData(data, "zip code", props.phsVariableValues);
       return jsonToCsv(tabJsonData);
     })
       .catch((error) => {
@@ -64,7 +67,8 @@ export default function Step1(props) {
   return (
     <div>
       <h2>{props.title}</h2>
-      <h4>Select the discovered attributes for which you want to get data from Data Commons</h4>
+      {props.phsVariableValues}
+      <h4>Download the Data Commons data and use it from your R project</h4>
       <Button variant="outlined" color="primary" onClick={downloadDataFile}>
         Download data
       </Button>
