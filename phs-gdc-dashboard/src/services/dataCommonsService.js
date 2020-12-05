@@ -21,7 +21,7 @@ import {DC_API_BASE_URL} from "../constants";
 //   return fetch(url, requestOptions);
 // };
 
-export function GetPlaceStatistics(places, statVars) {
+export function getPlaceStatistics(places, statVars) {
   let url = DC_API_BASE_URL + "stat/all";
   console.log(url);
   const requestOptions = {

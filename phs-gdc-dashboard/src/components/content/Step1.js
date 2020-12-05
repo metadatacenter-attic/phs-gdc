@@ -16,8 +16,8 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 export default function Step1(props) {
 
-  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-  const checkedIcon = <CheckBoxIcon fontSize="small" />;
+  const icon = <CheckBoxOutlineBlankIcon fontSize="small"/>;
+  const checkedIcon = <CheckBoxIcon fontSize="small"/>;
 
   const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -26,13 +26,13 @@ export default function Step1(props) {
       maxWidth: 500,
       minWidth: 200,
     },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
+    selectVariable: {
+
     },
   }));
 
   const classes = useStyles();
-  const [variable, setVariable] = React.useState('zip code');
+  const [variable, setVariable] = React.useState('');
   const [values, setValues] = React.useState('');
 
   const handleChangeVariableSelect = (event) => {
@@ -41,35 +41,33 @@ export default function Step1(props) {
 
   const handleChangeValuesField = (event) => {
     setValues(event.target.value);
+    if (values != null && values.trim().length > 0) {
+      let valuesArray = values.split(/\r?\n/);
+      console.log(valuesArray);
+    }
   };
 
-  const phsVariables = ["zip code"];
+  const phsVariables = ["state", "county", "city", "zip code"];
 
   return (
     <div>
       <h2>{props.title}</h2>
-      <h4>Enter or select the variable that you want to use to expand your original data with data from Data Commons</h4>
-      <FormControl className={classes.formControl}>
-        <Autocomplete
-          id="variable-select"
-          options={phsVariables}
-          disableCloseOnSelect
+      <h4>Enter or select the variable that you want to use to expand your original data with data from Data
+        Commons</h4>
+      <FormControl className={classes.formControl} variant="outlined" /* if the variant is omitted here, the label of the select field is misaligned */>
+        <InputLabel id="demo-simple-select-outlined-label">Variable</InputLabel>
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
           value={variable}
-          getOptionLabel={(option) => option}
-          style={{maxWidth: '100%' }}
-          renderInput={(params) => (
-            <TextField {...params}  variant="outlined" label="Variables" placeholder="" />
-          )}
-        />
-        {/*<InputLabel id="label-variable">Variable</InputLabel>*/}
-        {/*<Select*/}
-        {/*  labelId="label-variable"*/}
-        {/*  id="variable-select"*/}
-        {/*  value={variable}*/}
-        {/*  variant="outlined"*/}
-        {/*  onChange={handleChangeVariableSelect}>*/}
-        {/*  <MenuItem value={"zip code"}>zip code</MenuItem>*/}
-        {/*</Select>*/}
+          onChange={handleChangeVariableSelect}
+          variant="outlined"
+          className={classes.selectVariable}
+          label="Variable">
+          {phsVariables.map((phsVar, index) =>
+            <MenuItem key={index} value={phsVar}>{phsVar}</MenuItem>
+          )};
+        </Select>
         <FormHelperText>Select a PHS variable from the list</FormHelperText>
         <br/>
         <TextField
@@ -81,7 +79,7 @@ export default function Step1(props) {
           value={values}
           variant="outlined"
           onChange={handleChangeValuesField}/>
-        <FormHelperText>Copy-paste the variable values (one per line)</FormHelperText>
+        <FormHelperText>Paste the values of the selected variable (one per line)</FormHelperText>
       </FormControl>
     </div>
   );

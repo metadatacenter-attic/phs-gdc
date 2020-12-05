@@ -4,7 +4,9 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import {GetPlaceStatistics} from "../../services/dataCommonsService";
+import {getPlaceStatistics} from "../../services/dataCommonsService";
+import {toTabularJsonData} from "../../utils/dataCommonsUtils";
+import {jsonToCsv} from "../../utils/utils";
 
 export default function Step1(props) {
 
@@ -32,9 +34,10 @@ export default function Step1(props) {
     );
   };
 
-  function getData() {
-    return GetPlaceStatistics("zip/94306", "Count_Person").then((data) => {
-      return data;
+  function getCsvData() {
+    return getPlaceStatistics(["zip/94306", "zip/45202"], ["Count_Person", "Median_Income_Person"]).then((data) => {
+      let tabJsonData = toTabularJsonData(data, "zip code");
+      return jsonToCsv(tabJsonData);
     })
       .catch((error) => {
         error.json().then((json) => {
@@ -47,12 +50,12 @@ export default function Step1(props) {
   };
 
   function downloadDataFile() {
-    getData().then(data => {
+    getCsvData().then(data => {
       console.log(data);
       const element = document.createElement("a");
-      const file = new Blob([JSON.stringify(data)], {type: 'text/plain'});
+      const file = new Blob([data], {type: 'text/plain'});
       element.href = URL.createObjectURL(file);
-      element.download = "myFile.txt";
+      element.download = "myFile.csv";
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
     })
@@ -68,7 +71,7 @@ export default function Step1(props) {
       <br/>
       <br/>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        See R code
+        Generate R code
       </Button>
       <SimpleDialog open={open} onClose={handleClose}/>
     </div>
