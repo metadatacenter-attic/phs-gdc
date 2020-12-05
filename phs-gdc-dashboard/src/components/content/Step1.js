@@ -23,7 +23,8 @@ export default function Step1(props) {
     formControl: {
       textAlign: 'left',
       margin: theme.spacing(1),
-      minWidth: 120,
+      maxWidth: 500,
+      minWidth: 200,
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -55,7 +56,7 @@ export default function Step1(props) {
           disableCloseOnSelect
           value={variable}
           getOptionLabel={(option) => option}
-          style={{maxWidth: 400 }}
+          style={{maxWidth: '100%' }}
           renderInput={(params) => (
             <TextField {...params}  variant="outlined" label="Variables" placeholder="" />
           )}

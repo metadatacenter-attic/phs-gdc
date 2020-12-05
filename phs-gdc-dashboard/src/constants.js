@@ -1,0 +1,1 @@
+export const DC_API_BASE_URL = "https://api.datacommons.org/";

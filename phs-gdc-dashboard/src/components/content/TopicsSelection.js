@@ -7,13 +7,23 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import myData from './../../resources/data2.json';
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function TopicsSelection() {
+
+  const useStyles = makeStyles((theme) => ({
+    autoComplete: {
+      maxWidth: '100%',
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
-    <Autocomplete
+    <Autocomplete className={classes.autoComplete}
       multiple
       id="checkboxes-tags-demo"
       options={myData}
@@ -31,7 +41,6 @@ export default function TopicsSelection() {
           {option.name}
         </React.Fragment>
       )}
-      style={{maxWidth: 400 }}
       renderInput={(params) => (
         <TextField {...params}  variant="outlined" label="Variables" placeholder="" />
       )}
