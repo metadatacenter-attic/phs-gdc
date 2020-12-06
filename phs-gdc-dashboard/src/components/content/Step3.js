@@ -5,10 +5,10 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import {getPlaceStatistics} from "../../services/dataCommonsService";
-import {toTabularJsonData} from "../../utils/dataCommonsUtils";
+import {indexVariableValueToDcid, toTabularJsonData} from "../../utils/dataCommonsUtils";
 import {jsonToCsv} from "../../utils/utils";
 
-export default function Step1(props) {
+export default function Step3(props) {
 
   const [open, setOpen] = React.useState(false);
 
@@ -35,11 +35,11 @@ export default function Step1(props) {
   };
 
   function getCsvData() {
-    console.log(props.phsVariableValues);
-    let uniquePhsVariableValues = [...new Set(props.phsVariableValues)];
-    console.log(uniquePhsVariableValues)
-    return getPlaceStatistics(uniquePhsVariableValues, ["Count_Person", "Median_Income_Person"]).then((data) => {
-      let tabJsonData = toTabularJsonData(data, "zip code", props.phsVariableValues);
+    console.log('dcVariableNames', props.dcVariableNames);
+    let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(v, props.phsVariableName))
+    let uniquePhsVariableDcids = [...new Set(phsVariableDcids)];
+    return getPlaceStatistics(uniquePhsVariableDcids, props.dcVariableNames).then((data) => {
+      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues);
       return jsonToCsv(tabJsonData);
     })
       .catch((error) => {
@@ -67,8 +67,7 @@ export default function Step1(props) {
   return (
     <div>
       <h2>{props.title}</h2>
-      {props.phsVariableValues}
-      <h4>Download the Data Commons data and use it from your R project</h4>
+      <h4>Download the Data Commons data and use them in your project</h4>
       <Button variant="outlined" color="primary" onClick={downloadDataFile}>
         Download data
       </Button>

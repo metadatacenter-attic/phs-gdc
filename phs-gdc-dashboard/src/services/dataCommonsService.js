@@ -10,24 +10,12 @@ import {DC_API_BASE_URL} from "../constants";
  * @param statVars
  * @constructor
  */
-// export function GetPlaceStatistics(places, statVars) {
-//   let url = DC_API_BASE_URL + "stat/all";
-//   console.log(url);
-//   const requestOptions = {
-//     method: 'POST',
-//     headers: {'Content-Type': 'application/json'},
-//     body: JSON.stringify({places: places, statVars: statVars})
-//   };
-//   return fetch(url, requestOptions);
-// };
-
-export function getPlaceStatistics(places, statVars) {
+export function getPlaceStatistics(placeDcids, statVars) {
   let url = DC_API_BASE_URL + "stat/all";
-  console.log(url);
   const requestOptions = {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({places: places, statVars: statVars})
+    body: JSON.stringify({places: placeDcids, statVars: statVars})
   };
   return fetch(url, requestOptions).then(response => {
     // Check if the request is 200

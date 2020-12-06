@@ -15,8 +15,18 @@
     "category": "Demographics"
   },
   {
+    "name": "UnemploymentRate_Person",
+    "label": "UnemploymentRate_Person",
+    "category": "Demographics"
+  },
+  {
     "name": "Count_Household",
     "label": "Count_Household",
+    "category": "Demographics"
+  },
+  {
+    "name": "LifeExpectancy_Person",
+    "label": "LifeExpectancy_Person",
     "category": "Demographics"
   },
   {
@@ -25,9 +35,24 @@
     "category": "Crime"
   },
   {
+    "name": "Count_Death",
+    "label": "Count_Death",
+    "category": "Health"
+  },
+  {
     "name": "Count_MedicareEnrollee",
     "label": "Count_MedicareEnrollee",
     "category": "Health"
+  },
+  {
+    "name": "Count_Worker",
+    "label": "Count_Worker",
+    "category": "Employment"
+  },
+  {
+    "name": "Amount_Emissions_CarbonDioxide_PerCapita",
+    "label": "Amount_Emissions_CarbonDioxide_PerCapita",
+    "category": "Environment"
   },
   {
     "name": "Median_Income_Household",

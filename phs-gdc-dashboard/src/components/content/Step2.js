@@ -1,8 +1,8 @@
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import TopicsSelection from "./TopicsSelection";
+import TopicsSelector from "./TopicsSelector";
 
-export default function Step1(props) {
+export default function Step2(props) {
 
   const useStyles = makeStyles((theme) => ({
     topics: {
@@ -13,11 +13,6 @@ export default function Step1(props) {
   }));
 
   const classes = useStyles();
-  const [topic, setTopic] = React.useState('');
-
-  const handleChange = (event) => {
-    setTopic(event.target.value);
-  };
 
   return (
     <div>
@@ -25,7 +20,7 @@ export default function Step1(props) {
       <h4>Select the Data Commons variables you want to retrieve values from</h4>
       {/*<TopicsTree/>*/}
       <div className={classes.topics}>
-        <TopicsSelection/>
+        <TopicsSelector setDcVariableNames={props.setDcVariableNames}/>
       </div>
     </div>
   );

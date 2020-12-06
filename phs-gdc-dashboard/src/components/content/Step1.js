@@ -6,13 +6,9 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
-import myData from "../../resources/data2";
-import Checkbox from "@material-ui/core/Checkbox/Checkbox";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import CheckBoxOutlineBlankIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import {INDEX_VARIABLE_NAME_DEFAULT, INDEX_VARIABLES} from "../../constants";
 
 export default function Step1(props) {
 
@@ -32,15 +28,15 @@ export default function Step1(props) {
   }));
 
   const classes = useStyles();
-  const [variable, setVariable] = React.useState('');
+  const [variable, setVariable] = React.useState(INDEX_VARIABLE_NAME_DEFAULT);
   const [values, setValues] = React.useState('');
 
   const handleChangeVariableSelect = (event) => {
     setVariable(event.target.value);
+    props.setPhsVariableName(event.target.value);
   };
 
   const handleChangeValuesField = (event) => {
-    console.log('on change invoked')
     setValues(event.target.value);
     if (values != null && values.trim().length > 0) {
       let valuesArray = values.split(/\r?\n/);
@@ -51,7 +47,7 @@ export default function Step1(props) {
     }
   };
 
-  const phsVariables = ["state", "county", "city", "zip code"];
+  const phsIndexVariables = INDEX_VARIABLES;
 
   return (
     <div>
@@ -67,7 +63,7 @@ export default function Step1(props) {
           variant="outlined"
           className={classes.selectVariable}
           label="Variable">
-          {phsVariables.map((phsVar, index) =>
+          {phsIndexVariables.map((phsVar, index) =>
             <MenuItem key={index} value={phsVar}>{phsVar}</MenuItem>
           )};
         </Select>
@@ -77,8 +73,8 @@ export default function Step1(props) {
           id="standard-multiline-flexible"
           label="Variable values"
           multiline
-          rowsMax={10}
-          rows={6}
+          rowsMax={20}
+          rows={10}
           value={values}
           variant="outlined"
           onBlur={handleChangeValuesField}
