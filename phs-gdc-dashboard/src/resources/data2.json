@@ -20,6 +20,11 @@
     "category": "Demographics"
   },
   {
+    "name": "Count_HousingUnit",
+    "label": "Count_HousingUnit",
+    "category": "Demographics"
+  },
+  {
     "name": "Count_CriminalActivities_CombinedCrime",
     "label": "Count_CriminalActivities_CombinedCrime",
     "category": "Crime"
@@ -33,6 +38,15 @@
     "name": "Median_Income_Household",
     "label": "Median_Income_Household",
     "category": "Household"
+  },
+  {
+    "name": "Count_Establishment",
+    "label": "Count_Establishment",
+    "category": "Employment"
+  },
+  {
+    "name": "WagesAnnual_Establishment",
+    "label": "WagesAnnual_Establishment",
+    "category": "Employment"
   }
-
 ]

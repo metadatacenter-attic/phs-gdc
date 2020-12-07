@@ -73,7 +73,8 @@ export default function Step3(props) {
       </Button>
       <br/>
       <br/>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <br/>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen} disabled={true}>
         Generate R code
       </Button>
       <SimpleDialog open={open} onClose={handleClose}/>
