@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.1",
     "@testing-library/user-event": "^12.2.0",
+    "cross-env": "^7.0.3",
     "fontsource-roboto": "^3.0.3",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
@@ -17,7 +18,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env PORT=3010 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
