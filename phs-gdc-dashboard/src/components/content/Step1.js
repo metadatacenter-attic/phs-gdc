@@ -8,7 +8,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";
 import CheckBoxOutlineBlankIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import {INDEX_VARIABLE_NAME_DEFAULT, INDEX_VARIABLES} from "../../constants";
+import {INDEX_VARIABLES, DEFAULT_INDEX_VARIABLE_NAME} from "../../constants";
 
 export default function Step1(props) {
 
@@ -28,7 +28,7 @@ export default function Step1(props) {
   }));
 
   const classes = useStyles();
-  const [variable, setVariable] = React.useState(INDEX_VARIABLE_NAME_DEFAULT);
+  const [variable, setVariable] = React.useState(DEFAULT_INDEX_VARIABLE_NAME);
   const [values, setValues] = React.useState('');
 
   const handleChangeVariableSelect = (event) => {
@@ -63,8 +63,12 @@ export default function Step1(props) {
           variant="outlined"
           className={classes.selectVariable}
           label="Variable">
-          {phsIndexVariables.map((phsVar, index) =>
-            <MenuItem key={index} value={phsVar}>{phsVar}</MenuItem>
+          {Object.keys(phsIndexVariables).map((varKey) =>
+          {
+            if (phsIndexVariables[varKey].enabled) {
+              return <MenuItem key={varKey} value={varKey}>{phsIndexVariables[varKey].uiLabel}</MenuItem>
+            }
+          }
           )};
         </Select>
         <FormHelperText>Select a PHS variable from the list</FormHelperText>

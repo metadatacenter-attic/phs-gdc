@@ -75,8 +75,9 @@ export default function Step3(props) {
               control={<Switch checked={optionsState.includeDates} onChange={handleOptionsChange} name="includeDates"/>}
               label="Include dates"
             />
-            <Tooltip title="For each selected variable, it includes an additional column with the date (e.g., year) the data was collected.">
-              <HelpOutline />
+            <Tooltip
+              title="For each selected variable, it includes an additional column with the date (e.g., year) the data was collected.">
+              <HelpOutline/>
             </Tooltip>
           </FormGroup>
         </FormControl>
@@ -86,7 +87,8 @@ export default function Step3(props) {
 
   function CodeDialog(props) {
     return (
-      <Dialog fullWidth={true} onClose={handleCloseCodeDialog} aria-labelledby="simple-dialog-title" open={openCodeDialog}>
+      <Dialog fullWidth={true} onClose={handleCloseCodeDialog} aria-labelledby="simple-dialog-title"
+              open={openCodeDialog}>
         <DialogTitle id="simple-dialog-title">R code</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -98,11 +100,9 @@ export default function Step3(props) {
   };
 
   function getCsvData() {
-    console.log('dcVariableNames', props.dcVariableNames);
-    let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(v, props.phsVariableName))
-    let uniquePhsVariableDcids = [...new Set(phsVariableDcids)];
-    return getPlaceStatistics(uniquePhsVariableDcids, props.dcVariableNames).then((data) => {
-      console.log(data);
+    let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(props.phsVariableName, v));
+    let uniquePhsVariableValuesDcids = [...new Set(phsVariableDcids)];
+    return getPlaceStatistics(props.phsVariableName, uniquePhsVariableValuesDcids, props.dcVariableNames).then((data) => {
       let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, optionsState.includeDates);
       return jsonToCsv(tabJsonData);
     })
@@ -118,7 +118,6 @@ export default function Step3(props) {
 
   function downloadDataFile() {
     getCsvData().then(data => {
-      console.log(data);
       const element = document.createElement("a");
       const file = new Blob([data], {type: 'text/plain'});
       element.href = URL.createObjectURL(file);
@@ -131,7 +130,8 @@ export default function Step3(props) {
   return (
     <div>
       <h2>{props.title}</h2>
-      <IconButton aria-describedby={'settings-popover'} onClick={handleClickOpenSettingsPopOver}><SettingsIcon/></IconButton>
+      <IconButton aria-describedby={'settings-popover'}
+                  onClick={handleClickOpenSettingsPopOver}><SettingsIcon/></IconButton>
       <Popover
         id={'settings-popover'}
         open={openSettingsPopOver}

@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Step1 from "./content/Step1";
 import Step2 from "./content/Step2";
 import Step3 from "./content/Step3";
-import {INDEX_VARIABLE_NAME_DEFAULT} from "../constants";
+import {DEFAULT_INDEX_VARIABLE_NAME} from "../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +25,7 @@ export default function AppContent() {
   const classes = useStyles();
 
   const [phsVariableValues, setPhsVariableValues] = React.useState('');
-  const [phsVariableName, setPhsVariableName] = React.useState(INDEX_VARIABLE_NAME_DEFAULT);
+  const [phsVariableName, setPhsVariableName] = React.useState(DEFAULT_INDEX_VARIABLE_NAME);
   const [dcVariableNames, setDcVariableNames] = React.useState('');
 
   return (

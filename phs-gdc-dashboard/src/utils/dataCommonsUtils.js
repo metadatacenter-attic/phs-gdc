@@ -5,10 +5,7 @@
 import moment from "moment";
 
 import {
-  INDEX_VARIABLE_NAME_CITY,
-  INDEX_VARIABLE_NAME_COUNTY,
-  INDEX_VARIABLE_NAME_STATE,
-  INDEX_VARIABLE_NAME_ZIP_CODE, NOT_AVAILABLE_VALUE
+  INDEX_VARIABLES, NOT_AVAILABLE_VALUE
 } from "../constants";
 
 /**
@@ -21,8 +18,6 @@ import {
  * @param includeTemporalInfo
  */
 export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, includeDates) {
-
-  //console.log(jsonData);
 
   let tabularJsonData = [];
   let statVars = {};
@@ -41,12 +36,10 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, 
     }
   }
 
-  //console.log(statVars);
-
   let rows = {}
   // Generate rows and index them by phsVariableValue (placeId)
   for (let placeId in jsonData['placeData']) {
-    let placeValue = dcidToIndexVariableValue(placeId, phsVariableName);
+    let placeValue = indexVariableDcidToVariableValue(phsVariableName, placeId);
     let row = {[phsVariableName]: placeValue};
     for (let statVarName in statVars) {
       let date = statVars[statVarName];
@@ -104,34 +97,24 @@ function getDateFormat(date) {
 
 /**
  * Translates the value of an index variable to a DC node identifier (e.g., 94306 -> zip/94306)
- * @param value Variable value (e.g., 94306)
- * @param variableName Name of the variable (e.g., zip code)
+ * @param variableKey Key of the variable in the variables map (e.g., zipCode)
+ * @param variableValue Variable value (e.g., 94306)
  */
-export function indexVariableValueToDcid(variableValue, variableName) {
-  if (variableValue && variableValue.length > 0) {
-    if (variableName === INDEX_VARIABLE_NAME_STATE) {
-      //TODO
-    } else if (variableName === INDEX_VARIABLE_NAME_COUNTY) {
-      //TODO
-    } else if (variableName === INDEX_VARIABLE_NAME_CITY) {
-      //TODO
-    } else if (variableName === INDEX_VARIABLE_NAME_ZIP_CODE) {
-      return 'zip/' + variableValue;
+export function indexVariableValueToDcid(variableKey, variableValue) {
+  if (variableKey in INDEX_VARIABLES) {
+    let prefix = INDEX_VARIABLES[variableKey].dcidValuePrefix;
+    if (prefix) {
+      return prefix.concat(variableValue);
+    }
+    else {
+      return variableValue;
     }
   }
 };
 
-export function dcidToIndexVariableValue(dcid, variableName) {
-  if (dcid && dcid.length > 0) {
-    if (variableName === INDEX_VARIABLE_NAME_STATE) {
-      //TODO
-    } else if (variableName === INDEX_VARIABLE_NAME_COUNTY) {
-      //TODO
-    } else if (variableName === INDEX_VARIABLE_NAME_CITY) {
-      //TODO
-    } else if (variableName === INDEX_VARIABLE_NAME_ZIP_CODE) {
-      return dcid.replace('zip/', '');
-    }
+export function indexVariableDcidToVariableValue(variableKey, variableValueDcid) {
+  if (variableKey in INDEX_VARIABLES) {
+    return variableValueDcid.replace(INDEX_VARIABLES[variableKey].dcidValuePrefix, '');
   }
 };
 
