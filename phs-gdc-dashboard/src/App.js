@@ -3,6 +3,7 @@ import AppHeader from "./components/AppHeader";
 import AppContent from "./components/AppContent";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import AppFooter from "./components/AppFooter";
+import './App.css'
 
 export default function App() {
 

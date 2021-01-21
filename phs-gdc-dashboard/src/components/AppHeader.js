@@ -56,7 +56,7 @@ export default function AppHeader() {
           </Menu>
 
           <Typography variant="h6" className={classes.title}>
-            PHS-DC Dashboard
+            Data Commons Wizard
           </Typography>
         </Toolbar>
       </AppBar>

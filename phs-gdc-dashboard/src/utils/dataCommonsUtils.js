@@ -20,9 +20,9 @@ import {
  * @param phsVariableValues
  * @param includeTemporalInfo
  */
-export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, includeTemporalInfo) {
+export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, includeDates) {
 
-  console.log(jsonData);
+  //console.log(jsonData);
 
   let tabularJsonData = [];
   let statVars = {};
@@ -41,7 +41,7 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, 
     }
   }
 
-  console.log(statVars);
+  //console.log(statVars);
 
   let rows = {}
   // Generate rows and index them by phsVariableValue (placeId)
@@ -54,7 +54,7 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, 
       if (jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"]) {
         row[statVarName] = jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"][0]["val"][date];
         // If requested, include temporal information
-        if (includeTemporalInfo) {
+        if (includeDates) {
           row[statVarName + '_' + dateFormatName] = date;
         }
       }
