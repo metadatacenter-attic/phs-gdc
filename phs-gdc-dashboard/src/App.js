@@ -8,7 +8,7 @@ export default function App() {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      backgroundColor: "lightGray",
+      backgroundColor: "#f4f6f8",
       minHeight: "100vh",
     },
   }));

@@ -2,6 +2,7 @@
  * Data Commons Utility functions
  */
 
+import moment from "moment";
 
 import {
   INDEX_VARIABLE_NAME_CITY,
@@ -17,21 +18,23 @@ import {
  * @param jsonData
  * @param phsVariableName
  * @param phsVariableValues
+ * @param includeTemporalInfo
  */
-export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues) {
+export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, includeTemporalInfo) {
 
   console.log(jsonData);
 
   let tabularJsonData = [];
   let statVars = {};
 
-  // Extract column names and most recent year for each variable name and save them as a hashtable.
-  // To improve performance, we assume that a particular variable has the same years for all location identifiers
+  // Extract column names and most recent date for each variable name and save them as a hashtable.
+  // We assume that each variable (e.g., Count_Person) has the same most recent date (e.g., year)for all location
+  // identifiers (e.g., all zip codes).
   let firstKey = (Object.keys(jsonData['placeData']))[0];
   for (let varName in jsonData['placeData'][firstKey]['statVarData']) {
     if (jsonData['placeData'][firstKey]['statVarData'][varName]["sourceSeries"]) {
-      let year = getLatestYear(jsonData['placeData'][firstKey]['statVarData'][varName]["sourceSeries"][0]["val"])
-      statVars[varName] = year;
+      let date = getMostRecentDate(jsonData['placeData'][firstKey]['statVarData'][varName]["sourceSeries"][0]["val"])
+      statVars[varName] = date;
     }
     else { // no data
       statVars[varName] = null;
@@ -46,9 +49,14 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues) 
     let placeValue = dcidToIndexVariableValue(placeId, phsVariableName);
     let row = {[phsVariableName]: placeValue};
     for (let statVarName in statVars) {
-      let year = statVars[statVarName];
+      let date = statVars[statVarName];
+      let dateFormatName = getDateFormat(date);
       if (jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"]) {
-        row[statVarName] = jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"][0]["val"][year];
+        row[statVarName] = jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"][0]["val"][date];
+        // If requested, include temporal information
+        if (includeTemporalInfo) {
+          row[statVarName + '_' + dateFormatName] = date;
+        }
       }
       else {
         row[statVarName] = NOT_AVAILABLE_VALUE;
@@ -66,17 +74,36 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues) 
 };
 
 /**
- * Given an object with key-value pairs, where each key is a year, retrieve the most recent year
- * Example: { "2012": 8710, "2020": 8680, "2018": 8831 } -> 2020
+ * Given an object with key-value pairs, where each key is a date, retrieve the most recent date
+ * Example (with years): { "2012": 8710, "2020": 8680, "2018": 8831 } -> 2020
  * @param data
+ * TODO: make it work for other date formats if needed (e.g., months, weeks, etc.)
  */
-function getLatestYear(data) {
-  let latestYear = Object.keys(data).sort().reverse()[0];
-  return parseInt(latestYear);
+function getMostRecentDate(data) {
+  let mostRecentDate = Object.keys(data).sort().reverse()[0];
+  return parseInt(mostRecentDate);
 };
 
 /**
- * Translates a value of an index variable to a DC node identifier (e.g., 94306 -> zip/94306)
+ * Returns a string representing format in which the date is expressed. For example, if the date is '2018', it would
+ * return 'Year'.
+ * This function uses Moment.js: https://momentjs.com/
+ * @param date
+ */
+function getDateFormat(date) {
+  const DEFAULT_FORMAT_NAME = 'Date';
+  const YYYY_FORMAT_NAME = 'Year';
+  if (moment(date, "YYYY", true).isValid()) {
+    return YYYY_FORMAT_NAME;
+  }
+  // else if (...) // Add other formats when needed
+  else {
+    return DEFAULT_FORMAT_NAME;
+  }
+}
+
+/**
+ * Translates the value of an index variable to a DC node identifier (e.g., 94306 -> zip/94306)
  * @param value Variable value (e.g., 94306)
  * @param variableName Name of the variable (e.g., zip code)
  */

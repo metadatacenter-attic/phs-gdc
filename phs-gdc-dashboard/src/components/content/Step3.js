@@ -7,10 +7,22 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import {getPlaceStatistics} from "../../services/dataCommonsService";
 import {indexVariableValueToDcid, toTabularJsonData} from "../../utils/dataCommonsUtils";
 import {jsonToCsv} from "../../utils/utils";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import HelpOutline from '@material-ui/icons/HelpOutline';
+import Tooltip from "@material-ui/core/Tooltip";
 
 export default function Step3(props) {
 
   const [open, setOpen] = React.useState(false);
+
+  const [optionsState, setOptionsState] = React.useState({
+    includeDates: true
+  });
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,6 +30,10 @@ export default function Step3(props) {
 
   const handleClose = (value) => {
     setOpen(false);
+  };
+
+  const handleOptionsChange = (event) => {
+    setOptionsState({...optionsState, [event.target.name]: event.target.checked});
   };
 
   function SimpleDialog(props) {
@@ -39,7 +55,8 @@ export default function Step3(props) {
     let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(v, props.phsVariableName))
     let uniquePhsVariableDcids = [...new Set(phsVariableDcids)];
     return getPlaceStatistics(uniquePhsVariableDcids, props.dcVariableNames).then((data) => {
-      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues);
+      console.log(data);
+      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, true);
       return jsonToCsv(tabJsonData);
     })
       .catch((error) => {
@@ -68,16 +85,34 @@ export default function Step3(props) {
     <div>
       <h2>{props.title}</h2>
       <h4>Download the Data Commons data and use them in your project</h4>
-      <Button variant="outlined" color="primary" onClick={downloadDataFile}>
-        Download data
-      </Button>
-      <br/>
-      <br/>
-      <br/>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen} disabled={true}>
-        Generate R code
-      </Button>
-      <SimpleDialog open={open} onClose={handleClose}/>
+
+      <div>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Export settings</FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={<Switch checked={optionsState.includeDates} onChange={handleOptionsChange} name="includeDates"/>}
+              label="Include dates"
+            />
+            <Tooltip title="For each selected variable, it includes an additional column with the date (e.g., year) the data was collected.">
+              <HelpOutline />
+            </Tooltip>
+          </FormGroup>
+        </FormControl>
+      </div>
+
+      <div>
+        <Button variant="outlined" color="primary" onClick={downloadDataFile}>
+          Download data
+        </Button>
+        <br/>
+        <br/>
+        <br/>
+        <Button variant="outlined" color="primary" onClick={handleClickOpen} disabled={true}>
+          Generate R code
+        </Button>
+        <SimpleDialog open={open} onClose={handleClose}/>
+      </div>
     </div>
   );
 }
