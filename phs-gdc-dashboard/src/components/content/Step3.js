@@ -101,8 +101,8 @@ export default function Step3(props) {
 
   function getCsvData() {
     let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(props.phsVariableName, v));
-    let uniquePhsVariableValuesDcids = [...new Set(phsVariableDcids)];
-    return getPlaceStatistics(props.phsVariableName, uniquePhsVariableValuesDcids, props.dcVariableNames).then((data) => {
+    let uniquePhsVariableValueDcids = [...new Set(phsVariableDcids)];
+    return getPlaceStatistics(props.phsVariableName, uniquePhsVariableValueDcids, props.dcVariableNames).then((data) => {
       let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, optionsState.includeDates);
       return jsonToCsv(tabJsonData);
     })

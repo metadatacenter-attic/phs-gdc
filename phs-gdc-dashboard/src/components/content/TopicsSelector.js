@@ -22,10 +22,7 @@ export default function TopicsSelector(props) {
 
   const classes = useStyles();
 
-  //const [selectedVariableNames, setSelectedVariableNames] = React.useState([]);
-
   const handleChange = (values) => {
-    //setSelectedVariableNames(values.map(value => value.name));
     props.setDcVariableNames(values.map(value => value.name));
   };
 
@@ -38,10 +35,8 @@ export default function TopicsSelector(props) {
                   groupBy={(option) => option.category}
 
                   onChange={(event, values) => handleChange(values)}
-                  //value={selectedVariableNames}
 
                   getOptionLabel={(option) => option.label}
-                  //getOptionSelected={(option) => option.name}
                   renderOption={(option, {selected}) => (
                     <React.Fragment>
                       <Checkbox

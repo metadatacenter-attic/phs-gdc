@@ -15,10 +15,10 @@ import {
  * @param jsonData
  * @param phsVariableName
  * @param phsVariableValues
- * @param includeTemporalInfo
+ * @param includeDates
  */
 export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, includeDates) {
-
+  console.log(jsonData);
   let tabularJsonData = [];
   let statVars = {};
 
@@ -53,6 +53,9 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, 
       }
       else {
         row[statVarName] = NOT_AVAILABLE_VALUE;
+        if (includeDates) {
+          row[statVarName + '_' + dateFormatName] = NOT_AVAILABLE_VALUE;
+        }
       }
     }
     rows[placeValue] = row;

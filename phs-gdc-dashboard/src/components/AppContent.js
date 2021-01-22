@@ -26,7 +26,7 @@ export default function AppContent() {
 
   const [phsVariableValues, setPhsVariableValues] = React.useState('');
   const [phsVariableName, setPhsVariableName] = React.useState(DEFAULT_INDEX_VARIABLE_NAME);
-  const [dcVariableNames, setDcVariableNames] = React.useState('');
+  const [dcVariableNames, setDcVariableNames] = React.useState();
 
   return (
     <div className={classes.root}>
