@@ -15,3 +15,9 @@ h2 {
   letter-spacing: 0.08333em;
   text-transform: uppercase;
 }
+
+pre {
+  font-family: Consolas, Monaco, "Lucida Console", "Liberation Mono", "Nimbus Mono L", "Courier New", Courier, monospace;
+  font-size: 0.8rem;
+
+}

@@ -16,3 +16,7 @@ export function jsonToCsv(json) {
   csv = csv.join('\r\n');
   return csv;
 }
+
+export function removeDuplicates(array) {
+  return [...new Set(array)];
+}

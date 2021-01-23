@@ -13,10 +13,21 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import HelpOutline from '@material-ui/icons/HelpOutline';
 import SettingsIcon from '@material-ui/icons/Settings';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import Tooltip from "@material-ui/core/Tooltip";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import IconButton from "@material-ui/core/IconButton";
 import Popover from "@material-ui/core/Popover";
+import TextField from "@material-ui/core/TextField/TextField";
+import snippetsR from './../../resources/r/snippets/snippetsR.json';
+import DialogActions from "@material-ui/core/DialogActions";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import {stackoverflowLight} from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import {CopyToClipboard} from "react-copy-to-clipboard";
+import Snackbar from "@material-ui/core/Snackbar";
+import Grow from "@material-ui/core/Grow";
+import Collapse from "@material-ui/core/Collapse";
 
 export default function Step3(props) {
 
@@ -30,6 +41,11 @@ export default function Step3(props) {
     buttons: {
       marginTop: '4vh',
       //backgroundColor: 'yellow'
+    },
+    codeOptions: {
+      textAlign: "right",
+      marginTop: theme.spacing(-2),
+      marginBottom: theme.spacing(-2),
     }
   }));
 
@@ -63,6 +79,17 @@ export default function Step3(props) {
     setOptionsState({...optionsState, [event.target.name]: event.target.checked});
   };
 
+  // const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+  // const handleSnackbarClick = (event) => {
+  //   setSnackbarOpen(true);
+  // };
+  // const handleSnackbarClose = (event, reason) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+  //   setSnackbarOpen(false);
+  // };
+
   function SettingsPopOver(props) {
     return (
       <div className={classes.settings}>
@@ -87,14 +114,48 @@ export default function Step3(props) {
 
   function CodeDialog(props) {
     return (
-      <Dialog fullWidth={true} onClose={handleCloseCodeDialog} aria-labelledby="simple-dialog-title"
-              open={openCodeDialog}>
-        <DialogTitle id="simple-dialog-title">R code</DialogTitle>
+      <Dialog
+        maxWidth={"md"}
+        fullWidth={false}
+        onClose={handleCloseCodeDialog}
+        aria-labelledby="r-dialog-title"
+        open={openCodeDialog}>
+        <DialogTitle id="r-dialog-title">R code</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Copy-paste the generated R code.
+          <DialogContentText>The following code can be used to merge an existing .csv file (or an existing data frame)
+            with the .csv file
+            downloaded using the Data Commons Wizard.
           </DialogContentText>
+          <div className={classes.codeOptions}>
+            <Tooltip title="Show the source in GitHub">
+              <IconButton><GitHubIcon fontSize={"small"}/></IconButton>
+            </Tooltip>
+            <CopyToClipboard text={snippetsR.snippet1}>
+              <Tooltip title="Copy to clipboard">
+                <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
+              </Tooltip>
+            </CopyToClipboard>
+          </div>
+          <SyntaxHighlighter language="r" style={stackoverflowLight}>
+            {snippetsR.snippet1}
+          </SyntaxHighlighter>
+          {/*<Snackbar*/}
+          {/*  autoHideDuration={2000}*/}
+          {/*  anchorOrigin={{*/}
+          {/*    vertical: 'bottom',*/}
+          {/*    horizontal: 'center',*/}
+          {/*  }}*/}
+          {/*  open={snackbarOpen}*/}
+          {/*  onClose={handleSnackbarClose}*/}
+          {/*  message="Code copied to clipboard"*/}
+          {/*  TransitionComponent={Collapse}*/}
+          {/*/>*/}
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseCodeDialog} color="primary">
+            Close
+          </Button>
+        </DialogActions>
       </Dialog>
     );
   };
@@ -121,7 +182,7 @@ export default function Step3(props) {
       const element = document.createElement("a");
       const file = new Blob([data], {type: 'text/plain'});
       element.href = URL.createObjectURL(file);
-      element.download = "myFile.csv";
+      element.download = "dcw_data.csv";
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
     })

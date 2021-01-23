@@ -17,6 +17,9 @@ import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import {removeDuplicates} from "../../utils/utils";
+import ListItemText from "@material-ui/core/ListItemText";
+import Chip from "@material-ui/core/Chip";
 
 export default function Step1(props) {
 
@@ -33,14 +36,19 @@ export default function Step1(props) {
     separator: {
       margin: theme.spacing(2),
     },
-    select: {}
+    select: {},
+    chips: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    chip: {
+      margin: 2,
+    },
   }));
 
   const classes = useStyles();
   const [variable, setVariable] = React.useState(DEFAULT_INDEX_VARIABLE_NAME);
   const [valueOptionRadio, setValueOptionRadio] = React.useState('optionEnter');
-  const [state, setState] = React.useState('');
-  // const [selectedStates, setSelectedStates] = React.useState();
   const [variableValues, setVariableValues] = React.useState(''); // content of textfield
 
   const handleChangeVariableSelect = (event) => {
@@ -50,10 +58,6 @@ export default function Step1(props) {
 
   const handleChangeValuesOptionRadio = (event) => {
     setValueOptionRadio(event.target.value);
-  };
-
-  const handleChangeStateSelect = (event) => {
-    setState(event.target.value);
   };
 
   const handleChangeStatesSelect = (states) => {
@@ -67,7 +71,7 @@ export default function Step1(props) {
   const handleChangeValuesField = (event) => {
     setVariableValues(event.target.value);
     if (variableValues != null && variableValues.trim().length > 0) {
-      let valuesArray = variableValues.split(/\r?\n/);
+      let valuesArray = removeDuplicates(variableValues.split(/\r?\n/));
       props.setPhsVariableValues(valuesArray);
     } else {
       props.setPhsVariableValues([]);
@@ -104,30 +108,9 @@ export default function Step1(props) {
         <FormLabel component="legend">Variable values</FormLabel>
         <RadioGroup value={valueOptionRadio} onChange={handleChangeValuesOptionRadio}>
           <FormControlLabel value="optionEnter" control={<Radio/>} label="Enter values by hand"/>
-          <FormControlLabel value="optionSelect" control={<Radio/>} label="Use all values from a given territory"/>
+          <FormControlLabel value="optionSelect" control={<Radio/>} label="Use all values from selected locations"/>
         </RadioGroup>
       </FormControl>
-
-      {/*<FormControl className={classes.formControl} variant="outlined">*/}
-      {/*  {valueOptionRadio === "optionSelect" &&*/}
-      {/*  <>*/}
-      {/*    <InputLabel>State</InputLabel>*/}
-      {/*    <Select*/}
-      {/*      labelId="values-select-label"*/}
-      {/*      id="values-select-id"*/}
-      {/*      value={state}*/}
-      {/*      onChange={handleChangeStateSelect}*/}
-      {/*      variant="outlined"*/}
-      {/*      className={classes.select}*/}
-      {/*      label="State">*/}
-      {/*      {states.map((item) =>*/}
-      {/*        <MenuItem key={item.abbreviation} value={item.abbreviation}>{item.name}</MenuItem>*/}
-      {/*      )};*/}
-      {/*    </Select>*/}
-      {/*    /!*<FormHelperText>Select a state from the list</FormHelperText>*!/*/}
-      {/*  </>*/}
-      {/*  }*/}
-      {/*</FormControl>*/}
 
       <FormControl className={classes.formControl}>
         {valueOptionRadio === "optionEnter" &&
@@ -169,14 +152,13 @@ export default function Step1(props) {
               </React.Fragment>
             )}
             renderInput={(params) => (
-              <TextField {...params} variant="outlined" label="States" placeholder=""/>
+              <TextField {...params} variant="outlined" label="Location" placeholder=""/>
             )}
           />
-          <FormHelperText>Select one or several US states</FormHelperText>
+          <FormHelperText>Select one or multiple US states</FormHelperText>
         </>
         }
       </FormControl>
-
 
     </div>
   );

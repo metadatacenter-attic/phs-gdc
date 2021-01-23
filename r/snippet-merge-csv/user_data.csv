@@ -1,0 +1,16 @@
+patient_id,birth_date,diagnosis_date,diagnosis,state,zip
+1,11/1/1985,6/12/2015,Hypertension,CA,94306
+2,9/13/1953,11/16/2002,Diabetes,CA,91732
+3,11/9/1942,3/3/2011,Hyperlipidemia,CA,90004
+4,5/10/1952,1/3/2007,Respiratory problems,CA,94040
+5,3/3/1967,9/3/2008,Pain in joint,OR,97321
+6,12/6/1959,8/23/2008,Depressive disorder,OR,97236
+7,11/19/1984,3/10/2016,Hypertension,CA,95669
+8,12/23/1974,3/23/2007,Coronary atherosclerosis,OR,97907
+9,3/16/1981,7/1/2013,Obesity,CA,95982
+10,11/6/1950,7/15/2010,Osteoarthritis,CA,94040
+11,6/27/1975,10/2/2013,Hypertension,CA,94306
+12,9/14/1972,12/17/2015,Asthma,CA,91739
+13,10/12/1951,10/29/2004,Osteoarthritis,OR,97823
+14,7/4/1959,5/1/2011,Diabetes,OR,97112
+15,5/20/1985,9/29/2005,Asthma,CA,93003
