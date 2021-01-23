@@ -19,15 +19,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import IconButton from "@material-ui/core/IconButton";
 import Popover from "@material-ui/core/Popover";
-import TextField from "@material-ui/core/TextField/TextField";
 import snippetsR from './../../resources/r/snippets/snippetsR.json';
 import DialogActions from "@material-ui/core/DialogActions";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import {stackoverflowLight} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import {CopyToClipboard} from "react-copy-to-clipboard";
-import Snackbar from "@material-ui/core/Snackbar";
-import Grow from "@material-ui/core/Grow";
-import Collapse from "@material-ui/core/Collapse";
+import {SNIPPET_1_URL} from "../../constants";
 
 export default function Step3(props) {
 
@@ -127,14 +124,14 @@ export default function Step3(props) {
             downloaded using the Data Commons Wizard.
           </DialogContentText>
           <div className={classes.codeOptions}>
-            <Tooltip title="Show the source in GitHub">
-              <IconButton><GitHubIcon fontSize={"small"}/></IconButton>
-            </Tooltip>
             <CopyToClipboard text={snippetsR.snippet1}>
               <Tooltip title="Copy to clipboard">
                 <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
               </Tooltip>
             </CopyToClipboard>
+            <Tooltip title="Show GitHub source">
+              <IconButton onClick={() => window.open(SNIPPET_1_URL)}><GitHubIcon fontSize={"small"}/></IconButton>
+            </Tooltip>
           </div>
           <SyntaxHighlighter language="r" style={stackoverflowLight}>
             {snippetsR.snippet1}
