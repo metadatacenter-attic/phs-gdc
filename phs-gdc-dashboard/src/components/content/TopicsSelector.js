@@ -24,7 +24,6 @@ export default function TopicsSelector(props) {
 
   const handleChange = (values) => {
     props.setDcVariableNames(values.map(value => value.name));
-    props.validateStep2DcVariableNames();
   };
 
   return (
@@ -35,6 +34,7 @@ export default function TopicsSelector(props) {
                   disableCloseOnSelect
                   groupBy={(option) => option.category}
                   onChange={(event, values) => handleChange(values)}
+                  onBlur={props.validateStep2DcVariableNames}
                   getOptionLabel={(option) => option.label}
                   renderOption={(option, {selected}) => (
                     <React.Fragment>

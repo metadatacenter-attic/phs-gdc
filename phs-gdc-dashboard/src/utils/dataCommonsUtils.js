@@ -18,7 +18,6 @@ import {
  * @param includeDates
  */
 export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, includeDates) {
-  console.log(jsonData);
   let tabularJsonData = [];
   let statVars = {};
 

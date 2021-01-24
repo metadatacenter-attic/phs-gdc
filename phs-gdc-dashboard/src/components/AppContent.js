@@ -30,7 +30,6 @@ export default function AppContent() {
   const [showPhsVariableValuesError, setShowPhsVariableValuesError] = React.useState(false);
   const [showLocationsError, setShowLocationsError] = React.useState(false);
   const validateStep1VariableValues = () => {
-    console.log('var values',phsVariableValues);
     let isValid = phsVariableValues && phsVariableValues.length > 0 ? true : false;
     setShowPhsVariableValuesError(!isValid);
     setShowLocationsError(!isValid);
@@ -41,7 +40,6 @@ export default function AppContent() {
   const [dcVariableNames, setDcVariableNames] = React.useState();
   const [showDcVariableNamesError, setShowDcVariableNamesError] = React.useState(false);
   const validateStep2DcVariableNames = () => {
-    console.log(dcVariableNames);
     let isValid = dcVariableNames && dcVariableNames.length > 0 ? true : false;
     setShowDcVariableNamesError(!isValid);
     return isValid;

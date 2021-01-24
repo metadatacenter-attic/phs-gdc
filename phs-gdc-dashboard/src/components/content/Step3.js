@@ -43,7 +43,15 @@ export default function Step3(props) {
       textAlign: "right",
       marginTop: theme.spacing(0),
       marginBottom: theme.spacing(-2),
-    }
+    },
+    errorMsg: {
+      color: "red",
+      fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
+      fontWeight: 400,
+      fontSize: "0.75rem",
+      lineHeight: 1.66,
+      marginTop: theme.spacing(2),
+    },
   }));
 
   const classes = useStyles();
@@ -55,6 +63,8 @@ export default function Step3(props) {
   const [openCodeDialog, setOpenCodeDialog] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null); // popover anchor
   const openSettingsPopOver = Boolean(anchorEl);
+
+  // const [showErrorMsg, setShowErrorMsg] = React.useState(false);
 
   const handleClickOpenSettingsPopOver = (event) => {
     setAnchorEl(event.currentTarget);
@@ -172,10 +182,16 @@ export default function Step3(props) {
       });
   };
 
-  function downloadDataFile() {
+  function isValid() {
     let step1Valid = props.validateStep1VariableValues();
     let step2Valid = props.validateStep2DcVariableNames();
-    if (step1Valid && step2Valid) {
+    return step1Valid && step2Valid;
+  }
+
+  function downloadDataFile() {
+
+    if (isValid()) {
+      // setShowErrorMsg(false);
       getCsvData().then(data => {
         const element = document.createElement("a");
         const file = new Blob([data], {type: 'text/plain'});
@@ -184,6 +200,9 @@ export default function Step3(props) {
         document.body.appendChild(element); // Required for this to work in FireFox
         element.click();
       });
+    }
+    else {
+      // setShowErrorMsg(true);
     }
   };
 
@@ -213,6 +232,7 @@ export default function Step3(props) {
         <Button variant="outlined" color="primary" onClick={downloadDataFile}>
           Download data
         </Button>
+        {/*<div hidden={!showErrorMsg} className={classes.errorMsg}>Some fields are missing</div>*/}
         <br/>
         <br/>
         <br/>
