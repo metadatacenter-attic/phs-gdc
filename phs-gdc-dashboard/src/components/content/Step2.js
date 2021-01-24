@@ -20,7 +20,9 @@ export default function Step2(props) {
       <h4>Select the Data Commons variables you want to retrieve values from</h4>
       {/*<TopicsTree/>*/}
       <div className={classes.topics}>
-        <TopicsSelector setDcVariableNames={props.setDcVariableNames}/>
+        <TopicsSelector setDcVariableNames={props.setDcVariableNames}
+                        showDcVariableNamesError={props.showDcVariableNamesError}
+                        validateStep2DcVariableNames={props.validateStep2DcVariableNames}/>
       </div>
     </div>
   );

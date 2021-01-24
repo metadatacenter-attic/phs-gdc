@@ -41,7 +41,7 @@ export default function Step3(props) {
     },
     codeOptions: {
       textAlign: "right",
-      marginTop: theme.spacing(-2),
+      marginTop: theme.spacing(0),
       marginBottom: theme.spacing(-2),
     }
   }));
@@ -119,9 +119,7 @@ export default function Step3(props) {
         open={openCodeDialog}>
         <DialogTitle id="r-dialog-title">R code</DialogTitle>
         <DialogContent>
-          <DialogContentText>The following code can be used to merge an existing .csv file (or an existing data frame)
-            with the .csv file
-            downloaded using the Data Commons Wizard.
+          <DialogContentText>Use following code to merge the downloaded CSV file into your data.
           </DialogContentText>
           <div className={classes.codeOptions}>
             <CopyToClipboard text={snippetsR.snippet1}>
@@ -175,14 +173,18 @@ export default function Step3(props) {
   };
 
   function downloadDataFile() {
-    getCsvData().then(data => {
-      const element = document.createElement("a");
-      const file = new Blob([data], {type: 'text/plain'});
-      element.href = URL.createObjectURL(file);
-      element.download = "dcw_data.csv";
-      document.body.appendChild(element); // Required for this to work in FireFox
-      element.click();
-    })
+    let step1Valid = props.validateStep1VariableValues();
+    let step2Valid = props.validateStep2DcVariableNames();
+    if (step1Valid && step2Valid) {
+      getCsvData().then(data => {
+        const element = document.createElement("a");
+        const file = new Blob([data], {type: 'text/plain'});
+        element.href = URL.createObjectURL(file);
+        element.download = "dcw_data.csv";
+        document.body.appendChild(element); // Required for this to work in FireFox
+        element.click();
+      });
+    }
   };
 
   return (

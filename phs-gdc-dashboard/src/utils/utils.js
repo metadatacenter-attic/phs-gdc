@@ -20,3 +20,9 @@ export function jsonToCsv(json) {
 export function removeDuplicates(array) {
   return [...new Set(array)];
 }
+
+export function removeEmpty(array) {
+  return array.filter(function (element) {
+    return element != null && element.length > 0;
+  });
+}

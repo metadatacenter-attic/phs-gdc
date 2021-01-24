@@ -24,6 +24,7 @@ export default function TopicsSelector(props) {
 
   const handleChange = (values) => {
     props.setDcVariableNames(values.map(value => value.name));
+    props.validateStep2DcVariableNames();
   };
 
   return (
@@ -33,9 +34,7 @@ export default function TopicsSelector(props) {
                   options={myData}
                   disableCloseOnSelect
                   groupBy={(option) => option.category}
-
                   onChange={(event, values) => handleChange(values)}
-
                   getOptionLabel={(option) => option.label}
                   renderOption={(option, {selected}) => (
                     <React.Fragment>
@@ -49,7 +48,12 @@ export default function TopicsSelector(props) {
                     </React.Fragment>
                   )}
                   renderInput={(params) => (
-                    <TextField {...params} variant="outlined" label="Variables" placeholder=""/>
+                    <TextField {...params}
+                               error={props.showDcVariableNamesError}
+                               helperText={"Select Data Commons variables"}
+                               variant="outlined"
+                               label="Variables"
+                               placeholder=""/>
                   )}
     />
   );

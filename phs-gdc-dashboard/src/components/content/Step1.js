@@ -4,7 +4,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";
 import {DEFAULT_INDEX_VARIABLE_NAME, INDEX_VARIABLES} from "../../constants";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -17,9 +16,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import {removeDuplicates} from "../../utils/utils";
-import ListItemText from "@material-ui/core/ListItemText";
-import Chip from "@material-ui/core/Chip";
+import {removeDuplicates, removeEmpty} from "../../utils/utils";
 
 export default function Step1(props) {
 
@@ -50,6 +47,7 @@ export default function Step1(props) {
   const [variable, setVariable] = React.useState(DEFAULT_INDEX_VARIABLE_NAME);
   const [valueOptionRadio, setValueOptionRadio] = React.useState('optionEnter');
   const [variableValues, setVariableValues] = React.useState(''); // content of textfield
+  const phsIndexVariables = INDEX_VARIABLES;
 
   const handleChangeVariableSelect = (event) => {
     setVariable(event.target.value);
@@ -58,6 +56,24 @@ export default function Step1(props) {
 
   const handleChangeValuesOptionRadio = (event) => {
     setValueOptionRadio(event.target.value);
+    // reset variable values
+    setVariableValues('');
+    props.setPhsVariableValues([]);
+    // reset validation
+    props.setShowLocationsError(false);
+    props.setShowPhsVariableValuesError(false);
+  };
+
+  const handleChangeValuesField = (event) => {
+    let value = event.target.value;
+    setVariableValues(value);
+    if (value != null && value.trim().length > 0) {
+      let valuesArray = removeDuplicates(value.split(/\r?\n/));
+      valuesArray = removeEmpty(valuesArray);
+      props.setPhsVariableValues(valuesArray);
+    } else {
+      props.setPhsVariableValues([]);
+    }
   };
 
   const handleChangeStatesSelect = (states) => {
@@ -67,18 +83,6 @@ export default function Step1(props) {
     });
     props.setPhsVariableValues(valuesArray);
   };
-
-  const handleChangeValuesField = (event) => {
-    setVariableValues(event.target.value);
-    if (variableValues != null && variableValues.trim().length > 0) {
-      let valuesArray = removeDuplicates(variableValues.split(/\r?\n/));
-      props.setPhsVariableValues(valuesArray);
-    } else {
-      props.setPhsVariableValues([]);
-    }
-  };
-
-  const phsIndexVariables = INDEX_VARIABLES;
 
   return (
     <div>
@@ -117,15 +121,17 @@ export default function Step1(props) {
         <>
           <TextField
             id="standard-multiline-flexible"
-            label="Enter variable values"
+            label="Variable values"
             multiline
             rowsMax={20}
-            rows={10}
+            rows={6}
             value={variableValues}
             variant="outlined"
-            onBlur={handleChangeValuesField}
-            onChange={handleChangeValuesField}/>
-          <FormHelperText>Enter the values of the selected variable (one per line)</FormHelperText>
+            onChange={handleChangeValuesField}
+            onBlur={e => { handleChangeValuesField(e); props.validateStep1VariableValues(); }}
+            error={props.showPhsVariableValuesError}
+            helperText={"Enter the values of the selected variable (one per line)"}
+          />
         </>
         }
       </FormControl>
@@ -139,6 +145,7 @@ export default function Step1(props) {
             options={states}
             disableCloseOnSelect
             onChange={(event, values) => handleChangeStatesSelect(values)}
+            onBlur={props.validateStep1VariableValues}
             getOptionLabel={(option) => option.name}
             renderOption={(option, {selected}) => (
               <React.Fragment>
@@ -152,10 +159,12 @@ export default function Step1(props) {
               </React.Fragment>
             )}
             renderInput={(params) => (
-              <TextField {...params} variant="outlined" label="Location" placeholder=""/>
+              <TextField {...params}
+                         error={props.showLocationsError}
+                         helperText={"Select locations (US states)"}
+                         variant="outlined" label="Location" placeholder=""/>
             )}
           />
-          <FormHelperText>Select one or multiple US states</FormHelperText>
         </>
         }
       </FormControl>
