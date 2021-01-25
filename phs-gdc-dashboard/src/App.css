@@ -21,3 +21,31 @@ pre {
   font-size: 0.8rem;
 
 }
+
+/* STEP CARDS */
+
+.MuiCardHeader-root {
+  color: #263238;
+}
+
+/* Card title when the avatar is used */
+.MuiTypography-body2 {
+  font-size: 3em !important
+}
+
+.stepHeader {
+  font-size: 0.4em;
+}
+
+.stepSubHeader {
+  margin-top: 0;
+  font-size: 0.9em;
+  text-align: center;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* Card content */
+.MuiCardContent-root {
+  margin-top: 1.5em;
+}

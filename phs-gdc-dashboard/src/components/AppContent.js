@@ -6,6 +6,8 @@ import Step1 from "./content/Step1";
 import Step2 from "./content/Step2";
 import Step3 from "./content/Step3";
 import {DEFAULT_INDEX_VARIABLE_NAME} from "../constants";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,9 +52,9 @@ export default function AppContent() {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item md={4}>
-          <Paper className={classes.paper}>
+          <Card className={classes.paper}>
             <Step1
-              title={"1. PHS Index Variable"}
+              title={"Select Index Variable"}
               setPhsVariableName={setPhsVariableName}
               setPhsVariableValues={setPhsVariableValues}
               showPhsVariableValuesError={showPhsVariableValuesError}
@@ -61,27 +63,28 @@ export default function AppContent() {
               setShowLocationsError={setShowLocationsError}
               validateStep1VariableValues={validateStep1VariableValues}
             />
-          </Paper>
+          </Card>
         </Grid>
         <Grid item md={4}>
-          <Paper className={classes.paper}>
-            <Step2 title={"2. Data Commons Variables"}
+          <Card className={classes.paper}>
+            <Step2 title={"Select Data Commons Variables"}
                    setDcVariableNames={setDcVariableNames}
                    showDcVariableNamesError={showDcVariableNamesError}
                    validateStep2DcVariableNames={validateStep2DcVariableNames}
             />
-          </Paper>
+          </Card>
         </Grid>
         <Grid item md={4}>
-          <Paper className={classes.paper}>
-            <Step3 title={"3. Export Data"}
+          <Card className={classes.paper}>
+            <Step3 title={"Export Data"}
                    phsVariableName={phsVariableName}
                    phsVariableValues={phsVariableValues}
                    dcVariableNames={dcVariableNames}
                    validateStep1VariableValues={validateStep1VariableValues}
                    validateStep2DcVariableNames={validateStep2DcVariableNames}
+                   showValidationErrorMsg={showLocationsError || showDcVariableNamesError}
             />
-          </Paper>
+          </Card>
         </Grid>
       </Grid>
     </div>

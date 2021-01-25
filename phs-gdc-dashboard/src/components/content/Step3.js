@@ -25,6 +25,12 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import {stackoverflowLight} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import {SNIPPET_1_URL} from "../../constants";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Checkbox from "@material-ui/core/Checkbox";
 
 export default function Step3(props) {
 
@@ -35,8 +41,12 @@ export default function Step3(props) {
       paddingLeft: theme.spacing(4),
       paddingRight: theme.spacing(4),
     },
+    item: {
+      alignItems: "center",
+    },
     buttons: {
-      marginTop: '4vh',
+      marginTop: '2vh',
+      marginBottom: '4vh',
       //backgroundColor: 'yellow'
     },
     codeOptions: {
@@ -44,13 +54,13 @@ export default function Step3(props) {
       marginTop: theme.spacing(0),
       marginBottom: theme.spacing(-2),
     },
-    errorMsg: {
+    validationErrorMsg: {
       color: "red",
       fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
       fontWeight: 400,
       fontSize: "0.75rem",
       lineHeight: 1.66,
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(1),
     },
   }));
 
@@ -63,8 +73,7 @@ export default function Step3(props) {
   const [openCodeDialog, setOpenCodeDialog] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null); // popover anchor
   const openSettingsPopOver = Boolean(anchorEl);
-
-  // const [showErrorMsg, setShowErrorMsg] = React.useState(false);
+  const [showDownloadProgress, setShowDownloadProgress] = React.useState(false);
 
   const handleClickOpenSettingsPopOver = (event) => {
     setAnchorEl(event.currentTarget);
@@ -100,14 +109,19 @@ export default function Step3(props) {
   function SettingsPopOver(props) {
     return (
       <div className={classes.settings}>
-        <h4>Export settings</h4>
+        <h4>Settings</h4>
         <FormControl component="fieldset" fullWidth>
-          <FormGroup row>
+          <FormGroup row flex className={classes.item}>
             <FormControlLabel
-              labelPlacement="start"
-              color
-              control={<Switch checked={optionsState.includeDates} onChange={handleOptionsChange} name="includeDates"/>}
-              label="Include dates"
+              control={
+                <Checkbox
+                  checked={optionsState.includeDates}
+                  onChange={handleOptionsChange}
+                  name="includeDates"
+                  color="primary"
+                />
+              }
+              label="Include temporal information"
             />
             <Tooltip
               title="For each selected variable, it includes an additional column with the date (e.g., year) the data was collected.">
@@ -191,7 +205,7 @@ export default function Step3(props) {
   function downloadDataFile() {
 
     if (isValid()) {
-      // setShowErrorMsg(false);
+      setShowDownloadProgress(true);
       getCsvData().then(data => {
         const element = document.createElement("a");
         const file = new Blob([data], {type: 'text/plain'});
@@ -199,48 +213,57 @@ export default function Step3(props) {
         element.download = "dcw_data.csv";
         document.body.appendChild(element); // Required for this to work in FireFox
         element.click();
+        setShowDownloadProgress(false);
       });
-    }
-    else {
-      // setShowErrorMsg(true);
     }
   };
 
   return (
-    <div>
-      <h2>{props.title}</h2>
-      <IconButton aria-describedby={'settings-popover'}
-                  onClick={handleClickOpenSettingsPopOver}><SettingsIcon/></IconButton>
-      <Popover
-        id={'settings-popover'}
-        open={openSettingsPopOver}
-        anchorEl={anchorEl}
-        onClose={handleCloseSettingsPopOver}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}>
-        <SettingsPopOver/>
-      </Popover>
-      <h4>Download the Data Commons data and use them in your project</h4>
+    <>
+      <CardHeader className={"stepHeader"} title={props.title}
+                  avatar={
+                    <Avatar aria-label="step3">3</Avatar>
+                  }
+                  action={
+                    <IconButton
+                      aria-describedby={'settings-popover'}
+                      onClick={handleClickOpenSettingsPopOver}><SettingsIcon/></IconButton>
+                  }
+      />
+      <p className={"stepSubHeader"}>Generate and download the selected data</p>
+      <CardContent>
+        <Popover
+          id={'settings-popover'}
+          open={openSettingsPopOver}
+          anchorEl={anchorEl}
+          onClose={handleCloseSettingsPopOver}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}>
+          <SettingsPopOver/>
+        </Popover>
 
-      <div className={classes.buttons}>
-        <Button variant="outlined" color="primary" onClick={downloadDataFile}>
-          Download data
-        </Button>
-        {/*<div hidden={!showErrorMsg} className={classes.errorMsg}>Some fields are missing</div>*/}
-        <br/>
-        <br/>
-        <br/>
-        <Button variant="outlined" color="primary" onClick={handleClickOpenCodeDialog} disabled={false}>
-          Generate R code
-        </Button>
+        <div className={classes.buttons}>
+          <Button disabled={showDownloadProgress} variant="outlined" color="primary" onClick={downloadDataFile}>
+            Download data
+          </Button>
+          &nbsp;&nbsp;&nbsp;
+          <Button variant="outlined" color="primary" onClick={handleClickOpenCodeDialog} disabled={false}>
+            Show R code
+          </Button>
+        </div>
+        <div>
+          {showDownloadProgress && <CircularProgress/>}
+          {props.showValidationErrorMsg &&
+          <Typography className={classes.validationErrorMsg}>Please fill out all required fields</Typography>}
+        </div>
         <CodeDialog open={openCodeDialog} onClose={handleCloseCodeDialog}/>
-      </div>
-    </div>
+      </CardContent>
+    </>
   );
 }

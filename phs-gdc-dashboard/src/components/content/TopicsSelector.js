@@ -39,6 +39,7 @@ export default function TopicsSelector(props) {
                   renderOption={(option, {selected}) => (
                     <React.Fragment>
                       <Checkbox
+                        color={"primary"}
                         icon={icon}
                         checkedIcon={checkedIcon}
                         style={{marginRight: 8}}
@@ -52,7 +53,7 @@ export default function TopicsSelector(props) {
                                error={props.showDcVariableNamesError}
                                helperText={"Select Data Commons variables"}
                                variant="outlined"
-                               label="Variables"
+                               label="DC variables"
                                placeholder=""/>
                   )}
     />
