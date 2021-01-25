@@ -19,10 +19,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import {removeDuplicates, removeEmpty} from "../../utils/utils";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
-import SettingsIcon from "@material-ui/core/SvgIcon/SvgIcon";
-import Typography from "@material-ui/core/Typography";
 
 export default function Step1(props) {
 
@@ -84,9 +81,9 @@ export default function Step1(props) {
 
   const handleChangeStatesSelect = (states) => {
     let valuesArray = [];
-    states.map(state => {
-      valuesArray = valuesArray.concat(stateZipCodes[state.abbreviation]);
-    });
+    states.map(state => (
+      valuesArray = valuesArray.concat(stateZipCodes[state.abbreviation])
+    ));
     props.setPhsVariableValues(valuesArray);
   };
 

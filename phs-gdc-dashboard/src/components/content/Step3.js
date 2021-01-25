@@ -10,7 +10,6 @@ import {jsonToCsv} from "../../utils/utils";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import HelpOutline from '@material-ui/icons/HelpOutline';
 import SettingsIcon from '@material-ui/icons/Settings';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
@@ -158,17 +157,6 @@ export default function Step3(props) {
           <SyntaxHighlighter language="r" style={stackoverflowLight}>
             {snippetsR.snippet1}
           </SyntaxHighlighter>
-          {/*<Snackbar*/}
-          {/*  autoHideDuration={2000}*/}
-          {/*  anchorOrigin={{*/}
-          {/*    vertical: 'bottom',*/}
-          {/*    horizontal: 'center',*/}
-          {/*  }}*/}
-          {/*  open={snackbarOpen}*/}
-          {/*  onClose={handleSnackbarClose}*/}
-          {/*  message="Code copied to clipboard"*/}
-          {/*  TransitionComponent={Collapse}*/}
-          {/*/>*/}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseCodeDialog} color="primary">
