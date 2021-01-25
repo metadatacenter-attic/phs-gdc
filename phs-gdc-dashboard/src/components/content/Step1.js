@@ -162,6 +162,7 @@ export default function Step1(props) {
               renderOption={(option, {selected}) => (
                 <React.Fragment>
                   <Checkbox
+                    color={"primary"}
                     icon={icon}
                     checkedIcon={checkedIcon}
                     style={{marginRight: 8}}
