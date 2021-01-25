@@ -42,9 +42,12 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, 
     let row = {[phsVariableName]: placeValue};
     for (let statVarName in statVars) {
       let date = statVars[statVarName];
+      //console.log('date', date);
       let dateFormatName = getDateFormat(date);
-      if (jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"]) {
+      if (date && jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"]) {
         row[statVarName] = jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"][0]["val"][date];
+        // console.log(date);
+        // console.log(jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"]);
         // If requested, include temporal information
         if (includeDates) {
           row[statVarName + '_' + dateFormatName] = date;
