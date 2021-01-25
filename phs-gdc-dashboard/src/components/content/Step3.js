@@ -196,7 +196,7 @@ export default function Step3(props) {
       setShowDownloadProgress(true);
       getCsvData().then(data => {
         const element = document.createElement("a");
-        const file = new Blob([data], {type: 'text/plain'});
+        const file = new Blob([data], {type: 'text/csv'});
         element.href = URL.createObjectURL(file);
         element.download = "dcw_data.csv";
         document.body.appendChild(element); // Required for this to work in FireFox
