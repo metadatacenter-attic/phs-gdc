@@ -201,6 +201,7 @@ export default function Step3(props) {
         element.download = "dcw_data.csv";
         document.body.appendChild(element); // Required for this to work in FireFox
         element.click();
+        document.body.removeChild(element);
         setShowDownloadProgress(false);
       });
     }
