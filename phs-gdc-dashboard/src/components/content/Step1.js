@@ -20,6 +20,7 @@ import {removeDuplicates, removeEmpty} from "../../utils/utils";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 export default function Step1(props) {
 
@@ -113,7 +114,7 @@ export default function Step1(props) {
                         disabled={!phsIndexVariables[varKey].enabled}>{phsIndexVariables[varKey].uiLabel}</MenuItem>
             )};
           </Select>
-          {/*<FormHelperText>Select a PHS variable from the list</FormHelperText>*/}
+          <FormHelperText>Select a variable from the list (Note: the current version is limited to zip codes)</FormHelperText>
         </FormControl>
         <div className={classes.separator}/>
 
