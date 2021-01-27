@@ -22,7 +22,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import IconButton from "@material-ui/core/IconButton";
-import SettingsIcon from '@material-ui/icons/Settings';
 
 export default function Step1(props) {
 
@@ -33,19 +32,9 @@ export default function Step1(props) {
     formControl: {
       textAlign: 'left',
       margin: theme.spacing(1),
-      maxWidth: 500,
-      minWidth: 300,
     },
     separator: {
       margin: theme.spacing(2),
-    },
-    select: {},
-    chips: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    chip: {
-      margin: 2,
     },
   }));
 
@@ -105,7 +94,7 @@ export default function Step1(props) {
       />
       <p className={"stepSubHeader"}>Select variable that will link your data to Data Commons</p>
       <CardContent>
-        <FormControl className={classes.formControl}
+        <FormControl className={classes.formControl} fullWidth
                      variant="outlined" /* if the variant is omitted here, the label of the select field is misaligned */>
           <InputLabel id="variable-select-label">Variable</InputLabel>
           <Select
@@ -126,7 +115,7 @@ export default function Step1(props) {
         </FormControl>
         <div className={classes.separator}/>
 
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} fullWidth>
           <FormLabel component="legend">Variable values</FormLabel>
           <RadioGroup value={valueOptionRadio} onChange={handleChangeValuesOptionRadio}>
             <FormControlLabel value="optionEnter" control={<Radio color={"primary"}/>} label="Enter values by hand"/>
@@ -135,62 +124,61 @@ export default function Step1(props) {
           </RadioGroup>
         </FormControl>
 
-        <FormControl className={classes.formControl}>
-          {valueOptionRadio === "optionEnter" &&
-          <>
-            <TextField
-              id="standard-multiline-flexible"
-              label="Variable values"
-              multiline
-              rowsMax={20}
-              rows={6}
-              value={variableValues}
-              variant="outlined"
-              onChange={handleChangeValuesField}
-              onBlur={e => {
-                handleChangeValuesField(e);
-                props.validateStep1VariableValues();
-              }}
-              error={props.showPhsVariableValuesError}
-              helperText={"Enter the values of the selected variable (one per line)"}
-            />
-          </>
-          }
-        </FormControl>
+        <div className={classes.separator}/>
+        {valueOptionRadio === "optionEnter" &&
+        <>
+          <TextField
+            fullWidth
+            id="standard-multiline-flexible"
+            label="Variable values"
+            multiline
+            rowsMax={20}
+            rows={6}
+            value={variableValues}
+            variant="outlined"
+            onChange={handleChangeValuesField}
+            onBlur={e => {
+              handleChangeValuesField(e);
+              props.validateStep1VariableValues();
+            }}
+            error={props.showPhsVariableValuesError}
+            helperText={"Enter the values of the selected variable (one per line)"}
+          />
+        </>
+        }
 
-        <FormControl className={classes.formControl} variant="outlined">
-          {valueOptionRadio === "optionSelect" &&
-          <>
-            <Autocomplete
-              multiple
-              id="state-autocomplete-id"
-              options={states}
-              disableCloseOnSelect
-              onChange={(event, values) => handleChangeStatesSelect(values)}
-              onBlur={props.validateStep1VariableValues}
-              getOptionLabel={(option) => option.name}
-              renderOption={(option, {selected}) => (
-                <React.Fragment>
-                  <Checkbox
-                    color={"primary"}
-                    icon={icon}
-                    checkedIcon={checkedIcon}
-                    style={{marginRight: 8}}
-                    checked={selected}
-                  />
-                  {option.name}
-                </React.Fragment>
-              )}
-              renderInput={(params) => (
-                <TextField {...params}
-                           error={props.showLocationsError}
-                           helperText={"Select locations (US states)"}
-                           variant="outlined" label="Location" placeholder=""/>
-              )}
-            />
-          </>
-          }
-        </FormControl>
+        {valueOptionRadio === "optionSelect" &&
+        <>
+          <Autocomplete
+            multiple
+            id="state-autocomplete-id"
+            options={states}
+            disableCloseOnSelect
+            onChange={(event, values) => handleChangeStatesSelect(values)}
+            onBlur={props.validateStep1VariableValues}
+            getOptionLabel={(option) => option.name}
+            renderOption={(option, {selected}) => (
+              <React.Fragment>
+                <Checkbox
+                  color={"primary"}
+                  icon={icon}
+                  checkedIcon={checkedIcon}
+                  style={{marginRight: 8}}
+                  checked={selected}
+                />
+                {option.name}
+              </React.Fragment>
+            )}
+            renderInput={(params) => (
+              <TextField {...params}
+                         error={props.showLocationsError}
+                         helperText={"Select locations (US states)"}
+                         variant="outlined" label="Location" placeholder=""/>
+            )}
+          />
+        </>
+        }
+
       </CardContent>
 
     </div>

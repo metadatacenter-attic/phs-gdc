@@ -7,10 +7,6 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import {getPlaceStatistics} from "../../services/dataCommonsService";
 import {indexVariableValueToDcid, toTabularJsonData} from "../../utils/dataCommonsUtils";
 import {jsonToCsv} from "../../utils/utils";
-import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import HelpOutline from '@material-ui/icons/HelpOutline';
 import SettingsIcon from '@material-ui/icons/Settings';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -29,24 +25,20 @@ import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Checkbox from "@material-ui/core/Checkbox";
+import SettingsPopOver from "./SettingsPopOver";
 
 export default function Step3(props) {
 
   const useStyles = makeStyles((theme) => ({
-    settings: {
-      paddingTop: theme.spacing(1),
-      paddingBottom: theme.spacing(4),
-      paddingLeft: theme.spacing(4),
-      paddingRight: theme.spacing(4),
-    },
     item: {
       alignItems: "center",
     },
     buttons: {
       marginTop: '2vh',
-      marginBottom: '4vh',
-      //backgroundColor: 'yellow'
+      marginBottom: '3vh',
+    },
+    button: {
+      marginBottom: '1vh',
     },
     codeOptions: {
       textAlign: "right",
@@ -66,7 +58,7 @@ export default function Step3(props) {
   const classes = useStyles();
 
   const [optionsState, setOptionsState] = React.useState({
-    includeDates: true
+    includeDates: false
   });
 
   const [openCodeDialog, setOpenCodeDialog] = React.useState(false);
@@ -88,48 +80,6 @@ export default function Step3(props) {
 
   const handleCloseCodeDialog = (value) => {
     setOpenCodeDialog(false);
-  };
-
-  const handleOptionsChange = (event) => {
-    setOptionsState({...optionsState, [event.target.name]: event.target.checked});
-  };
-
-  // const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-  // const handleSnackbarClick = (event) => {
-  //   setSnackbarOpen(true);
-  // };
-  // const handleSnackbarClose = (event, reason) => {
-  //   if (reason === 'clickaway') {
-  //     return;
-  //   }
-  //   setSnackbarOpen(false);
-  // };
-
-  function SettingsPopOver(props) {
-    return (
-      <div className={classes.settings}>
-        <h4>Settings</h4>
-        <FormControl component="fieldset" fullWidth>
-          <FormGroup row flex className={classes.item}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={optionsState.includeDates}
-                  onChange={handleOptionsChange}
-                  name="includeDates"
-                  color="primary"
-                />
-              }
-              label="Include temporal information"
-            />
-            <Tooltip
-              title="For each selected variable, it includes an additional column with the date (e.g., year) the data was collected.">
-              <HelpOutline/>
-            </Tooltip>
-          </FormGroup>
-        </FormControl>
-      </div>
-    );
   };
 
   function CodeDialog(props) {
@@ -234,15 +184,20 @@ export default function Step3(props) {
             vertical: 'top',
             horizontal: 'center',
           }}>
-          <SettingsPopOver/>
+          <SettingsPopOver
+            optionsState={optionsState}
+            setOptionsState={setOptionsState}
+          />
         </Popover>
 
         <div className={classes.buttons}>
-          <Button disabled={showDownloadProgress} variant="outlined" color="primary" onClick={downloadDataFile} size={"large"}>
+          <Button className={classes.button} disabled={showDownloadProgress} variant="outlined" color="primary"
+                  onClick={downloadDataFile} size={"large"}>
             Download data
           </Button>
           &nbsp;&nbsp;&nbsp;
-          <Button variant="outlined" color="primary" onClick={handleClickOpenCodeDialog} disabled={false} size={"large"}>
+          <Button className={classes.button} variant="outlined" color="primary" onClick={handleClickOpenCodeDialog}
+                  disabled={false} size={"large"}>
             Show R code
           </Button>
         </div>

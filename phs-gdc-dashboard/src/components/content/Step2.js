@@ -5,7 +5,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import SettingsIcon from '@material-ui/icons/Settings';
 
 export default function Step2(props) {
 
