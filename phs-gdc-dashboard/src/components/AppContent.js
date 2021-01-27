@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: "4vh",
   },
-  paper: {
+  card: {
     minHeight: "75vh",
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -50,7 +50,7 @@ export default function AppContent() {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item md={4}>
-          <Card className={classes.paper}>
+          <Card className={classes.card}>
             <Step1
               title={"Select Index Variable"}
               setPhsVariableName={setPhsVariableName}
@@ -64,7 +64,7 @@ export default function AppContent() {
           </Card>
         </Grid>
         <Grid item md={4}>
-          <Card className={classes.paper}>
+          <Card className={classes.card}>
             <Step2 title={"Select Data Commons Variables"}
                    setDcVariableNames={setDcVariableNames}
                    showDcVariableNamesError={showDcVariableNamesError}
@@ -73,7 +73,7 @@ export default function AppContent() {
           </Card>
         </Grid>
         <Grid item md={4}>
-          <Card className={classes.paper}>
+          <Card className={classes.card}>
             <Step3 title={"Export Data"}
                    phsVariableName={phsVariableName}
                    phsVariableValues={phsVariableValues}
