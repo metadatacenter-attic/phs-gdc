@@ -1,4 +1,3 @@
-
 # Please fill in the following constants according to your folder/file names
 wd <- "~/Desktop/r_wd"
 user_filename <- "user_data.csv"

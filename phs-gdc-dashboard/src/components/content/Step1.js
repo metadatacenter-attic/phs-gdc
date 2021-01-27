@@ -21,6 +21,8 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import IconButton from "@material-ui/core/IconButton";
+import SettingsIcon from '@material-ui/icons/Settings';
 
 export default function Step1(props) {
 
@@ -91,10 +93,15 @@ export default function Step1(props) {
   return (
     <div>
       <CardHeader className={"stepHeader"}
-        title={props.title}
-        avatar={
-          <Avatar aria-label="step1">1</Avatar>
-        }
+                  title={props.title}
+                  avatar={
+                    <Avatar aria-label="step1">1</Avatar>
+                  }
+                  action={
+                    <IconButton
+                      aria-describedby={'settings-popover'}
+                    >&nbsp;&nbsp;&nbsp;</IconButton>
+                  }
       />
       <p className={"stepSubHeader"}>Select the PHS variable that will link your data to Data Commons</p>
       <CardContent>
@@ -114,7 +121,8 @@ export default function Step1(props) {
                         disabled={!phsIndexVariables[varKey].enabled}>{phsIndexVariables[varKey].uiLabel}</MenuItem>
             )};
           </Select>
-          <FormHelperText>Select a variable from the list (Note: the current version is limited to zip codes)</FormHelperText>
+          <FormHelperText>Select a variable from the list (Note: the current version is limited to zip
+            codes)</FormHelperText>
         </FormControl>
         <div className={classes.separator}/>
 
@@ -122,7 +130,8 @@ export default function Step1(props) {
           <FormLabel component="legend">Variable values</FormLabel>
           <RadioGroup value={valueOptionRadio} onChange={handleChangeValuesOptionRadio}>
             <FormControlLabel value="optionEnter" control={<Radio color={"primary"}/>} label="Enter values by hand"/>
-            <FormControlLabel value="optionSelect" control={<Radio color={"primary"}/>} label="Use all values from selected locations"/>
+            <FormControlLabel value="optionSelect" control={<Radio color={"primary"}/>}
+                              label="Use all values from selected locations"/>
           </RadioGroup>
         </FormControl>
 

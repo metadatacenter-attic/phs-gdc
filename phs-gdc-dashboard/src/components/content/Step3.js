@@ -219,7 +219,7 @@ export default function Step3(props) {
                       onClick={handleClickOpenSettingsPopOver}><SettingsIcon/></IconButton>
                   }
       />
-      <p className={"stepSubHeader"}>Generate and download the selected data</p>
+      <p className={"stepSubHeader"}>Generate and download the selected data<br/></p>
       <CardContent>
         <Popover
           id={'settings-popover'}
@@ -238,11 +238,11 @@ export default function Step3(props) {
         </Popover>
 
         <div className={classes.buttons}>
-          <Button disabled={showDownloadProgress} variant="outlined" color="primary" onClick={downloadDataFile}>
+          <Button disabled={showDownloadProgress} variant="outlined" color="primary" onClick={downloadDataFile} size={"large"}>
             Download data
           </Button>
           &nbsp;&nbsp;&nbsp;
-          <Button variant="outlined" color="primary" onClick={handleClickOpenCodeDialog} disabled={false}>
+          <Button variant="outlined" color="primary" onClick={handleClickOpenCodeDialog} disabled={false} size={"large"}>
             Show R code
           </Button>
         </div>
