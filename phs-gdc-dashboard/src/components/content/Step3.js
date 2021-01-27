@@ -171,7 +171,7 @@ export default function Step3(props) {
     let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(props.phsVariableName, v));
     let uniquePhsVariableValueDcids = [...new Set(phsVariableDcids)];
     return getPlaceStatistics(props.phsVariableName, uniquePhsVariableValueDcids, props.dcVariableNames).then((data) => {
-      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, optionsState.includeDates);
+      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, props.dcVariableNames, optionsState.includeDates);
       return jsonToCsv(tabJsonData);
     })
       .catch((error) => {

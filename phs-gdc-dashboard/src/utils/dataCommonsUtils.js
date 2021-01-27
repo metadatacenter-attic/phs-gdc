@@ -15,48 +15,32 @@ import {
  * @param jsonData
  * @param phsVariableName
  * @param phsVariableValues
+ * @param dcVariableNames
  * @param includeDates
  */
-export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, includeDates) {
+export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, dcVariableNames, includeDates) {
   let tabularJsonData = [];
-  let statVars = {};
-
-  // Extract column names and most recent date for each variable name and save them as a hashtable.
-  // We assume that each variable (e.g., Count_Person) has the same most recent date (e.g., year)for all location
-  // identifiers (e.g., all zip codes).
-  let firstKey = (Object.keys(jsonData['placeData']))[0];
-  for (let varName in jsonData['placeData'][firstKey]['statVarData']) {
-    if (jsonData['placeData'][firstKey]['statVarData'][varName]["sourceSeries"]) {
-      let date = getMostRecentDate(jsonData['placeData'][firstKey]['statVarData'][varName]["sourceSeries"][0]["val"])
-      statVars[varName] = date;
-    }
-    else { // no data
-      statVars[varName] = null;
-    }
-  }
 
   let rows = {}
   // Generate rows and index them by phsVariableValue (placeId)
   for (let placeId in jsonData['placeData']) {
     let placeValue = indexVariableDcidToVariableValue(phsVariableName, placeId);
     let row = {[phsVariableName]: placeValue};
-    for (let statVarName in statVars) {
-      let date = statVars[statVarName];
-      //console.log('date', date);
-      let dateFormatName = getDateFormat(date);
-      if (date && jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"]) {
-        row[statVarName] = jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"][0]["val"][date];
-        // console.log(date);
-        // console.log(jsonData['placeData'][placeId]['statVarData'][statVarName]["sourceSeries"]);
+    for (let i=0; i < dcVariableNames.length; i++) {
+      let dcVarName = dcVariableNames[i];
+      // If there is any data for the given placeId and variable...
+      if (jsonData['placeData'][placeId]['statVarData'][dcVarName]['sourceSeries']) {
+        let date = getMostRecentDate(jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"]);
+        row[dcVarName] = jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"][date];
         // If requested, include temporal information
         if (includeDates) {
-          row[statVarName + '_' + dateFormatName] = date;
+          row[dcVarName + '_Date'] = date;
         }
       }
-      else {
-        row[statVarName] = NOT_AVAILABLE_VALUE;
+      else { // no data
+        row[dcVarName] = NOT_AVAILABLE_VALUE;
         if (includeDates) {
-          row[statVarName + '_' + dateFormatName] = NOT_AVAILABLE_VALUE;
+          row[dcVarName + '_Date'] = NOT_AVAILABLE_VALUE;
         }
       }
     }
@@ -67,7 +51,6 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, 
   phsVariableValues.forEach(placeValue => {
     tabularJsonData.push(rows[placeValue]);
   });
-
   return tabularJsonData;
 };
 
@@ -88,17 +71,17 @@ function getMostRecentDate(data) {
  * This function uses Moment.js: https://momentjs.com/
  * @param date
  */
-function getDateFormat(date) {
-  const DEFAULT_FORMAT_NAME = 'Date';
-  const YYYY_FORMAT_NAME = 'Year';
-  if (moment(date, "YYYY", true).isValid()) {
-    return YYYY_FORMAT_NAME;
-  }
-  // else if (...) // Add other formats when needed
-  else {
-    return DEFAULT_FORMAT_NAME;
-  }
-}
+// function getDateFormat(date) {
+//   const DEFAULT_FORMAT_NAME = 'Date';
+//   const YYYY_FORMAT_NAME = 'Year';
+//   if (moment(date, "YYYY", true).isValid()) {
+//     return YYYY_FORMAT_NAME;
+//   }
+//   // else if (...) // Add other formats when needed
+//   else {
+//     return DEFAULT_FORMAT_NAME;
+//   }
+// }
 
 /**
  * Translates the value of an index variable to a DC node identifier (e.g., 94306 -> zip/94306)
