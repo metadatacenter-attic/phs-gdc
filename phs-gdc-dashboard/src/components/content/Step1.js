@@ -92,7 +92,7 @@ export default function Step1(props) {
                     >&nbsp;&nbsp;&nbsp;</IconButton>
                   }
       />
-      <p className={"stepSubHeader"}>Select variable that will link your data to Data Commons</p>
+      <p className={"stepSubHeader"}>Select the variable that will link your data to Data Commons</p>
       <CardContent>
         <FormControl className={classes.formControl} fullWidth
                      variant="outlined" /* if the variant is omitted here, the label of the select field is misaligned */>
