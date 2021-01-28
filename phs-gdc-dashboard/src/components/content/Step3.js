@@ -14,7 +14,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import IconButton from "@material-ui/core/IconButton";
 import Popover from "@material-ui/core/Popover";
-import snippetsR from './../../resources/r/snippets/snippetsR.json';
 import DialogActions from "@material-ui/core/DialogActions";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import {stackoverflowLight} from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -26,6 +25,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SettingsPopOver from "./SettingsPopOver";
+import {generateRCode} from "../../services/codeGenerationService";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 
 export default function Step3(props) {
 
@@ -53,6 +55,9 @@ export default function Step3(props) {
       lineHeight: 1.66,
       marginTop: theme.spacing(1),
     },
+    codeContent: {
+      minHeight: 450,
+    }
   }));
 
   const classes = useStyles();
@@ -82,7 +87,15 @@ export default function Step3(props) {
     setOpenCodeDialog(false);
   };
 
+
+
   function CodeDialog(props) {
+
+    const [snippetOption, setSnippetOption] = React.useState(0);
+    const handleSnippetOptionChange = (event, newValue) => {
+      setSnippetOption(newValue);
+    };
+
     return (
       <Dialog
         maxWidth={"md"}
@@ -92,10 +105,20 @@ export default function Step3(props) {
         open={openCodeDialog}>
         <DialogTitle id="r-dialog-title">R code</DialogTitle>
         <DialogContent>
-          <DialogContentText>Use following code to merge the downloaded CSV file into your data.
+          <DialogContentText>Use one of the following code snippets to merge the downloaded CSV file into your data.
           </DialogContentText>
+          <Tabs
+            value={snippetOption}
+            onChange={handleSnippetOptionChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab label="Option 1" />
+            <Tab label="Option 2" />
+          </Tabs>
           <div className={classes.codeOptions}>
-            <CopyToClipboard text={snippetsR.snippet1}>
+            <CopyToClipboard text={generateRCode(snippetOption)}>
               <Tooltip title="Copy to clipboard">
                 <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
               </Tooltip>
@@ -104,9 +127,11 @@ export default function Step3(props) {
               <IconButton onClick={() => window.open(SNIPPET_1_URL)}><GitHubIcon fontSize={"small"}/></IconButton>
             </Tooltip>
           </div>
+          <div className={classes.codeContent}>
           <SyntaxHighlighter language="r" style={stackoverflowLight}>
-            {snippetsR.snippet1}
+            {generateRCode(snippetOption)}
           </SyntaxHighlighter>
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseCodeDialog} color="primary">
@@ -198,7 +223,7 @@ export default function Step3(props) {
           &nbsp;&nbsp;&nbsp;
           <Button className={classes.button} variant="outlined" color="primary" onClick={handleClickOpenCodeDialog}
                   disabled={false} size={"large"}>
-            Show R code
+            Generate R code
           </Button>
         </div>
         <div>
