@@ -2,7 +2,7 @@
  * Data Commons Utility functions
  */
 
-import moment from "moment";
+//import moment from "moment";
 
 import {
   INDEX_VARIABLES, NOT_AVAILABLE_VALUE
