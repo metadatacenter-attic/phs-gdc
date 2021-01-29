@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "4vh",
   },
   card: {
-    minHeight: "75vh",
+    height: "100%",
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,

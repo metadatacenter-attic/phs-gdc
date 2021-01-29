@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     fontSize: "0.8em",
     lineHeight: "1.5em",
+    margin: theme.spacing(3),
   },
 }));
 
