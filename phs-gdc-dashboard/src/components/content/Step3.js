@@ -30,9 +30,6 @@ import SettingsPopOver from "./SettingsPopOver";
 export default function Step3(props) {
 
   const useStyles = makeStyles((theme) => ({
-    item: {
-      alignItems: "center",
-    },
     buttons: {
       marginTop: '2vh',
       marginBottom: '3vh',
