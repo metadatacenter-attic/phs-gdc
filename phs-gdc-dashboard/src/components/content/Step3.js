@@ -32,9 +32,6 @@ import Tab from "@material-ui/core/Tab";
 export default function Step3(props) {
 
   const useStyles = makeStyles((theme) => ({
-    item: {
-      alignItems: "center",
-    },
     buttons: {
       marginTop: '2vh',
       marginBottom: '3vh',

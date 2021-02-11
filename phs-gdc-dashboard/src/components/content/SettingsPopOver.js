@@ -4,7 +4,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
-import HelpOutline from "@material-ui/core/SvgIcon/SvgIcon";
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 export default function SettingsPopOver(props) {
@@ -15,6 +15,9 @@ export default function SettingsPopOver(props) {
       paddingBottom: theme.spacing(4),
       paddingLeft: theme.spacing(4),
       paddingRight: theme.spacing(4),
+    },
+    item: {
+      alignItems: "center",
     },
   }));
 
@@ -28,7 +31,7 @@ export default function SettingsPopOver(props) {
     <div className={classes.settings}>
       <h4>Settings</h4>
       <FormControl component="fieldset" fullWidth>
-        <FormGroup row flex className={classes.item}>
+        <FormGroup row className={classes.item}>
           <FormControlLabel
             control={
               <Checkbox
@@ -40,9 +43,9 @@ export default function SettingsPopOver(props) {
             }
             label="Include temporal information"
           />
-          <Tooltip
+          <Tooltip flex
             title="For each selected variable, it includes an additional column with the date (e.g., year) the data was collected.">
-            <HelpOutline/>
+            <HelpOutlineIcon/>
           </Tooltip>
         </FormGroup>
       </FormControl>
