@@ -62,7 +62,7 @@ export default function RCodeDialog(props) {
         <div className={classes.codeOptions}>
           <CopyToClipboard
             text={generateRCode(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
-              props.optionsState.includeDates)}>
+              props.settingsState.includeDates)}>
             <Tooltip title="Copy to clipboard">
               <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
             </Tooltip>
@@ -74,7 +74,7 @@ export default function RCodeDialog(props) {
         <div className={classes.codeContent}>
           <SyntaxHighlighter language="r" style={stackoverflowLight}>
             {generateRCode(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
-              props.optionsState.includeDates)}
+              props.settingsState.includeDates)}
           </SyntaxHighlighter>
         </div>
       </DialogContent>

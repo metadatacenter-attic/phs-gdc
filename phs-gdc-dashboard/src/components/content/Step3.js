@@ -45,7 +45,7 @@ export default function Step3(props) {
 
   const classes = useStyles();
 
-  const [optionsState, setOptionsState] = React.useState({
+  const [settingsState, setSettingsState] = React.useState({
     includeDates: false
   });
 
@@ -76,7 +76,7 @@ export default function Step3(props) {
     let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(props.phsVariableName, v));
     let uniquePhsVariableValueDcids = [...new Set(phsVariableDcids)];
     return getPlaceStatistics(props.phsVariableName, uniquePhsVariableValueDcids, props.dcVariableNames).then((data) => {
-      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, props.dcVariableNames, optionsState.includeDates);
+      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, props.dcVariableNames, settingsState.includeDates);
       return jsonToCsv(tabJsonData);
     })
       .catch((error) => {
@@ -140,8 +140,8 @@ export default function Step3(props) {
             horizontal: 'center',
           }}>
           <SettingsPopOver
-            optionsState={optionsState}
-            setOptionsState={setOptionsState}
+            settingsState={settingsState}
+            setSettingsState={setSettingsState}
           />
         </Popover>
 
@@ -166,7 +166,7 @@ export default function Step3(props) {
                      phsVariableName={props.phsVariableName}
                      phsVariableValues={props.phsVariableValues}
                      dcVariableNames={props.dcVariableNames}
-                     optionsState={optionsState}/>
+                     settingsState={settingsState}/>
 
       </CardContent>
     </>
