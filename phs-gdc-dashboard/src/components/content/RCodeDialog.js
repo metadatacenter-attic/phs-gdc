@@ -28,6 +28,7 @@ export default function RCodeDialog(props) {
     },
     codeContent: {
       minHeight: 450,
+      maxWidth: 700
     }
   }));
   const classes = useStyles();
