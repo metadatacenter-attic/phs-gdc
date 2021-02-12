@@ -21,7 +21,9 @@ function generateRCodeFileIndependent(indexVariableName, indexVariableValues, dc
 }
 
 /**
- * Concatenates all the elements in an array into a single string, where the values are enclosed between quotes and separated by commas
+ * Concatenates all the elements in an array into a single string, where the values are enclosed between quotes and
+ * separated by commas
+ *
  * @param array
  * @returns {string}
  */
