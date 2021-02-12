@@ -1,18 +1,30 @@
 import snippetsR from './../resources/r/snippets/snippetsR.json';
 
+export function generateRCode(option, indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
+
+  if (option === 0) {
+    return generateRCodeFileDependent();
+  } else {
+    return generateRCodeFileIndependent(indexVariableName, indexVariableValues, dcVariableNames, includeDates);
+  }
+}
+
 function generateRCodeFileDependent() {
   return snippetsR.snippetFileDependent;
 }
 
-function generateRCodeFileIndependent(phsVariableValues, dcVariableNames, includeDates) {
-  return "sampleCode\n" + phsVariableValues + "\n" + dcVariableNames + "\n" + includeDates;
+function generateRCodeFileIndependent(indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
+  let snippet = snippetsR.snippetFileIndependent;
+  snippet = snippet.replace("$INDEX_VARIABLE_VALUES", arrayToCommaSeparated(indexVariableValues));
+  snippet = snippet.replace("$DC_VARIABLE_NAMES", arrayToCommaSeparated(dcVariableNames));
+  return snippet;
 }
 
-export function generateRCode(option, phsVariableValues, dcVariableNames, includeDates) {
-  if (option === 0) {
-    return generateRCodeFileDependent();
-  }
-  else {
-    return generateRCodeFileIndependent(phsVariableValues, dcVariableNames, includeDates);
-  }
+/**
+ * Concatenates all the elements in an array into a single string, where the values are enclosed between quotes and separated by commas
+ * @param array
+ * @returns {string}
+ */
+function arrayToCommaSeparated(array) {
+  return "\"" + array.join("\",\"") + "\"";
 }

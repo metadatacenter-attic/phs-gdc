@@ -77,7 +77,9 @@ export default function Step3(props) {
   };
 
   const handleClickOpenCodeDialog = () => {
-    setOpenCodeDialog(true);
+    if (isValid()) {
+      setOpenCodeDialog(true);
+    }
   };
 
   const handleCloseCodeDialog = (value) => {
@@ -86,7 +88,7 @@ export default function Step3(props) {
 
 
 
-  function CodeDialog(props) {
+  function CodeDialog() {
 
     const [snippetOption, setSnippetOption] = React.useState(0);
     const handleSnippetOptionChange = (event, newValue) => {
@@ -102,7 +104,7 @@ export default function Step3(props) {
         open={openCodeDialog}>
         <DialogTitle id="r-dialog-title">R code</DialogTitle>
         <DialogContent>
-          <DialogContentText>Use one of the following code snippets to merge the downloaded CSV file into your data.
+          <DialogContentText>Use one of the following code snippets to retrieve and merge Data Commons data into your data
           </DialogContentText>
           <Tabs
             value={snippetOption}
@@ -115,7 +117,7 @@ export default function Step3(props) {
             <Tab label="Option 2" />
           </Tabs>
           <div className={classes.codeOptions}>
-            <CopyToClipboard text={generateRCode(snippetOption)}>
+            <CopyToClipboard text={generateRCode(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames, optionsState.includeDates)}>
               <Tooltip title="Copy to clipboard">
                 <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
               </Tooltip>
@@ -126,7 +128,7 @@ export default function Step3(props) {
           </div>
           <div className={classes.codeContent}>
           <SyntaxHighlighter language="r" style={stackoverflowLight}>
-            {generateRCode(snippetOption)}
+            {generateRCode(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames, optionsState.includeDates)}
           </SyntaxHighlighter>
           </div>
         </DialogContent>
