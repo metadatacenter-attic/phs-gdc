@@ -16,8 +16,17 @@ function generateRCodeFileDependent() {
 function generateRCodeFileIndependent(indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
   let snippet = snippetsR.snippetFileIndependent;
   snippet = snippet.replace("$INDEX_VARIABLE_VALUES", arrayToCommaSeparated(indexVariableValues));
+  snippet = snippet.replace("$INDEX_VARIABLE_NAME", toCommonDataLocationType(indexVariableName));
   snippet = snippet.replace("$DC_VARIABLE_NAMES", arrayToCommaSeparated(dcVariableNames));
   return snippet;
+}
+
+function toCommonDataLocationType(locType) {
+  if (locType == "zipCode") {
+    return "zip";
+  } else {
+    return locType
+  }
 }
 
 /**
