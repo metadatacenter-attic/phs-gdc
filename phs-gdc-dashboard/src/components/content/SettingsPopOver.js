@@ -23,8 +23,8 @@ export default function SettingsPopOver(props) {
 
   const classes = useStyles();
 
-  const handleOptionsChange = (event) => {
-    props.setOptionsState({...props.optionsState, [event.target.name]: event.target.checked});
+  const handleSettingsChange = (event) => {
+    props.setSettingsState({...props.settingsState, [event.target.name]: event.target.checked});
   };
 
   return (
@@ -35,8 +35,8 @@ export default function SettingsPopOver(props) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={props.optionsState.includeDates}
-                onChange={handleOptionsChange}
+                checked={props.settingsState.includeDates}
+                onChange={handleSettingsChange}
                 name="includeDates"
                 color="primary"
               />
