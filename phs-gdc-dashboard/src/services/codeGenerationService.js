@@ -1,22 +1,39 @@
 import snippetsR from './../resources/r/snippets/snippetsR.json';
 
-export function generateRCode(option, indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
+export function generateRCodeForInstallation(option) {
 
   if (option === 0) {
-    return generateRCodeFileDependent(indexVariableName);
+    return getLibrariesForFileBasedDataRetrieval();
   } else {
-    return generateRCodeFileIndependent(indexVariableName, indexVariableValues, dcVariableNames, includeDates);
+    return getLibrariesForApiBasedDataRetrieval();
   }
 }
 
-function generateRCodeFileDependent(indexVariableName) {
-  let snippet = snippetsR.snippetFileDependent;
+function getLibrariesForFileBasedDataRetrieval() {
+  return snippetsR.snippetFileBasedDataRetrievalLibraries;
+}
+
+function getLibrariesForApiBasedDataRetrieval() {
+  return snippetsR.snippetApiBasedDataRetrievalLibraries;
+}
+
+export function generateRCodeForRetrieval(option, indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
+
+  if (option === 0) {
+    return getCodeForFileBasedDataRetrieval(indexVariableName);
+  } else {
+    return getCodeForApiBasedDataRetrieval(indexVariableName, indexVariableValues, dcVariableNames, includeDates);
+  }
+}
+
+function getCodeForFileBasedDataRetrieval(indexVariableName) {
+  let snippet = snippetsR.snippetFileBasedDataRetrievalCode;
   snippet = snippet.replace("$INDEX_VARIABLE_NAME", indexVariableName);
   return snippet;
 }
 
-function generateRCodeFileIndependent(indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
-  let snippet = snippetsR.snippetFileIndependent;
+function getCodeForApiBasedDataRetrieval(indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
+  let snippet = snippetsR.snippetApiBasedDataRetrievalCode;
   snippet = snippet.replace("$INDEX_VARIABLE_VALUES", arrayToCommaSeparated(indexVariableValues));
   snippet = snippet.replace("$INDEX_VARIABLE_NAME", indexVariableName);
   snippet = snippet.replace("$DC_VARIABLE_NAMES", arrayToCommaSeparated(dcVariableNames));

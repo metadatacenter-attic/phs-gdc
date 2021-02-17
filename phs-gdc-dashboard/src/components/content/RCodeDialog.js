@@ -7,7 +7,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {CopyToClipboard} from "react-copy-to-clipboard";
-import {generateRCode} from "../../services/codeGenerationService";
+import {generateRCodeForInstallation} from "../../services/codeGenerationService";
+import {generateRCodeForRetrieval} from "../../services/codeGenerationService";
 import IconButton from "@material-ui/core/IconButton";
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 //import {SNIPPET_1_URL} from "../../constants";
@@ -21,14 +22,25 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 export default function RCodeDialog(props) {
 
   const useStyles = makeStyles((theme) => ({
+    codeDescription: {
+      textAlign: 'left',
+      width: 560,
+      fontSize: 15,
+      color: '#313131',
+      marginTop: theme.spacing(5),
+      marginBottom: theme.spacing(-3)
+    },
+    copyCode: {
+      fontSize: 13
+    },
     codeOptions: {
-      textAlign: "right",
+      textAlign: 'right',
       marginTop: theme.spacing(2),
       marginRight: theme.spacing(2),
       marginBottom: theme.spacing(-2),
     },
     codeContent: {
-      height: 120,
+      minHeight: 50,
       width: 750
     }
   }));
@@ -61,20 +73,35 @@ export default function RCodeDialog(props) {
           <Tab label="API-based Data Retrieval"/>
         </Tabs>
         <div className={classes.codeOptions}>
+          <p class={classes.codeDescription}>Run the code below to set up the required libraries (only once).</p>
           <CopyToClipboard
-            text={generateRCode(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
+            text={generateRCodeForInstallation(snippetOption)}>
+            <Tooltip title="Copy to clipboard">
+              <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
+            </Tooltip>
+          </CopyToClipboard><span class={classes.copyCode}>Copy to clipboard</span>
+        </div>
+        <div className={classes.codeContent}>
+          <SyntaxHighlighter language="r" style={stackoverflowLight}>
+            {generateRCodeForInstallation(snippetOption)}
+          </SyntaxHighlighter>
+        </div>
+        <div className={classes.codeOptions}>
+          <p class={classes.codeDescription}>Run the code below to retrieve the DataCommons.org data and to merge it with your existing data frame.</p>
+          <CopyToClipboard
+            text={generateRCodeForRetrieval(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
               props.settingsState.includeDates)}>
             <Tooltip title="Copy to clipboard">
               <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
             </Tooltip>
-          </CopyToClipboard><span>Copy to clipboard</span>
+          </CopyToClipboard><span class={classes.copyCode}>Copy to clipboard</span>
           {/*<Tooltip title="Show GitHub source">*/}
           {/*  <IconButton onClick={() => window.open(SNIPPET_1_URL)}><GitHubIcon fontSize={"small"}/></IconButton>*/}
           {/*</Tooltip>*/}
         </div>
         <div className={classes.codeContent}>
           <SyntaxHighlighter language="r" style={stackoverflowLight}>
-            {generateRCode(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
+            {generateRCodeForRetrieval(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
               props.settingsState.includeDates)}
           </SyntaxHighlighter>
         </div>
