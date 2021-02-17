@@ -73,7 +73,7 @@ export default function RCodeDialog(props) {
           <Tab label="API-based Data Retrieval"/>
         </Tabs>
         <div className={classes.codeOptions}>
-          <p class={classes.codeDescription}>Run the code below to set up the required libraries (only once).</p>
+          <p class={classes.codeDescription}><b>Installation</b>: Run the code below to set up the required libraries (only once).</p>
           <CopyToClipboard
             text={generateRCodeForInstallation(snippetOption)}>
             <Tooltip title="Copy to clipboard">
@@ -87,7 +87,7 @@ export default function RCodeDialog(props) {
           </SyntaxHighlighter>
         </div>
         <div className={classes.codeOptions}>
-          <p class={classes.codeDescription}>Run the code below to retrieve the DataCommons.org data and to merge it with your existing data frame.</p>
+          <p class={classes.codeDescription}>Run the code below to retrieve the DataCommons.org data and to merge it with your existing data frame. Replace the <tt>***</tt> symbols with your data frame context.</p>
           <CopyToClipboard
             text={generateRCodeForRetrieval(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
               props.settingsState.includeDates)}>
