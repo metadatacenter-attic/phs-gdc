@@ -47,7 +47,7 @@ export default function RCodeDialog(props) {
       open={props.openCodeDialog}>
       <DialogTitle id="r-dialog-title">R code</DialogTitle>
       <DialogContent>
-        <DialogContentText>Use one of the following code snippets to retrieve and merge Data Commons data into your data
+        <DialogContentText>Use one of the following methods to retrieve and merge DataCommons.org data into your data frame.
         </DialogContentText>
         <Tabs
           value={snippetOption}
@@ -56,8 +56,8 @@ export default function RCodeDialog(props) {
           textColor="primary"
           centered
         >
-          <Tab label="Option 1"/>
-          <Tab label="Option 2"/>
+          <Tab label="File-based Data Retrieval"/>
+          <Tab label="API-based Data Retrieval"/>
         </Tabs>
         <div className={classes.codeOptions}>
           <CopyToClipboard
