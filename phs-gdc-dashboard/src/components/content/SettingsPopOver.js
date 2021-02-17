@@ -6,6 +6,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabe
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
 
 export default function SettingsPopOver(props) {
 
@@ -23,8 +25,12 @@ export default function SettingsPopOver(props) {
 
   const classes = useStyles();
 
-  const handleSettingsChange = (event) => {
-    props.setSettingsState({...props.settingsState, [event.target.name]: event.target.checked});
+  const handleIncludeDatesCheckBoxChange = (event) => {
+    props.setSettingsState({...props.settingsState, 'includeDates': event.target.checked});
+  };
+
+  const handleIncludeDatesOptionRadioChange = (event) => {
+    props.setSettingsState({...props.settingsState, 'includeDatesOption': event.target.value});
   };
 
   return (
@@ -36,18 +42,33 @@ export default function SettingsPopOver(props) {
             control={
               <Checkbox
                 checked={props.settingsState.includeDates}
-                onChange={handleSettingsChange}
+                onChange={handleIncludeDatesCheckBoxChange}
                 name="includeDates"
                 color="primary"
               />
             }
             label="Include temporal information"
           />
-          <Tooltip flex
-            title="For each selected variable, it includes an additional column with the date (e.g., year) the data was collected.">
+          <Tooltip
+                   title="For each selected variable, it includes the date when the most recent data were collected,
+                   either as an additional column (e.g., Median_Income_Year) or in the column name (e.g., Median_Income_2018).">
             <HelpOutlineIcon/>
           </Tooltip>
         </FormGroup>
+        <RadioGroup row
+                    aria-label="includeDatesOption"
+                    name="includeDatesOption"
+                    value={props.settingsState.includeDatesOption}
+                    onChange={handleIncludeDatesOptionRadioChange}>
+          <FormControlLabel
+            value="column"
+            control={<Radio disabled={!props.settingsState.includeDates} color={"primary"}/>}
+            label="As additional column"/>
+          <FormControlLabel
+            value="header"
+            control={<Radio disabled={!props.settingsState.includeDates} color={"primary"}/>}
+            label="In column name"/>
+        </RadioGroup>
       </FormControl>
     </div>
   );
