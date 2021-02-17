@@ -3,21 +3,24 @@ import snippetsR from './../resources/r/snippets/snippetsR.json';
 export function generateRCode(option, indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
 
   if (option === 0) {
-    return generateRCodeFileDependent();
+    return generateRCodeFileDependent(indexVariableName);
   } else {
     return generateRCodeFileIndependent(indexVariableName, indexVariableValues, dcVariableNames, includeDates);
   }
 }
 
-function generateRCodeFileDependent() {
-  return snippetsR.snippetFileDependent;
+function generateRCodeFileDependent(indexVariableName) {
+  let snippet = snippetsR.snippetFileDependent;
+  snippet = snippet.replace("$INDEX_VARIABLE_NAME", indexVariableName);
+  return snippet;
 }
 
 function generateRCodeFileIndependent(indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
   let snippet = snippetsR.snippetFileIndependent;
   snippet = snippet.replace("$INDEX_VARIABLE_VALUES", arrayToCommaSeparated(indexVariableValues));
-  snippet = snippet.replace("$INDEX_VARIABLE_NAME", toCommonDataLocationType(indexVariableName));
+  snippet = snippet.replace("$INDEX_VARIABLE_NAME", indexVariableName);
   snippet = snippet.replace("$DC_VARIABLE_NAMES", arrayToCommaSeparated(dcVariableNames));
+  snippet = snippet.replace("$LOCATION_TYPE", toCommonDataLocationType(indexVariableName));
   return snippet;
 }
 
