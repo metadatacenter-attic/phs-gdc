@@ -23,12 +23,13 @@ export default function RCodeDialog(props) {
   const useStyles = makeStyles((theme) => ({
     codeOptions: {
       textAlign: "right",
-      marginTop: theme.spacing(0),
+      marginTop: theme.spacing(2),
+      marginRight: theme.spacing(2),
       marginBottom: theme.spacing(-2),
     },
     codeContent: {
-      minHeight: 450,
-      maxWidth: 700
+      height: 120,
+      width: 750
     }
   }));
   const classes = useStyles();
@@ -66,7 +67,7 @@ export default function RCodeDialog(props) {
             <Tooltip title="Copy to clipboard">
               <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
             </Tooltip>
-          </CopyToClipboard>
+          </CopyToClipboard><span>Copy to clipboard</span>
           {/*<Tooltip title="Show GitHub source">*/}
           {/*  <IconButton onClick={() => window.open(SNIPPET_1_URL)}><GitHubIcon fontSize={"small"}/></IconButton>*/}
           {/*</Tooltip>*/}
