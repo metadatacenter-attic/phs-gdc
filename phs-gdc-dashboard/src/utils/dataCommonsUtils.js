@@ -17,40 +17,70 @@ import {
  * @param phsVariableValues
  * @param dcVariableNames
  * @param includeDates
+ * @param includeDatesOption
  */
-export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, dcVariableNames, includeDates) {
+export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, dcVariableNames, includeDates, includeDatesOption) {
   let tabularJsonData = [];
 
   let rows = {}
   // Generate rows and index them by phsVariableValue (placeId)
+  let colNamesIncludeDatesOptionHeader = new Set();
   for (let placeId in jsonData['placeData']) {
     let placeValue = indexVariableDcidToVariableValue(phsVariableName, placeId);
     let row = {[phsVariableName]: placeValue};
     for (let i=0; i < dcVariableNames.length; i++) {
       let dcVarName = dcVariableNames[i];
-      // If there is any data for the given placeId and variable...
+      let colName = dcVarName;
+      // Check if there is any data for the given placeId and variable...
       if (jsonData['placeData'][placeId]['statVarData'][dcVarName]['sourceSeries']) {
         let date = getMostRecentDate(jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"]);
-        row[dcVarName] = jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"][date];
-        // If requested, include temporal information
-        if (includeDates) {
-          row[dcVarName + '_Date'] = date;
+        // If requested, include temporal information in the column header
+        if (includeDates && includeDatesOption === 'header') {
+          colName = colName + '_' + date;
+          colNamesIncludeDatesOptionHeader.add(colName);
+        }
+        row[colName] = jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"][date];
+        // If requested, include temporal information as an additional column
+        if (includeDates && includeDatesOption === 'column') {
+          row[colName + '_Date'] = date;
         }
       }
       else { // no data
-        row[dcVarName] = NOT_AVAILABLE_VALUE;
         if (includeDates) {
-          row[dcVarName + '_Date'] = NOT_AVAILABLE_VALUE;
+          if (includeDatesOption === 'header') {
+            // Can't do anything because I don't know the name(s) of the columns whose headers contain dates
+          }
+          else if (includeDatesOption === 'column') {
+            row[colName] = NOT_AVAILABLE_VALUE;
+            row[colName + '_Date'] = NOT_AVAILABLE_VALUE;
+          }
+          else {
+            console.error('Invalid option: ' + includeDatesOption);
+          }
+        }
+        else {
+          row[colName] = NOT_AVAILABLE_VALUE;
         }
       }
     }
     rows[placeValue] = row;
   }
 
-  // Generate the final tabular data (it may contain duplicated rows)
+  if (includeDates && includeDatesOption === 'header') {
+    // Fill out any missing cell with NAs if needed
+    colNamesIncludeDatesOptionHeader.forEach(cName => {
+      Object.keys(rows).forEach(function (key) {
+        if (!(cName in rows[key])) {
+          rows[key][cName] = NOT_AVAILABLE_VALUE;
+        }
+      });
+    });
+  };
+
   phsVariableValues.forEach(placeValue => {
     tabularJsonData.push(rows[placeValue]);
   });
+
   return tabularJsonData;
 };
 

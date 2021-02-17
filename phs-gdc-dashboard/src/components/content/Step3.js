@@ -46,7 +46,8 @@ export default function Step3(props) {
   const classes = useStyles();
 
   const [settingsState, setSettingsState] = React.useState({
-    includeDates: false
+    includeDates: false,
+    includeDatesOption: 'column'
   });
 
   const [openCodeDialog, setOpenCodeDialog] = React.useState(false);
@@ -76,16 +77,17 @@ export default function Step3(props) {
     let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(props.phsVariableName, v));
     let uniquePhsVariableValueDcids = [...new Set(phsVariableDcids)];
     return getPlaceStatistics(props.phsVariableName, uniquePhsVariableValueDcids, props.dcVariableNames).then((data) => {
-      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, props.dcVariableNames, settingsState.includeDates);
+      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, props.dcVariableNames, settingsState.includeDates, settingsState.includeDatesOption);
       return jsonToCsv(tabJsonData);
     })
       .catch((error) => {
-        error.json().then((json) => {
+        console.error(error);
+        //error.json().then((json) => {
           // this.setState({
           //   errors: json,
           //   loading: false
           // });
-        })
+        //})
       });
   };
 
