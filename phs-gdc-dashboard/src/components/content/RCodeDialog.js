@@ -24,20 +24,17 @@ export default function RCodeDialog(props) {
   const useStyles = makeStyles((theme) => ({
     codeDescription: {
       textAlign: 'left',
-      width: 560,
+      width: 700,
       fontSize: 15,
       color: '#313131',
       marginTop: theme.spacing(5),
-      marginBottom: theme.spacing(-3)
-    },
-    copyCode: {
-      fontSize: 13
+      marginBottom: theme.spacing(-4)
     },
     codeOptions: {
       textAlign: 'right',
       marginTop: theme.spacing(2),
-      marginRight: theme.spacing(2),
-      marginBottom: theme.spacing(-2),
+      marginRight: theme.spacing(1),
+      marginBottom: theme.spacing(-1),
     },
     codeContent: {
       minHeight: 50,
@@ -79,7 +76,7 @@ export default function RCodeDialog(props) {
             <Tooltip title="Copy to clipboard">
               <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
             </Tooltip>
-          </CopyToClipboard><span class={classes.copyCode}>Copy to clipboard</span>
+          </CopyToClipboard>
         </div>
         <div className={classes.codeContent}>
           <SyntaxHighlighter language="r" style={stackoverflowLight}>
@@ -87,14 +84,14 @@ export default function RCodeDialog(props) {
           </SyntaxHighlighter>
         </div>
         <div className={classes.codeOptions}>
-          <p class={classes.codeDescription}>Run the code below to retrieve the DataCommons.org data and to merge it with your existing data frame. Replace the <tt>***</tt> symbols with your data frame context.</p>
+          <p class={classes.codeDescription}>Run the code below to retrieve the DataCommons.org data and to merge it with your existing data frame. Replace the <tt>&#60;YOUR_DATA_FRAME&#62;</tt> and <tt>&#60;YOUR_COLUMN_NAME&#62;</tt> placeholders accordingly.</p>
           <CopyToClipboard
             text={generateRCodeForRetrieval(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
               props.settingsState.includeDates)}>
             <Tooltip title="Copy to clipboard">
               <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
             </Tooltip>
-          </CopyToClipboard><span class={classes.copyCode}>Copy to clipboard</span>
+          </CopyToClipboard>
           {/*<Tooltip title="Show GitHub source">*/}
           {/*  <IconButton onClick={() => window.open(SNIPPET_1_URL)}><GitHubIcon fontSize={"small"}/></IconButton>*/}
           {/*</Tooltip>*/}
