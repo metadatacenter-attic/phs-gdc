@@ -1,12 +1,10 @@
-/* eslint-disable no-use-before-define */
-
 import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import myData from './../../resources/data2.json';
+import statVars from './../../resources/dc_statvars_list.json';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small"/>;
 const checkedIcon = <CheckBoxIcon fontSize="small"/>;
@@ -21,7 +19,7 @@ export default function TopicsSelector(props) {
     <Autocomplete
                   multiple
                   id="checkboxes-tags-demo"
-                  options={myData}
+                  options={statVars}
                   disableCloseOnSelect
                   groupBy={(option) => option.category}
                   onChange={(event, values) => handleChange(values)}

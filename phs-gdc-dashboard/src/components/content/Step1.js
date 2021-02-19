@@ -142,7 +142,7 @@ export default function Step1(props) {
               props.validateStep1VariableValues();
             }}
             error={props.showPhsVariableValuesError}
-            helperText={"Enter the values of the selected variable (one per line)"}
+            helperText={"Enter values (one per line)"}
           />
         </>
         }

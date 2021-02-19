@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SettingsPopOver from "./SettingsPopOver";
 import RCodeDialog from "./RCodeDialog";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export default function Step3(props) {
 
@@ -83,10 +84,10 @@ export default function Step3(props) {
       .catch((error) => {
         console.error(error);
         //error.json().then((json) => {
-          // this.setState({
-          //   errors: json,
-          //   loading: false
-          // });
+        // this.setState({
+        //   errors: json,
+        //   loading: false
+        // });
         //})
       });
   };
@@ -121,9 +122,11 @@ export default function Step3(props) {
                     <Avatar aria-label="step3">3</Avatar>
                   }
                   action={
-                    <IconButton
-                      aria-describedby={'settings-popover'}
-                      onClick={handleClickOpenSettingsPopOver}><SettingsIcon/></IconButton>
+                    <Tooltip title="Export settings">
+                      <IconButton
+                        aria-describedby={'settings-popover'}
+                        onClick={handleClickOpenSettingsPopOver}><SettingsIcon/></IconButton>
+                    </Tooltip>
                   }
       />
       <p className={"stepSubHeader"}>Generate and download the selected data<br/></p>
