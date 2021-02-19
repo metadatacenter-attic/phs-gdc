@@ -34,18 +34,18 @@ function getCodeForFileBasedDataRetrieval(indexVariableName) {
 
 function getCodeForApiBasedDataRetrieval(indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
   let snippet = snippetsR.snippetApiBasedDataRetrievalCode;
-  snippet = snippet.replace("$INDEX_VARIABLE_VALUES", arrayToCommaSeparated(indexVariableValues));
+  snippet = snippet.replace("$INDEX_VARIABLE_VALUES", arrayToWrappedCommaSeparated(indexVariableValues, 100));
   snippet = snippet.replace("$INDEX_VARIABLE_NAME", indexVariableName);
-  snippet = snippet.replace("$DC_VARIABLE_NAMES", arrayToCommaSeparated(dcVariableNames));
+  snippet = snippet.replace("$DC_VARIABLE_NAMES", arrayToWrappedCommaSeparated(dcVariableNames, 100));
   snippet = snippet.replace("$LOCATION_TYPE", toCommonDataLocationType(indexVariableName));
   return snippet;
 }
 
 function toCommonDataLocationType(locType) {
-  if (locType == "zipCode") {
+  if (locType === "zipCode") {
     return "zip";
   } else {
-    return locType
+    return locType;
   }
 }
 
@@ -58,4 +58,20 @@ function toCommonDataLocationType(locType) {
  */
 function arrayToCommaSeparated(array) {
   return "\"" + array.join("\",\"") + "\"";
+}
+
+function arrayToWrappedCommaSeparated(array, length) {
+  let output = "";
+  let clone = copyArray(array);
+  while(clone.length > length) {
+    let split = clone.splice(0, length);
+    output += arrayToCommaSeparated(split) + ",\n";
+  }
+  output += arrayToCommaSeparated(clone);
+  return output;
+}
+
+function copyArray(array) {
+  let identity = (x) => x;
+  return array.map(identity);
 }
