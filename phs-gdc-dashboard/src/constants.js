@@ -11,19 +11,19 @@ export const INDEX_VARIABLES = {
   [INDEX_VARIABLE_STATE_NAME]: {
     "uiLabel": "state",
     "dcid": "State",
-    "dcidValuePrefix": null,
-    "enabled": false
+    "dcidValuePrefix": "geoId/",
+    "enabled": true
   },
   [INDEX_VARIABLE_COUNTY_NAME]: {
     "uiLabel": "county",
     "dcid": "County",
-    "dcidValuePrefix": null,
+    "dcidValuePrefix": "geoId/",
     "enabled": false
   },
   [INDEX_VARIABLE_CITY_NAME]: {
     "uiLabel": "city",
     "dcid": "City",
-    "dcidValuePrefix": null,
+    "dcidValuePrefix": "geoId/",
     "enabled": false
   },
   [INDEX_VARIABLE_ZIPCODE_NAME]: {

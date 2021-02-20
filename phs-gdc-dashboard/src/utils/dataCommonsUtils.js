@@ -3,10 +3,16 @@
  */
 
 //import moment from "moment";
+import STATE_TO_FIPS from './../resources/locationData/stateToFips';
+import FIPS_TO_STATE from './../resources/locationData/fipsToState';
 
 import {
+  INDEX_VARIABLE_CITY_NAME,
+  INDEX_VARIABLE_COUNTY_NAME,
+  INDEX_VARIABLE_STATE_NAME, INDEX_VARIABLE_ZIPCODE_NAME,
   INDEX_VARIABLES, NOT_AVAILABLE_VALUE
 } from "../constants";
+import stateZipCodes from "../resources/locationData/zipCodesByState";
 
 /**
  * Transforms data returned from the Data Commons /stat/all API to Json in tabular format
@@ -26,7 +32,9 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, 
   // Generate rows and index them by phsVariableValue (placeId)
   let colNamesIncludeDatesOptionHeader = new Set();
   for (let placeId in jsonData['placeData']) {
+    console.log('placeId', placeId);
     let placeValue = indexVariableDcidToVariableValue(phsVariableName, placeId);
+    console.log('placeValue', placeValue);
     let row = {[phsVariableName]: placeValue};
     for (let i=0; i < dcVariableNames.length; i++) {
       let dcVarName = dcVariableNames[i];
@@ -44,6 +52,7 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, 
         if (includeDates && includeDatesOption === 'column') {
           row[colName + '_Date'] = date;
         }
+        console.log('row', row)
       }
       else { // no data
         if (includeDates) {
@@ -77,8 +86,13 @@ export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, 
     });
   };
 
+  console.log('rows', rows);
+  console.log('phsVariableValues', phsVariableValues);
+
   phsVariableValues.forEach(placeValue => {
-    tabularJsonData.push(rows[placeValue]);
+    if (placeValue in rows) {
+      tabularJsonData.push(rows[placeValue]);
+    }
   });
 
   return tabularJsonData;
@@ -118,23 +132,97 @@ function getMostRecentDate(data) {
  * @param variableKey Key of the variable in the variables map (e.g., zipCode)
  * @param variableValue Variable value (e.g., 94306)
  */
-export function indexVariableValueToDcid(variableKey, variableValue) {
-  if (variableKey in INDEX_VARIABLES) {
-    let prefix = INDEX_VARIABLES[variableKey].dcidValuePrefix;
-    if (prefix) {
-      return prefix.concat(variableValue);
+export function indexVariableValueToDcid(indexVariable, indexVariableValue) {
+  if (indexVariable in INDEX_VARIABLES) {
+    let prefix = INDEX_VARIABLES[indexVariable].dcidValuePrefix;
+    console.log(indexVariable)
+    if (indexVariable === INDEX_VARIABLE_STATE_NAME) {
+      let fips = stateToFips(indexVariableValue);
+      if (fips) {
+        return prefix.concat(fips);
+      }
     }
-    else {
-      return variableValue;
+    else if (indexVariable === INDEX_VARIABLE_COUNTY_NAME) {
+
     }
+    else if (indexVariable === INDEX_VARIABLE_CITY_NAME) {
+
+    }
+    else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
+      return prefix.concat(indexVariableValue);
+    }
+  }
+  else {
+    console.error("Invalid variable: " + indexVariable);
   }
 };
 
-export function indexVariableDcidToVariableValue(variableKey, variableValueDcid) {
-  if (variableKey in INDEX_VARIABLES) {
-    return variableValueDcid.replace(INDEX_VARIABLES[variableKey].dcidValuePrefix, '');
+export function indexVariableDcidToVariableValue(indexVariable, indexVariableValueDcid) {
+  if (indexVariable in INDEX_VARIABLES) {
+    let prefix = INDEX_VARIABLES[indexVariable].dcidValuePrefix;
+    if (indexVariable === INDEX_VARIABLE_STATE_NAME) {
+      return fipsToState(indexVariableValueDcid.replace(prefix, ''));
+    }
+    else if (indexVariable === INDEX_VARIABLE_COUNTY_NAME) {
+
+    }
+    else if (indexVariable === INDEX_VARIABLE_CITY_NAME) {
+
+    }
+    else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
+      return indexVariableValueDcid.replace(prefix, '');
+    }
+  }
+  else {
+    console.error("Invalid variable: " + indexVariable);
   }
 };
+
+function stateToFips(state) {
+  if (state in STATE_TO_FIPS) {
+    return STATE_TO_FIPS[state];
+  }
+  else {
+    console.error("State not found: " + state);
+  }
+};
+
+function fipsToState(fips) {
+  if (fips in FIPS_TO_STATE) {
+    return FIPS_TO_STATE[fips];
+  }
+  else {
+    console.error("Fips not found: " + fips);
+  }
+};
+
+export function getAllVariableValuesByState(states, indexVariable) {
+  let values = [];
+
+  if (indexVariable in INDEX_VARIABLES) {
+    if (indexVariable === INDEX_VARIABLE_STATE_NAME) {
+      states.map(state => (
+        values = values.concat([state.name])
+      ));
+    }
+    else if (indexVariable === INDEX_VARIABLE_COUNTY_NAME) {
+
+    }
+    else if (indexVariable === INDEX_VARIABLE_CITY_NAME) {
+
+    }
+    else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
+      states.map(state => (
+        values = values.concat(stateZipCodes[state.abbreviation])
+      ));
+    }
+    console.log('values', values)
+    return values;
+  }
+  else {
+    console.error("Invalid variable: " + indexVariable);
+  }
+}
 
 
 

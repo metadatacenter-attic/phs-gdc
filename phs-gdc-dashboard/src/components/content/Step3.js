@@ -76,12 +76,19 @@ export default function Step3(props) {
 
   function getCsvData() {
     let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(props.phsVariableName, v));
+    // Remove not found values ('undefined') from array
+    // phsVariableDcids = phsVariableDcids.filter(function(x) {
+    //   return x !== undefined;
+    // });
+    console.log('phsVariableDcids: ' + phsVariableDcids);
     let uniquePhsVariableValueDcids = [...new Set(phsVariableDcids)];
     return getPlaceStatistics(props.phsVariableName, uniquePhsVariableValueDcids, props.dcVariableNames).then((data) => {
-      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, props.dcVariableNames, settingsState.includeDates, settingsState.includeDatesOption);
+      console.log(data);
+      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
+        settingsState.includeDates, settingsState.includeDatesOption);
+      console.log('tabjsondata', tabJsonData)
       return jsonToCsv(tabJsonData);
-    })
-      .catch((error) => {
+    }).catch((error) => {
         console.error(error);
         //error.json().then((json) => {
         // this.setState({

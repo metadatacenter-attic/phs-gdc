@@ -11,7 +11,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import Radio from "@material-ui/core/Radio";
 import states from './../../resources/locationData/allStates.json';
-import stateZipCodes from './../../resources/locationData/zipCodesByState.json';
 import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
@@ -22,6 +21,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import IconButton from "@material-ui/core/IconButton";
+import {getAllVariableValuesByState} from "../../utils/dataCommonsUtils";
 
 export default function Step1(props) {
 
@@ -71,12 +71,9 @@ export default function Step1(props) {
     }
   };
 
-  const handleChangeStatesSelect = (states) => {
-    let valuesArray = [];
-    states.map(state => (
-      valuesArray = valuesArray.concat(stateZipCodes[state.abbreviation])
-    ));
-    props.setPhsVariableValues(valuesArray);
+  const handleChangeLocationSelect = (states, variable) => {
+    console.log(getAllVariableValuesByState(states, variable));
+    props.setPhsVariableValues(getAllVariableValuesByState(states, variable));
   };
 
   return (
@@ -110,8 +107,7 @@ export default function Step1(props) {
                         disabled={!phsIndexVariables[varKey].enabled}>{phsIndexVariables[varKey].uiLabel}</MenuItem>
             )};
           </Select>
-          <FormHelperText>Select a variable from the list (Note: the current version is limited to zip
-            codes)</FormHelperText>
+          <FormHelperText>Select a variable from the list</FormHelperText>
         </FormControl>
         <div className={classes.separator}/>
 
@@ -154,7 +150,7 @@ export default function Step1(props) {
             id="state-autocomplete-id"
             options={states}
             disableCloseOnSelect
-            onChange={(event, values) => handleChangeStatesSelect(values)}
+            onChange={(event, values) => handleChangeLocationSelect(values, variable)}
             onBlur={props.validateStep1VariableValues}
             getOptionLabel={(option) => option.name}
             renderOption={(option, {selected}) => (
