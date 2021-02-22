@@ -24,7 +24,7 @@ export const INDEX_VARIABLES = {
     "uiLabel": "city",
     "dcid": "City",
     "dcidValuePrefix": "geoId/",
-    "enabled": false
+    "enabled": true
   },
   [INDEX_VARIABLE_ZIPCODE_NAME]: {
     "uiLabel": "zip code",
