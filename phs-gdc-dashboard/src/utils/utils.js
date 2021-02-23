@@ -3,7 +3,6 @@
  */
 
 export function jsonToCsv(json) {
-  console.log('json', json);
   let fields = Object.keys(json[0]);
   let replacer = function (key, value) {
     return value === null ? '' : value;

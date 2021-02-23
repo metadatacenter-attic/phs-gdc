@@ -9,13 +9,16 @@ import FIPS_TO_STATE from './../resources/locationData/fipsToState';
 import CITY_TO_FIPS from './../resources/locationData/cityToFips';
 import FIPS_TO_CITY from './../resources/locationData/fipsToCity';
 
+import STATE_TO_ZIPS from "../resources/locationData/stateToZips";
+import STATE_TO_CITIES from "../resources/locationData/stateToCities";
+
 import {
   INDEX_VARIABLE_CITY_NAME,
   INDEX_VARIABLE_COUNTY_NAME,
   INDEX_VARIABLE_STATE_NAME, INDEX_VARIABLE_ZIPCODE_NAME,
   INDEX_VARIABLES, NOT_AVAILABLE_VALUE
 } from "../constants";
-import stateZipCodes from "../resources/locationData/zipCodesByState";
+
 
 /**
  * Transforms data returned from the Data Commons /stat/all API to Json in tabular format
@@ -23,77 +26,66 @@ import stateZipCodes from "../resources/locationData/zipCodesByState";
  *
  * @param jsonData
  * @param phsVariableName
- * @param phsVariableValues
+ * @param indexVariableValuesToDcidsMap
+ * @param indexVariableDcidsToValuesMap
  * @param dcVariableNames
  * @param includeDates
  * @param includeDatesOption
+ * @returns {[]}
  */
-export function toTabularJsonData(jsonData, phsVariableName, phsVariableValues, dcVariableNames, includeDates, includeDatesOption) {
+export function toTabularJsonData(jsonData, phsVariableName, indexVariableValuesToDcidsMap, indexVariableDcidsToValuesMap,
+                                  dcVariableNames, includeDates, includeDatesOption) {
   let tabularJsonData = [];
 
   let rows = {}
   // Generate rows and index them by phsVariableValue (placeId)
   let colNamesIncludeDatesOptionHeader = new Set();
-  for (let placeId in jsonData['placeData']) {
-    console.log('placeId', placeId);
-    let placeValue = indexVariableDcidToVariableValue(phsVariableName, placeId);
-    console.log('placeValue', placeValue);
-    let row = {[phsVariableName]: placeValue};
-    for (let i = 0; i < dcVariableNames.length; i++) {
-      let dcVarName = dcVariableNames[i];
-      let colName = dcVarName;
-      // Check if there is any data for the given placeId and variable...
-      if (jsonData['placeData'][placeId]['statVarData'][dcVarName]['sourceSeries']) {
-        let date = getMostRecentDate(jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"]);
-        // If requested, include temporal information in the column header
-        if (includeDates && includeDatesOption === 'header') {
-          colName = colName + '_' + date;
-          colNamesIncludeDatesOptionHeader.add(colName);
-        }
-        row[colName] = jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"][date];
-        // If requested, include temporal information as an additional column
-        if (includeDates && includeDatesOption === 'column') {
-          row[colName + '_Date'] = date;
-        }
-        console.log('row', row)
-      } else { // no data
-        if (includeDates) {
-          if (includeDatesOption === 'header') {
-            // Can't do anything because I don't know the name(s) of the columns whose headers contain dates
-          } else if (includeDatesOption === 'column') {
-            row[colName] = NOT_AVAILABLE_VALUE;
-            row[colName + '_Date'] = NOT_AVAILABLE_VALUE;
-          } else {
-            console.error('Invalid option: ' + includeDatesOption);
+
+  // Iterate over unique place values and find the corresponding JSON data
+  for (let placeValue in indexVariableValuesToDcidsMap) {
+    let placeId = indexVariableValuesToDcidsMap[placeValue];
+    if (placeId in jsonData['placeData']) {
+      let row = {[phsVariableName]: placeValue};
+      for (let i = 0; i < dcVariableNames.length; i++) {
+        let dcVarName = dcVariableNames[i];
+        let colName = dcVarName;
+        // Check if there is any data for the given placeId and variable...
+        if (jsonData['placeData'][placeId]['statVarData'][dcVarName]['sourceSeries']) {
+          let date = getMostRecentDate(jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"]);
+          // If requested, include temporal information in the column header
+          if (includeDates && includeDatesOption === 'header') {
+            colName = colName + '_' + date;
+            colNamesIncludeDatesOptionHeader.add(colName);
           }
-        } else {
-          row[colName] = NOT_AVAILABLE_VALUE;
+          row[colName] = jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"][date];
+          // If requested, include temporal information as an additional column
+          if (includeDates && includeDatesOption === 'column') {
+            row[colName + '_Date'] = date;
+          }
+        } else { // no data
+          if (includeDates) {
+            if (includeDatesOption === 'header') {
+              // Can't do anything because I don't know the name(s) of the columns whose headers contain dates
+            } else if (includeDatesOption === 'column') {
+              row[colName] = NOT_AVAILABLE_VALUE;
+              row[colName + '_Date'] = NOT_AVAILABLE_VALUE;
+            } else {
+              console.error('Invalid option: ' + includeDatesOption);
+            }
+          } else {
+            row[colName] = NOT_AVAILABLE_VALUE;
+          }
         }
       }
+      rows[placeValue] = row;
     }
-    rows[placeValue] = row;
+    else {
+      console.error("PlaceId not found in json: ", placeId);
+    }
   }
 
-  if (includeDates && includeDatesOption === 'header') {
-    // Fill out any missing cell with NAs if needed
-    colNamesIncludeDatesOptionHeader.forEach(cName => {
-      Object.keys(rows).forEach(function (key) {
-        if (!(cName in rows[key])) {
-          rows[key][cName] = NOT_AVAILABLE_VALUE;
-        }
-      });
-    });
-  }
-  ;
-
-  console.log('rows', rows);
-  console.log('phsVariableValues', phsVariableValues);
-
-  phsVariableValues.forEach(indexVariableValue => {
-    indexVariableValue = indexVariableValueToStandardValue(phsVariableName, indexVariableValue);
-    if (indexVariableValue && indexVariableValue in rows) { // Discard undefined values
-      tabularJsonData.push(rows[indexVariableValue]);
-    }
+  Object.keys(indexVariableValuesToDcidsMap).forEach(placeValue => {
+    tabularJsonData.push(rows[placeValue]);
   });
 
   return tabularJsonData;
@@ -128,6 +120,29 @@ function getMostRecentDate(data) {
 //   }
 // }
 
+export function generateIndexVariableValuesToDcidsMap(indexVariable, indexVariableValues) {
+  let valueToDcidMap = {}
+  for (let i=0; i<indexVariableValues.length; i++) {
+    let dcid = indexVariableValueToDcid(indexVariable, indexVariableValues[i]);
+    if (dcid) {
+      valueToDcidMap[indexVariableValues[i]] = dcid;
+    }
+  }
+  return valueToDcidMap;
+};
+
+export function generateIndexVariableDcidsToValuesMap(indexVariable, indexVariableValues) {
+  let dcidToValueMap = {}
+  for (let i=0; i<indexVariableValues.length; i++) {
+    let dcid = indexVariableValueToDcid(indexVariable, indexVariableValues[i]);
+    if (dcid) {
+      dcidToValueMap[dcid] = indexVariableValues[i];
+    }
+  }
+  return dcidToValueMap;
+};
+
+
 /**
  * Translates the value of an index variable to a DC node identifier (e.g., 94306 -> zip/94306)
  * @param variableKey Key of the variable in the variables map (e.g., zipCode)
@@ -136,7 +151,10 @@ function getMostRecentDate(data) {
 export function indexVariableValueToDcid(indexVariable, indexVariableValue) {
   if (indexVariable in INDEX_VARIABLES) {
     let prefix = INDEX_VARIABLES[indexVariable].dcidValuePrefix;
-    return prefix.concat(indexVariableValueToFips(indexVariable, indexVariableValue));
+    let fips = indexVariableValueToFips(indexVariable, indexVariableValue);
+    if (fips) {
+      return prefix.concat(indexVariableValueToFips(indexVariable, indexVariableValue));
+    }
   } else {
     console.error("Invalid variable: " + indexVariable);
   }
@@ -233,7 +251,6 @@ function preprocessAndExpand(str) {
   if (str.includes(" ,")) {
     variations.push(str.replace(" ,", ","));
   }
-  console.log('variations', variations);
   return variations;
 }
 
@@ -247,34 +264,35 @@ export function getAllVariableValuesByState(states, indexVariable) {
     } else if (indexVariable === INDEX_VARIABLE_COUNTY_NAME) {
 
     } else if (indexVariable === INDEX_VARIABLE_CITY_NAME) {
-
+      states.map(state => (
+        values = values.concat(STATE_TO_CITIES[state.abbreviation])
+      ));
     } else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
       states.map(state => (
-        values = values.concat(stateZipCodes[state.abbreviation])
+        values = values.concat(STATE_TO_ZIPS[state.abbreviation])
       ));
     }
-    console.log('values', values)
     return values;
   } else {
     console.error("Invalid variable: " + indexVariable);
   }
 }
 
-function indexVariableValueToStandardValue(indexVariable, indexVariableValue) {
-  if (indexVariable in INDEX_VARIABLES) {
-    if (indexVariable === INDEX_VARIABLE_STATE_NAME) {
-      return fipsToState(stateToFips(indexVariableValue));
-    } else if (indexVariable === INDEX_VARIABLE_COUNTY_NAME) {
-        // TODO
-    } else if (indexVariable === INDEX_VARIABLE_CITY_NAME) {
-      return fipsToCity(cityToFips(indexVariableValue));
-    } else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
-      return indexVariableValue;
-    }
-  } else {
-    console.error("Invalid variable: " + indexVariable);
-  }
-};
+// function indexVariableValueToStandardValue(indexVariable, indexVariableValue) {
+//   if (indexVariable in INDEX_VARIABLES) {
+//     if (indexVariable === INDEX_VARIABLE_STATE_NAME) {
+//       return fipsToState(stateToFips(indexVariableValue));
+//     } else if (indexVariable === INDEX_VARIABLE_COUNTY_NAME) {
+//         // TODO
+//     } else if (indexVariable === INDEX_VARIABLE_CITY_NAME) {
+//       return fipsToCity(cityToFips(indexVariableValue));
+//     } else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
+//       return indexVariableValue;
+//     }
+//   } else {
+//     console.error("Invalid variable: " + indexVariable);
+//   }
+// };
 
 
 

@@ -6,7 +6,7 @@ import json
 import pandas as pd
 
 
-def function1():
+def generate_data():
 
     # Read map fips -> state abbreviation
     with open('source_data/fips-to-state-abbreviation.json') as f:
@@ -17,22 +17,32 @@ def function1():
 
     city_to_fips = {}
     fips_to_city = {}
+    state_to_cities = {}
     for i, row in df.iterrows():
         place_name = row['Name']
         if is_city_name(place_name):
             city = extract_city(place_name)
             state_fips = row['State']
             state_abbr = fips_to_state_abbrv[state_fips]
+            city_plus_state_abbr_short = city + ',' + state_abbr
             city_plus_state_abbr = city + ', ' + state_abbr
             fips = state_fips + row['Place']
-            city_to_fips[city_plus_state_abbr.lower()] = fips
+            city_to_fips[city_plus_state_abbr_short.lower()] = fips
             fips_to_city[fips] = city_plus_state_abbr
+
+            if not state_abbr in state_to_cities:
+                state_to_cities[state_abbr] = []
+            state_to_cities[state_abbr].append(city_plus_state_abbr)
+
 
     with open('output_data/cityToFips.json', 'w', encoding='utf-8') as f:
         json.dump(city_to_fips, f, indent=2)
 
     with open('output_data/fipsToCity.json', 'w', encoding='utf-8') as f:
         json.dump(fips_to_city, f, indent=2)
+
+    with open('output_data/stateToCities.json', 'w', encoding='utf-8') as f:
+        json.dump(state_to_cities, f, indent=2)
 
 
 def is_city_name(place_name):
@@ -57,7 +67,7 @@ def replace_right(source, target, replacement, replacements=None):
 
 
 def main():
-    function1()
+    generate_data()
     print('Execution completed')
 
 

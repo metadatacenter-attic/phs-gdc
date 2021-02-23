@@ -72,7 +72,6 @@ export default function Step1(props) {
   };
 
   const handleChangeLocationSelect = (states, variable) => {
-    console.log(getAllVariableValuesByState(states, variable));
     props.setPhsVariableValues(getAllVariableValuesByState(states, variable));
   };
 

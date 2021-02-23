@@ -1,7 +1,12 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import {getPlaceStatistics} from "../../services/dataCommonsService";
-import {indexVariableValueToDcid, toTabularJsonData} from "../../utils/dataCommonsUtils";
+import {
+  generateIndexVariableDcidsToValuesMap,
+  generateIndexVariableValuesToDcidsMap,
+  indexVariableValueToDcid,
+  toTabularJsonData
+} from "../../utils/dataCommonsUtils";
 import {jsonToCsv} from "../../utils/utils";
 import SettingsIcon from '@material-ui/icons/Settings';
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -75,18 +80,12 @@ export default function Step3(props) {
   };
 
   function getCsvData() {
-    let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(props.phsVariableName, v));
-    // Remove not found values ('undefined') from array
-    // phsVariableDcids = phsVariableDcids.filter(function(x) {
-    //   return x !== undefined;
-    // });
-    console.log('phsVariableDcids: ' + phsVariableDcids);
-    let uniquePhsVariableValueDcids = [...new Set(phsVariableDcids)];
-    return getPlaceStatistics(props.phsVariableName, uniquePhsVariableValueDcids, props.dcVariableNames).then((data) => {
-      console.log(data);
-      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
+    let indexVariableValuesToDcidsMap = generateIndexVariableValuesToDcidsMap(props.phsVariableName, props.phsVariableValues);
+    let indexVariableDcidsToValuesMap = generateIndexVariableDcidsToValuesMap(props.phsVariableName, props.phsVariableValues);
+    let indexVariableValueDcids = Object.keys(indexVariableDcidsToValuesMap);
+    return getPlaceStatistics(props.phsVariableName, indexVariableValueDcids, props.dcVariableNames).then((data) => {
+      let tabJsonData = toTabularJsonData(data, props.phsVariableName, indexVariableValuesToDcidsMap, indexVariableDcidsToValuesMap, props.dcVariableNames,
         settingsState.includeDates, settingsState.includeDatesOption);
-      console.log('tabjsondata', tabJsonData)
       return jsonToCsv(tabJsonData);
     }).catch((error) => {
         console.error(error);
