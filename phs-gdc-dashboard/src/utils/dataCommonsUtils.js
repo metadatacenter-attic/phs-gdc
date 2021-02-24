@@ -4,13 +4,19 @@
 
 //import moment from "moment";
 import STATE_TO_FIPS from './../resources/locationData/stateToFips';
-import FIPS_TO_STATE from './../resources/locationData/fipsToState';
+//import FIPS_TO_STATE from './../resources/locationData/fipsToState';
 
 import CITY_TO_FIPS from './../resources/locationData/cityToFips';
-import FIPS_TO_CITY from './../resources/locationData/fipsToCity';
+//import FIPS_TO_CITY from './../resources/locationData/fipsToCity';
 
-import STATE_TO_ZIPS from "../resources/locationData/stateToZips";
-import STATE_TO_CITIES from "../resources/locationData/stateToCities";
+import COUNTY_TO_FIPS from './../resources/locationData/countyToFips';
+//import FIPS_TO_COUNTY from './../resources/locationData/fipsToCounty';
+
+import STATE_TO_ZIPS from '../resources/locationData/stateToZips';
+import STATE_TO_CITIES from '../resources/locationData/stateToCities';
+import STATE_TO_COUNTIES from "../resources/locationData/stateToCounties";
+
+
 
 import {
   INDEX_VARIABLE_CITY_NAME,
@@ -168,7 +174,10 @@ export function indexVariableValueToFips(indexVariable, indexVariableValue) {
         return fips;
       }
     } else if (indexVariable === INDEX_VARIABLE_COUNTY_NAME) {
-
+      let fips = countyToFips(indexVariableValue);
+      if (fips) {
+        return fips;
+      }
     } else if (indexVariable === INDEX_VARIABLE_CITY_NAME) {
       let fips = cityToFips(indexVariableValue);
       if (fips) {
@@ -176,24 +185,6 @@ export function indexVariableValueToFips(indexVariable, indexVariableValue) {
       }
     } else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
       return indexVariableValue;
-    }
-  } else {
-    console.error("Invalid variable: " + indexVariable);
-  }
-};
-
-
-export function indexVariableDcidToVariableValue(indexVariable, indexVariableValueDcid) {
-  if (indexVariable in INDEX_VARIABLES) {
-    let prefix = INDEX_VARIABLES[indexVariable].dcidValuePrefix;
-    if (indexVariable === INDEX_VARIABLE_STATE_NAME) {
-      return fipsToState(indexVariableValueDcid.replace(prefix, ''));
-    } else if (indexVariable === INDEX_VARIABLE_COUNTY_NAME) {
-
-    } else if (indexVariable === INDEX_VARIABLE_CITY_NAME) {
-      return fipsToCity(indexVariableValueDcid.replace(prefix, ''));
-    } else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
-      return indexVariableValueDcid.replace(prefix, '');
     }
   } else {
     console.error("Invalid variable: " + indexVariable);
@@ -210,12 +201,14 @@ function stateToFips(state) {
   console.error("State not found: " + state);
 };
 
-function fipsToState(fips) {
-  if (fips in FIPS_TO_STATE) {
-    return FIPS_TO_STATE[fips];
-  } else {
-    console.error("Fips not found in FIPS-to-State map: " + fips);
+function countyToFips(county) {
+  let variations = preprocessAndExpand(county);
+  for (let i = 0; i < variations.length; i++) {
+    if (variations[i] in COUNTY_TO_FIPS) {
+      return COUNTY_TO_FIPS[variations[i]];
+    }
   }
+  console.error("County not found: " + county);
 };
 
 function cityToFips(city) {
@@ -228,13 +221,38 @@ function cityToFips(city) {
   console.error("City not found: " + city);
 };
 
-function fipsToCity(fips) {
-  if (fips in FIPS_TO_CITY) {
-    return FIPS_TO_CITY[fips];
-  } else {
-    console.error("Fips not found in FIPS-to-City map: " + fips);
-  }
-};
+// export function indexVariableDcidToVariableValue(indexVariable, indexVariableValueDcid) {
+//   if (indexVariable in INDEX_VARIABLES) {
+//     let prefix = INDEX_VARIABLES[indexVariable].dcidValuePrefix;
+//     if (indexVariable === INDEX_VARIABLE_STATE_NAME) {
+//       return fipsToState(indexVariableValueDcid.replace(prefix, ''));
+//     } else if (indexVariable === INDEX_VARIABLE_COUNTY_NAME) {
+//
+//     } else if (indexVariable === INDEX_VARIABLE_CITY_NAME) {
+//       return fipsToCity(indexVariableValueDcid.replace(prefix, ''));
+//     } else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
+//       return indexVariableValueDcid.replace(prefix, '');
+//     }
+//   } else {
+//     console.error("Invalid variable: " + indexVariable);
+//   }
+// };
+
+// function fipsToState(fips) {
+//   if (fips in FIPS_TO_STATE) {
+//     return FIPS_TO_STATE[fips];
+//   } else {
+//     console.error("Fips not found in FIPS-to-State map: " + fips);
+//   }
+// };
+
+// function fipsToCity(fips) {
+//   if (fips in FIPS_TO_CITY) {
+//     return FIPS_TO_CITY[fips];
+//   } else {
+//     console.error("Fips not found in FIPS-to-City map: " + fips);
+//   }
+// };
 
 function preprocessAndExpand(str) {
   // Basic preprocessing
@@ -262,7 +280,9 @@ export function getAllVariableValuesByState(states, indexVariable) {
         values = values.concat([state.name])
       ));
     } else if (indexVariable === INDEX_VARIABLE_COUNTY_NAME) {
-
+      states.map(state => (
+        values = values.concat(STATE_TO_COUNTIES[state.abbreviation])
+      ));
     } else if (indexVariable === INDEX_VARIABLE_CITY_NAME) {
       states.map(state => (
         values = values.concat(STATE_TO_CITIES[state.abbreviation])

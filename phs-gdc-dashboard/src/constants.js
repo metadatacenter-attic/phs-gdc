@@ -18,7 +18,7 @@ export const INDEX_VARIABLES = {
     "uiLabel": "county",
     "dcid": "County",
     "dcidValuePrefix": "geoId/",
-    "enabled": false
+    "enabled": true
   },
   [INDEX_VARIABLE_CITY_NAME]: {
     "uiLabel": "city",

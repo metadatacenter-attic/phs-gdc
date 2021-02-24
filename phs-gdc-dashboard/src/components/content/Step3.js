@@ -4,7 +4,6 @@ import {getPlaceStatistics} from "../../services/dataCommonsService";
 import {
   generateIndexVariableDcidsToValuesMap,
   generateIndexVariableValuesToDcidsMap,
-  indexVariableValueToDcid,
   toTabularJsonData
 } from "../../utils/dataCommonsUtils";
 import {jsonToCsv} from "../../utils/utils";
@@ -83,6 +82,7 @@ export default function Step3(props) {
     let indexVariableValuesToDcidsMap = generateIndexVariableValuesToDcidsMap(props.phsVariableName, props.phsVariableValues);
     let indexVariableDcidsToValuesMap = generateIndexVariableDcidsToValuesMap(props.phsVariableName, props.phsVariableValues);
     let indexVariableValueDcids = Object.keys(indexVariableDcidsToValuesMap);
+    console.log('indexVariableValuesToDcidsMap', indexVariableValuesToDcidsMap);
     return getPlaceStatistics(props.phsVariableName, indexVariableValueDcids, props.dcVariableNames).then((data) => {
       let tabJsonData = toTabularJsonData(data, props.phsVariableName, indexVariableValuesToDcidsMap, indexVariableDcidsToValuesMap, props.dcVariableNames,
         settingsState.includeDates, settingsState.includeDatesOption);
@@ -161,7 +161,8 @@ export default function Step3(props) {
                   onClick={downloadDataFile} size={"large"}>
             Download data
           </Button>
-          &nbsp;&nbsp;&nbsp;
+          <br/>
+          <br/>
           <Button className={classes.button} variant="outlined" color="primary" onClick={handleClickOpenCodeDialog}
                   disabled={false} size={"large"}>
             Generate R code
