@@ -5,13 +5,12 @@ import Select from "@material-ui/core/Select";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
-import {DEFAULT_INDEX_VARIABLE_NAME, INDEX_VARIABLES} from "../../constants";
+import {DEFAULT_INDEX_VARIABLE_NAME, DEFAULT_VALUE_OPTION, INDEX_VARIABLES} from "../../constants";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import Radio from "@material-ui/core/Radio";
 import states from './../../resources/locationData/allStates.json';
-import stateZipCodes from './../../resources/locationData/zipCodesByState.json';
 import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
@@ -22,6 +21,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import IconButton from "@material-ui/core/IconButton";
+import {getAllVariableValuesByState} from "../../utils/dataCommonsUtils";
 
 export default function Step1(props) {
 
@@ -40,13 +40,20 @@ export default function Step1(props) {
 
   const classes = useStyles();
   const [variable, setVariable] = React.useState(DEFAULT_INDEX_VARIABLE_NAME);
-  const [valueOptionRadio, setValueOptionRadio] = React.useState('optionEnter');
+  const [valueOptionRadio, setValueOptionRadio] = React.useState(DEFAULT_VALUE_OPTION);
   const [variableValues, setVariableValues] = React.useState(''); // content of textfield
   const phsIndexVariables = INDEX_VARIABLES;
 
   const handleChangeVariableSelect = (event) => {
     setVariable(event.target.value);
     props.setPhsVariableName(event.target.value);
+    // reset radio button and variable values
+    setValueOptionRadio(DEFAULT_VALUE_OPTION);
+    setVariableValues('');
+    props.setPhsVariableValues([]);
+    // reset validation
+    props.setShowLocationsError(false);
+    props.setShowPhsVariableValuesError(false);
   };
 
   const handleChangeValuesOptionRadio = (event) => {
@@ -71,12 +78,8 @@ export default function Step1(props) {
     }
   };
 
-  const handleChangeStatesSelect = (states) => {
-    let valuesArray = [];
-    states.map(state => (
-      valuesArray = valuesArray.concat(stateZipCodes[state.abbreviation])
-    ));
-    props.setPhsVariableValues(valuesArray);
+  const handleChangeLocationSelect = (states, variable) => {
+    props.setPhsVariableValues(getAllVariableValuesByState(states, variable));
   };
 
   return (
@@ -110,8 +113,7 @@ export default function Step1(props) {
                         disabled={!phsIndexVariables[varKey].enabled}>{phsIndexVariables[varKey].uiLabel}</MenuItem>
             )};
           </Select>
-          <FormHelperText>Select a variable from the list (Note: the current version is limited to zip
-            codes)</FormHelperText>
+          <FormHelperText>Select a variable from the list</FormHelperText>
         </FormControl>
         <div className={classes.separator}/>
 
@@ -154,7 +156,7 @@ export default function Step1(props) {
             id="state-autocomplete-id"
             options={states}
             disableCloseOnSelect
-            onChange={(event, values) => handleChangeStatesSelect(values)}
+            onChange={(event, values) => handleChangeLocationSelect(values, variable)}
             onBlur={props.validateStep1VariableValues}
             getOptionLabel={(option) => option.name}
             renderOption={(option, {selected}) => (

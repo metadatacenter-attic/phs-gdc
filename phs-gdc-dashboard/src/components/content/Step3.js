@@ -1,7 +1,11 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import {getPlaceStatistics} from "../../services/dataCommonsService";
-import {indexVariableValueToDcid, toTabularJsonData} from "../../utils/dataCommonsUtils";
+import {
+  generateIndexVariableDcidsToValuesMap,
+  generateIndexVariableValuesToDcidsMap,
+  toTabularJsonData
+} from "../../utils/dataCommonsUtils";
 import {jsonToCsv} from "../../utils/utils";
 import SettingsIcon from '@material-ui/icons/Settings';
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -75,13 +79,14 @@ export default function Step3(props) {
   };
 
   function getCsvData() {
-    let phsVariableDcids = props.phsVariableValues.map(v => indexVariableValueToDcid(props.phsVariableName, v));
-    let uniquePhsVariableValueDcids = [...new Set(phsVariableDcids)];
-    return getPlaceStatistics(props.phsVariableName, uniquePhsVariableValueDcids, props.dcVariableNames).then((data) => {
-      let tabJsonData = toTabularJsonData(data, props.phsVariableName, props.phsVariableValues, props.dcVariableNames, settingsState.includeDates, settingsState.includeDatesOption);
+    let indexVariableValuesToDcidsMap = generateIndexVariableValuesToDcidsMap(props.phsVariableName, props.phsVariableValues);
+    let indexVariableDcidsToValuesMap = generateIndexVariableDcidsToValuesMap(props.phsVariableName, props.phsVariableValues);
+    let indexVariableValueDcids = Object.keys(indexVariableDcidsToValuesMap);
+    return getPlaceStatistics(props.phsVariableName, indexVariableValueDcids, props.dcVariableNames).then((data) => {
+      let tabJsonData = toTabularJsonData(data, props.phsVariableName, indexVariableValuesToDcidsMap, indexVariableDcidsToValuesMap, props.dcVariableNames,
+        settingsState.includeDates, settingsState.includeDatesOption);
       return jsonToCsv(tabJsonData);
-    })
-      .catch((error) => {
+    }).catch((error) => {
         console.error(error);
         //error.json().then((json) => {
         // this.setState({
@@ -155,7 +160,8 @@ export default function Step3(props) {
                   onClick={downloadDataFile} size={"large"}>
             Download data
           </Button>
-          &nbsp;&nbsp;&nbsp;
+          <br/>
+          <br/>
           <Button className={classes.button} variant="outlined" color="primary" onClick={handleClickOpenCodeDialog}
                   disabled={false} size={"large"}>
             Generate R code

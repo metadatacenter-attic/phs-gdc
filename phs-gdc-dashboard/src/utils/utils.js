@@ -15,14 +15,18 @@ export function jsonToCsv(json) {
   csv.unshift(fields.join(',')); // add header column
   csv = csv.join('\r\n');
   return csv;
-}
+};
 
 export function removeDuplicates(array) {
   return [...new Set(array)];
-}
+};
 
 export function removeEmpty(array) {
   return array.filter(function (element) {
     return element != null && element.length > 0;
   });
-}
+};
+
+export function hasUpperCase(str) {
+  return str.toLowerCase() !== str;
+};
