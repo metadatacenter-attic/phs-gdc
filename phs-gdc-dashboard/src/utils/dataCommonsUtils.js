@@ -108,12 +108,12 @@ function getMostRecentDate(data) {
   return parseInt(mostRecentDate);
 };
 
-/**
- * Returns a string representing format in which the date is expressed. For example, if the date is '2018', it would
- * return 'Year'.
- * This function uses Moment.js: https://momentjs.com/
- * @param date
- */
+// /**
+//  * Returns a string representing format in which the date is expressed. For example, if the date is '2018', it would
+//  * return 'Year'.
+//  * This function uses Moment.js: https://momentjs.com/
+//  * @param date
+//  */
 // function getDateFormat(date) {
 //   const DEFAULT_FORMAT_NAME = 'Date';
 //   const YYYY_FORMAT_NAME = 'Year';

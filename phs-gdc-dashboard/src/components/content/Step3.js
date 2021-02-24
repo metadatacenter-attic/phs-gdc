@@ -82,7 +82,6 @@ export default function Step3(props) {
     let indexVariableValuesToDcidsMap = generateIndexVariableValuesToDcidsMap(props.phsVariableName, props.phsVariableValues);
     let indexVariableDcidsToValuesMap = generateIndexVariableDcidsToValuesMap(props.phsVariableName, props.phsVariableValues);
     let indexVariableValueDcids = Object.keys(indexVariableDcidsToValuesMap);
-    console.log('indexVariableValuesToDcidsMap', indexVariableValuesToDcidsMap);
     return getPlaceStatistics(props.phsVariableName, indexVariableValueDcids, props.dcVariableNames).then((data) => {
       let tabJsonData = toTabularJsonData(data, props.phsVariableName, indexVariableValuesToDcidsMap, indexVariableDcidsToValuesMap, props.dcVariableNames,
         settingsState.includeDates, settingsState.includeDatesOption);
