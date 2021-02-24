@@ -35,7 +35,10 @@ export const INDEX_VARIABLES = {
 }
 
 // Variable selected by default
-export const DEFAULT_INDEX_VARIABLE_NAME =  INDEX_VARIABLE_ZIPCODE_NAME;
+export const DEFAULT_INDEX_VARIABLE_NAME =  INDEX_VARIABLE_STATE_NAME;
+
+// Input option for variable values selected by default
+export const DEFAULT_VALUE_OPTION = "optionEnter";
 
 export const SNIPPET_1_URL = "https://github.com/metadatacenter/phs-gdc/blob/develop/r/snippet-merge-csv/MergeSnippet.R";
 

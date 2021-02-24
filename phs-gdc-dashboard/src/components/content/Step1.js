@@ -5,7 +5,7 @@ import Select from "@material-ui/core/Select";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
-import {DEFAULT_INDEX_VARIABLE_NAME, INDEX_VARIABLES} from "../../constants";
+import {DEFAULT_INDEX_VARIABLE_NAME, DEFAULT_VALUE_OPTION, INDEX_VARIABLES} from "../../constants";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -40,13 +40,20 @@ export default function Step1(props) {
 
   const classes = useStyles();
   const [variable, setVariable] = React.useState(DEFAULT_INDEX_VARIABLE_NAME);
-  const [valueOptionRadio, setValueOptionRadio] = React.useState('optionEnter');
+  const [valueOptionRadio, setValueOptionRadio] = React.useState(DEFAULT_VALUE_OPTION);
   const [variableValues, setVariableValues] = React.useState(''); // content of textfield
   const phsIndexVariables = INDEX_VARIABLES;
 
   const handleChangeVariableSelect = (event) => {
     setVariable(event.target.value);
     props.setPhsVariableName(event.target.value);
+    // reset radio button and variable values
+    setValueOptionRadio(DEFAULT_VALUE_OPTION);
+    setVariableValues('');
+    props.setPhsVariableValues([]);
+    // reset validation
+    props.setShowLocationsError(false);
+    props.setShowPhsVariableValuesError(false);
   };
 
   const handleChangeValuesOptionRadio = (event) => {
