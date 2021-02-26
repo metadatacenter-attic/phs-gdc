@@ -9,9 +9,8 @@ to discover and use freely available research data.
 ### The data
 
 The Google-provided [Data Commons repository](https://datacommons.org/) provides access to numerous public data sets 
-that can be applied to research in many domains.  
-The Data Commons Graph aggregates data from many different data sources into a single database
-so that it can be accessed in a consistent way.
+that can be applied to research in many domains. The Data Commons Graph aggregates data from many different data sources
+into a single database, so that it can be accessed in a consistent way.
 This data is browseable by [place](https://datacommons.org/place/) or [entity](https://datacommons.org/browser/), 
 and publicly accessible via APIs, with numerous [python libraries](http://docs.datacommons.org/api/) 
 and Python workbook examples](http://docs.datacommons.org/tutorials). 
