@@ -22,8 +22,23 @@ def get_statvars():
         if tag.name == 'details':
             statvars_tree.append(parse_details_as_tree(tag))
 
-    with open('dc_statvars_tree.json', 'w', encoding='utf-8') as f:
-        json.dump(statvars_tree, f, indent=2)
+    # Generate tree (custom, made to work with react-virtualized-tree)
+    statvars_tree_custom = []
+    for tag in main_content.contents:
+        if tag.name == 'details':
+            statvars_tree_custom.append(parse_details_as_tree_custom(tag))
+
+    with open('dc_statvars_tree_custom.json', 'w', encoding='utf-8') as f:
+        json.dump(statvars_tree_custom, f, indent=2)
+
+    # Generate tree (based on https://dowjones.github.io/react-dropdown-tree-select)
+    statvars_tree_select = []
+    for tag in main_content.contents:
+        if tag.name == 'details':
+            statvars_tree_select.append(parse_details_as_tree_select(tag))
+
+    with open('dc_statvars_tree_select.json', 'w', encoding='utf-8') as f:
+        json.dump(statvars_tree_select, f, indent=2)
 
     # Generate list
     statvars_list = []
@@ -61,6 +76,65 @@ def parse_details_as_tree(details):
         "children": node_children
     }
 
+
+# Tree designed to work with https://dowjones.github.io/react-dropdown-tree-select
+def parse_details_as_tree_custom(details):
+    node_name = details.summary.string
+    node_id = node_name.lower()
+    state = {"expanded": False}
+    node_children = []
+    if details.details:
+        for tag in details.contents:
+            if tag.name == 'details':
+                node_children.append(parse_details_as_tree_custom(tag))
+    else:
+        if details.ul:
+            cont = details.ul.contents
+        else:
+            cont = details.contents
+        for tag in cont:
+            if tag.name == 'li':
+                node_children.append({
+                    "id": tag.a.string.lower(),
+                    "name": tag.a.string,
+                    "state": state,
+                    "children": []
+                })
+    return {
+        "id": node_id,
+        "name": node_name,
+        "state": state,
+        "children": node_children
+    }
+
+
+# Tree designed to work with https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/VirtualMode/React/Light/
+def parse_details_as_tree_select(details):
+    node_name = details.summary.string
+    node_id = node_name.lower()
+    node_children = []
+    if details.details:
+        for tag in details.contents:
+            if tag.name == 'details':
+                node_children.append(parse_details_as_tree_select(tag))
+    else:
+        if details.ul:
+            cont = details.ul.contents
+        else:
+            cont = details.contents
+        for tag in cont:
+            if tag.name == 'li':
+                node_children.append({
+                    "value": tag.a.string.lower(),
+                    "label": tag.a.string,
+                    "nodeType": "variable"
+                })
+    return {
+        "value": node_id,
+        "label": node_name,
+        "nodeType": "group",
+        "children": node_children
+    }
 
 def parse_details_as_list(details, statvar_list, parent_category):
     category_name = details.summary.string
