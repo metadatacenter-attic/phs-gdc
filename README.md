@@ -53,4 +53,8 @@ to increase its capabilities and its ease of use.
 Given additional funding, we will be able to make it more powerful and even easier to use.
 and to begin designing similar technologies to retrieve data from the Biomedical Data Commons graph.
 
+### Providing feedback
 
+To provide feedback, please enter a ticket to the 
+[Data Commons Wizard GitHub repository](https://github.com/metadatacenter/phs-gdc/issues) or send email to 
+jgraybeal (at) stanford.edu. 
