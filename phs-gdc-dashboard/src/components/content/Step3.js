@@ -79,6 +79,7 @@ export default function Step3(props) {
   };
 
   function getCsvData() {
+    console.log('dcVarNames: ', props.dcVariableNames);
     let indexVariableValuesToDcidsMap = generateIndexVariableValuesToDcidsMap(props.phsVariableName, props.phsVariableValues);
     let indexVariableDcidsToValuesMap = generateIndexVariableDcidsToValuesMap(props.phsVariableName, props.phsVariableValues);
     let indexVariableValueDcids = Object.keys(indexVariableDcidsToValuesMap);

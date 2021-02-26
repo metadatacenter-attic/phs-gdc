@@ -1,12 +1,12 @@
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import TopicsSelector from "./TopicsSelector";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import TopicsTree from "./TopicsTree";
-import TopicsSelector2 from "./TopicsSelector2";
+import TopicsTreeVirtualized from "./TopicsTreeVirtualized";
+import TopicsSelectorVirtualized from "./TopicsSelectorVirtualized";
+import TopicsTreeSelect from "./TopicsTreeSelect";
 
 export default function Step2(props) {
 
@@ -15,6 +15,9 @@ export default function Step2(props) {
       marginLeft: 'auto',
       marginRight: 'auto',
       textAlign: 'center'
+    },
+    topicsTree: {
+      marginTop: theme.spacing(2),
     }
   }));
 
@@ -36,18 +39,17 @@ export default function Step2(props) {
       <p className={"stepSubHeader"}>Select the Data Commons variables you want to retrieve values from</p>
       <CardContent>
         <div className={classes.topics}>
-          {/*Basic topics autocomplete selector*/}
-          {/*<TopicsSelector setDcVariableNames={props.setDcVariableNames}*/}
-          {/*                showDcVariableNamesError={props.showDcVariableNamesError}*/}
-          {/*                validateStep2DcVariableNames={props.validateStep2DcVariableNames}/>*/}
-
-          {/*Enhanced topics autocomplete selector. It uses virtualization to improve performance when dealing with a large amount of options*/}
-          <TopicsSelector2 setDcVariableNames={props.setDcVariableNames}
-                           showDcVariableNamesError={props.showDcVariableNamesError}
-                           validateStep2DcVariableNames={props.validateStep2DcVariableNames}/>
-
+          {/*<TopicsSelectorVirtualized setDcVariableNames={props.setDcVariableNames}*/}
+          {/*                           showDcVariableNamesError={props.showDcVariableNamesError}*/}
+          {/*                           validateStep2DcVariableNames={props.validateStep2DcVariableNames}/>*/}
+          <div className={classes.topicsTree}>
+            {/*<TopicsTreeVirtualized />*/}
+            <TopicsTreeSelect
+              setDcVariableNames={props.setDcVariableNames}
+              showDcVariableNamesError={props.showDcVariableNamesError}
+              validateStep2DcVariableNames={props.validateStep2DcVariableNames}/>
+          </div>
         </div>
-        {/*<div><TopicsTree/></div>*/}
       </CardContent>
     </>
   );

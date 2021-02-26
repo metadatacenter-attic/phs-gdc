@@ -4,17 +4,12 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import {useTheme, makeStyles} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {VariableSizeList} from 'react-window';
 import statVars from './../../resources/dc_statvars_list.json';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Checkbox from "@material-ui/core/Checkbox";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import {DC_GRAPH_BROWSER_BASE_URL} from "../../constants";
-
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small"/>;
 const checkedIcon = <CheckBoxIcon fontSize="small"/>;
@@ -121,7 +116,7 @@ function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-export default function TopicsSelector2(props) {
+export default function TopicsSelectorVirtualized(props) {
   const classes = useStyles();
 
   const handleChange = (values) => {
@@ -150,16 +145,16 @@ export default function TopicsSelector2(props) {
             checked={selected}
           />
           {option.label}
-          <Tooltip title="Show in Data Commons Graph Browser">
-            <IconButton onClick={() => window.open(DC_GRAPH_BROWSER_BASE_URL + option.name)}><OpenInNewIcon
-              fontSize={"small"}/></IconButton>
-          </Tooltip>
+          {/*<Tooltip title="Show in Data Commons Graph Browser">*/}
+          {/*  <IconButton onClick={() => window.open(DC_GRAPH_BROWSER_BASE_URL + option.name)}><OpenInNewIcon*/}
+          {/*    fontSize={"small"}/></IconButton>*/}
+          {/*</Tooltip>*/}
         </React.Fragment>
       )}
       renderInput={(params) => (
         <TextField {...params}
                    error={props.showDcVariableNamesError}
-                   helperText={"Select Data Commons variables" + " (" + formatNumber(statVars.length) + ")"}
+                   helperText={"Select Data Commons variables (" + formatNumber(statVars.length) + ")"}
                    variant="outlined"
                    label="DC variables"
                    placeholder=""/>
