@@ -35,9 +35,9 @@ to find any relevant data and bring it into their own data sets.
 ## The Data Commons Wizard
 
 The [Data Commons Wizard prototype](https://dcw.metadatacenter.org) provides a simple interface
-through which researchers can specify the locations and subjects for which they want data.
+through which researchers can specify the locations and topics for which they want data.
 Researchers can select whether they want to receive the timestamp and/or other provenance for the data.
-The Wizard can download the latest data for those locations and subjects, as they are available in the Data Commons,
+The Wizard can download the latest data for those locations and topics, as they are available in the Data Commons,
 or provide R code that will query the Data Commons directly for the data. 
 (Code is also available to integrate the resulting values into the researcher's data table, 
 using the chosen location type (zip codes, city name, etc.) as the lookup index for the retrieved values.
