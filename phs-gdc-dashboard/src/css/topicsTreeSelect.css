@@ -1,19 +1,3 @@
-/*body {*/
-/*  margin: 20px;*/
-/*  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,*/
-/*  Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial,*/
-/*  sans-serif;*/
-/*}*/
-
-/* fallback, until https://github.com/CompuIves/codesandbox-client/issues/174 is resolved */
-/*@font-face {*/
-/*  font-family: "Material Icons";*/
-/*  font-style: normal;*/
-/*  font-weight: 400;*/
-/*  src: url(https://fonts.gstatic.com/s/materialicons/v36/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)*/
-/*  format("woff2");*/
-/*}*/
-
 .material-icons {
   font-family: "Material Icons";
   font-weight: normal;
@@ -34,79 +18,210 @@
  * The idea is that it is easy to extend/override builtin styles with very little effort.
  */
 
-/*.statvars-tree .dropdown-trigger > span:after {*/
-/*  font-size: 12px;*/
-/*  color: #555;*/
-/*}*/
-
 .statvars-tree {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
+.statvars-tree .dropdown {
+  width: 100%;
+}
+
+.statvars-tree .tag {
+  font-size: 0.8em;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.87);
+  overflow: hidden;
+  white-space: nowrap;
+  padding-left: 10px;
+  padding-right: 0px;
+  text-overflow: ellipsis;
+  border: none;
+  border-radius: 16px;
+  justify-content: center;
+  text-decoration: none;
+  background-color: #e0e0e0;
+  height: 2em;
+  vertical-align: middle;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.statvars-tree span.tag button.tag-remove {
+  visibility: hidden;
+}
+
+.statvars-tree span.tag button.tag-remove::after {
+  visibility: visible;
+  content: '\e5c9';
+  color: rgba(0, 0, 0, 0.26);
+  font-family: "Material Icons";
+  vertical-align: middle;
+  font-size: 2.3em;
+  font-weight: normal;
+  padding: 0px;
+}
+
+.statvars-tree span.tag  button.tag-remove:hover::after {
+  color: #868686;
+}
+
+/*.statvars-tree .node {*/
+/*  padding-top: 4px;*/
+/*  padding-bottom: 4px;*/
+/*  line-height: 0.8em;*/
+/*}*/
+
+.statvars-tree .dropdown-content {
+  width: 100%;
+}
+
+/**/
+/*.statvars-tree .suspended .node-label {*/
+/*  font-style: italic;*/
+/*  text-decoration: line-through;*/
+/*}*/
+
+.statvars-tree .dropdown-content {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
 .statvars-tree .dropdown-trigger {
-  font-size: 1em;
-  padding: 4px;
-  line-height: 1.5;
-  letter-spacing: 0.00938em;
-  max-height: 200px;
-  display: inline-block;
-  overflow: auto;
-  /*border: 6px solid #b9b9b9 !important;*/
+  width: 100%;
   border-radius: 4px;
+  overflow-x: auto;
+}
+
+.statvars-tree .infinite-scroll-component {
+
+}
+
+.statvars-tree .dropdown-trigger .tag-item {
+  /*max-width: 250px;*/
+  /*line-height: 1.6em;*/
+
+}
+
+.statvars-tree .dropdown-trigger .tag-item span.tag {
+  /*display: inline-block;*/
+  /*background-color: red;*/
+  /*white-space: nowrap;*/
+  /*overflow: hidden;*/
+  /*text-overflow: ellipsis;*/
+}
+
+.statvars-tree .dropdown-trigger input.search {
+  line-height: 2.4em;
+  font-size: 1em;
+  text-decoration: none;
+  border: none;
+}
+
+.statvars-tree .dropdown .dropdown-trigger.arrow.bottom:after {
+  vertical-align: middle;
+  line-height: 2em;
+  float:right;
+  content: "\e5c5" !important;
+  font-family: "Material Icons";
+  font-size: 1.5em;
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+
+.statvars-tree .dropdown .dropdown-trigger.arrow.top:after {
+  vertical-align: middle;
+  line-height: 2em;
+  float:right;
+  content: "\e5c7" !important;
+  font-family: "Material Icons";
+  font-size: 1.5em;
+  color: rgba(0, 0, 0, 0.54) !important;
 }
 
 .statvars-tree .toggle {
-  font: normal normal normal 18px/1 "Material Icons";
-  color: #555;
+  font-family: "Material Icons";
+  font-size: 1.4em;
+  font-style: normal;
   white-space: pre;
   margin-right: 4px;
+  vertical-align: middle;
+  padding-top: 2px;
 }
 
 .statvars-tree .toggle.collapsed::after {
   cursor: pointer;
   content: "\E5CF";
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
 }
 
 .statvars-tree .toggle.expanded::after {
   cursor: pointer;
   content: "\E5CE";
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
 }
+
 
 /* checkbox styles */
 .statvars-tree .checkbox-item {
-  position: relative;
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0.75rem;
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  outline: 0;
+  font-size: 1em;
   vertical-align: middle;
+  position: relative;
+  /*height: 1.2em;*/
+  /*width: 1.2em;*/
+  margin-right: 0.75em;
+  cursor: pointer;
+  /*-webkit-appearance: none;*/
+  /*-moz-appearance: none;*/
+  /*appearance: none;*/
+  outline: 0;
+  padding: 0px;
 }
 
-.statvars-tree .checkbox-item:before {
-  content: "";
+/*.statvars-tree .checkbox-item:before {*/
+
+/*}*/
+
+/*.statvars-tree checkbox-item:checked {*/
+
+/*}*/
+
+/*.statvars-tree .checkbox-item:checked:before {*/
+/* */
+/*}*/
+
+/*Category nodes*/
+.statvars-tree li.node.tree {
+  padding-top: 8px;
+  padding-bottom: 0px;
+  line-height: 1.2em;
+}
+
+.statvars-tree li.node.tree span.node-label {
+  color: #000000de;
+}
+
+/*Leaf nodes*/
+.statvars-tree ul.root li.node.leaf {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  line-height: 0.5em;
+  color: #3f51b5;
+}
+
+.statvars-tree ul.root.searchModeOn li.node.leaf {
+  line-height: 1.6em;
+}
+
+.statvars-tree li.node.disabled i {
   position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 1;
   width: 100%;
-  height: 100%;
-  border: 2px solid #aaa;
-  transition: all 0.3s ease-in-out;
+  text-align: left;
 }
 
-.statvars-tree .checkbox-item:checked:before {
-  height: 50%;
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  border-top-style: none;
-  border-right-style: none;
-  border-color: #2196f3;
+.statvars-tree li.node.disabled input[type="checkbox"] {
+  visibility: hidden;
 }
 
 

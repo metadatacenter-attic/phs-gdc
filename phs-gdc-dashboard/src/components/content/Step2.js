@@ -4,8 +4,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import TopicsTreeVirtualized from "./TopicsTreeVirtualized";
-import TopicsSelectorVirtualized from "./TopicsSelectorVirtualized";
 import TopicsTreeSelect from "./TopicsTreeSelect";
 
 export default function Step2(props) {
@@ -17,7 +15,7 @@ export default function Step2(props) {
       textAlign: 'center'
     },
     topicsTree: {
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(1),
     }
   }));
 
@@ -39,11 +37,9 @@ export default function Step2(props) {
       <p className={"stepSubHeader"}>Select the Data Commons variables you want to retrieve values from</p>
       <CardContent>
         <div className={classes.topics}>
-          {/*<TopicsSelectorVirtualized setDcVariableNames={props.setDcVariableNames}*/}
-          {/*                           showDcVariableNamesError={props.showDcVariableNamesError}*/}
-          {/*                           validateStep2DcVariableNames={props.validateStep2DcVariableNames}/>*/}
+
           <div className={classes.topicsTree}>
-            {/*<TopicsTreeVirtualized />*/}
+
             <TopicsTreeSelect
               setDcVariableNames={props.setDcVariableNames}
               showDcVariableNamesError={props.showDcVariableNamesError}
