@@ -3,11 +3,13 @@
     "value": "demographics",
     "label": "Demographics",
     "nodeType": "group",
+    "disabled": true,
     "children": [
       {
         "value": "person",
         "label": "Person",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "growthrate_count_person",
@@ -11230,6 +11232,7 @@
         "value": "parent",
         "label": "Parent",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_parent_25ormoreyears_childenrolledinpublicschool_educationalattainment9thto12thgradenodiploma",
@@ -11337,6 +11340,7 @@
         "value": "child",
         "label": "Child",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_child_5ormoreyears_languageotherthanenglishspokenathome_enrolledinpublicschool",
@@ -11364,6 +11368,7 @@
         "value": "student",
         "label": "Student",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_student",
@@ -13661,6 +13666,7 @@
         "value": "teacher",
         "label": "Teacher",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_teacher",
@@ -13675,6 +13681,7 @@
     "value": "crime",
     "label": "Crime",
     "nodeType": "group",
+    "disabled": true,
     "children": [
       {
         "value": "count_criminalactivities_aggravatedassault",
@@ -13737,11 +13744,13 @@
     "value": "health",
     "label": "Health",
     "nodeType": "group",
+    "disabled": true,
     "children": [
       {
         "value": "death",
         "label": "Death",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_death",
@@ -19874,6 +19883,7 @@
         "value": "drugdistribution",
         "label": "DrugDistribution",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "retaildrugdistribution_drugdistribution_14hydroxycodeinone",
@@ -20271,6 +20281,7 @@
         "value": "medicalconditionincident",
         "label": "MedicalConditionIncident",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_medicalconditionincident_covid_19_patienthospitalized",
@@ -20348,6 +20359,7 @@
         "value": "medicaltest",
         "label": "MedicalTest",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_medicaltest_conditioncovid_19_pending",
@@ -20370,6 +20382,7 @@
         "value": "medicareenrollee",
         "label": "MedicareEnrollee",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_medicareenrollee",
@@ -20424,11 +20437,13 @@
     "value": "employment",
     "label": "Employment",
     "nodeType": "group",
+    "disabled": true,
     "children": [
       {
         "value": "worker",
         "label": "Worker",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_worker",
@@ -22881,6 +22896,7 @@
         "value": "establishment",
         "label": "Establishment",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_establishment",
@@ -23803,6 +23819,7 @@
         "value": "jobposting",
         "label": "JobPosting",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_jobposting_naicsaccommodationfoodservices_adjusted",
@@ -23940,6 +23957,7 @@
         "value": "unemploymentinsuranceclaim",
         "label": "UnemploymentInsuranceClaim",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_unemploymentinsuranceclaim_shorttimecompensation_scaledforparttimeunemploymentbenefits",
@@ -24029,11 +24047,13 @@
     "value": "economic",
     "label": "Economic",
     "nodeType": "group",
+    "disabled": true,
     "children": [
       {
         "value": "economicactivity",
         "label": "EconomicActivity",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "growthrate_amount_economicactivity_grossdomesticproduction",
@@ -24191,6 +24211,7 @@
         "value": "consumption",
         "label": "Consumption",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "amount_consumption_electricity_percapita",
@@ -24208,6 +24229,7 @@
         "value": "debt",
         "label": "Debt",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "amount_debt_government_asafractionofgrossdomesticproduction",
@@ -24225,6 +24247,7 @@
         "value": "treasurybill",
         "label": "TreasuryBill",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "interestrate_treasurybill_month1",
@@ -24252,6 +24275,7 @@
         "value": "treasurybond",
         "label": "TreasuryBond",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "interestrate_treasurybond_year20",
@@ -24269,6 +24293,7 @@
         "value": "treasurynote",
         "label": "TreasuryNote",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "interestrate_treasurynote_year10",
@@ -24303,6 +24328,7 @@
     "value": "environment",
     "label": "Environment",
     "nodeType": "group",
+    "disabled": true,
     "children": [
       {
         "value": "amount_emissions_carbondioxide_percapita",
@@ -24315,6 +24341,7 @@
     "value": "household",
     "label": "Household",
     "nodeType": "group",
+    "disabled": true,
     "children": [
       {
         "value": "count_household",
@@ -28992,6 +29019,7 @@
     "value": "housingunit",
     "label": "HousingUnit",
     "nodeType": "group",
+    "disabled": true,
     "children": [
       {
         "value": "count_housingunit",
@@ -29494,11 +29522,13 @@
     "value": "disasters",
     "label": "Disasters",
     "nodeType": "group",
+    "disabled": true,
     "children": [
       {
         "value": "cycloneevent",
         "label": "CycloneEvent",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_cycloneevent",
@@ -29531,6 +29561,7 @@
         "value": "earthquakeevent",
         "label": "EarthquakeEvent",
         "nodeType": "group",
+        "disabled": true,
         "children": [
           {
             "value": "count_earthquakeevent",

@@ -133,6 +133,7 @@ def parse_details_as_tree_select(details):
         "value": node_id,
         "label": node_name,
         "nodeType": "group",
+        "disabled": True,
         "children": node_children
     }
 
