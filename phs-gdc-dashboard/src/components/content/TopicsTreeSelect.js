@@ -9,7 +9,6 @@ export default function TopicsTreeSelect(props) {
 
   const handleChange = React.useMemo(
     () => (_, selectedNodes) => {
-      //setDcVarNames(selectedValues.map(val => val.label));
       let nodes = [];
       for (let i=0; i<selectedNodes.length; i++) {
         if (selectedNodes[i].nodeType === 'variable') {
@@ -20,13 +19,6 @@ export default function TopicsTreeSelect(props) {
     },
     []
   );
-
-  const onBlur = () => {
-    console.log('onBlur')
-
-    //props.setDcVariableNames(selectedNodes);
-    //props.validateStep2DcVariableNames();
-  }
 
   return (
     <div style={{height: 300,textAlign: "left"}}>

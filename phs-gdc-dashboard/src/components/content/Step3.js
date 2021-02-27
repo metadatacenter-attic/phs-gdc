@@ -80,13 +80,12 @@ export default function Step3(props) {
   };
 
   function getCsvData() {
-    console.log('dcVarNames: ', props.dcVariableNames);
     let indexVariableValuesToDcidsMap = generateIndexVariableValuesToDcidsMap(props.phsVariableName, props.phsVariableValues);
     let indexVariableDcidsToValuesMap = generateIndexVariableDcidsToValuesMap(props.phsVariableName, props.phsVariableValues);
     let indexVariableValueDcids = Object.keys(indexVariableDcidsToValuesMap);
     return getPlaceStatistics(props.phsVariableName, indexVariableValueDcids, props.dcVariableNames).then((data) => {
       let tabJsonData = toTabularJsonData(data, props.phsVariableName, indexVariableValuesToDcidsMap, indexVariableDcidsToValuesMap, props.dcVariableNames,
-        settingsState.includeDates, settingsState.includeDatesOption);
+        settingsState.includeDates, settingsState.includeDatesOption, settingsState.includeProvenance);
       return jsonToCsv(tabJsonData);
     }).catch((error) => {
         console.error(error);

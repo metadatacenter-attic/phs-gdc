@@ -37,10 +37,11 @@ import {
  * @param dcVariableNames
  * @param includeDates
  * @param includeDatesOption
+ * @param includeProvenance
  * @returns {[]}
  */
 export function toTabularJsonData(jsonData, phsVariableName, indexVariableValuesToDcidsMap, indexVariableDcidsToValuesMap,
-                                  dcVariableNames, includeDates, includeDatesOption) {
+                                  dcVariableNames, includeDates, includeDatesOption, includeProvenance) {
   let tabularJsonData = [];
 
   let rows = {}
@@ -68,6 +69,11 @@ export function toTabularJsonData(jsonData, phsVariableName, indexVariableValues
           if (includeDates && includeDatesOption === 'column') {
             row[colName + '_Date'] = date;
           }
+          // If requested, include provenance information as an additional column
+          if (includeProvenance) {
+            let provenanceDomain = jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["provenanceDomain"];
+            row[colName + '_Provenance'] = provenanceDomain;
+          }
         } else { // no data
           if (includeDates) {
             if (includeDatesOption === 'header') {
@@ -78,7 +84,12 @@ export function toTabularJsonData(jsonData, phsVariableName, indexVariableValues
             } else {
               console.error('Invalid option: ' + includeDatesOption);
             }
-          } else {
+          }
+          if (includeProvenance) {
+            row[colName] = NOT_AVAILABLE_VALUE;
+            row[colName + '_Provenance'] = NOT_AVAILABLE_VALUE;
+          }
+          if (!includeDates && !includeProvenance) {
             row[colName] = NOT_AVAILABLE_VALUE;
           }
         }
