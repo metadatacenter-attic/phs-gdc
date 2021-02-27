@@ -3,6 +3,7 @@ import statVarsTree from './../../resources/dc_statvars_tree_select.json';
 import '../../css/topicsTreeSelect.css'
 import 'react-dropdown-tree-select/dist/styles.css'
 import {ReactDropdownTreeSelectMemoized} from "./dropdownTree.container";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 export default function TopicsTreeSelect(props) {
 
@@ -34,8 +35,8 @@ export default function TopicsTreeSelect(props) {
         mode="hierarchical"
         data={statVarsTree}
         onChange={handleChange}
-
       />
+      <FormHelperText className="tree-helper-text">Search for variables by name or browse the hierarchy</FormHelperText>
     </div>
   );
 }

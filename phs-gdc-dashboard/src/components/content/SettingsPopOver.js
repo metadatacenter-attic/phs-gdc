@@ -33,6 +33,10 @@ export default function SettingsPopOver(props) {
     props.setSettingsState({...props.settingsState, 'includeDatesOption': event.target.value});
   };
 
+  const handleIncludeProvenanceCheckBoxChange = (event) => {
+    props.setSettingsState({...props.settingsState, 'includeProvenance': event.target.checked});
+  };
+
   return (
     <div className={classes.settings}>
       <h4>Export settings</h4>
@@ -69,6 +73,23 @@ export default function SettingsPopOver(props) {
             control={<Radio disabled={!props.settingsState.includeDates} color={"primary"}/>}
             label="In column name"/>
         </RadioGroup>
+        <FormGroup row className={classes.item}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={props.settingsState.includeProvenance}
+                onChange={handleIncludeProvenanceCheckBoxChange}
+                name="includeProvenance"
+                color="primary"
+              />
+            }
+            label="Include provenance"
+          />
+          <Tooltip
+            title="For each selected variable, it includes the corresponding data source as an additional column.">
+            <HelpOutlineIcon/>
+          </Tooltip>
+        </FormGroup>
       </FormControl>
     </div>
   );

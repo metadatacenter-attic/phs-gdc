@@ -52,7 +52,8 @@ export default function Step3(props) {
 
   const [settingsState, setSettingsState] = React.useState({
     includeDates: false,
-    includeDatesOption: 'column'
+    includeDatesOption: 'column',
+    includeProvenance: false,
   });
 
   const [openCodeDialog, setOpenCodeDialog] = React.useState(false);

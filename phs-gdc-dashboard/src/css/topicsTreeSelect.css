@@ -62,7 +62,7 @@
   padding: 0px;
 }
 
-.statvars-tree span.tag  button.tag-remove:hover::after {
+.statvars-tree span.tag button.tag-remove:hover::after {
   color: #868686;
 }
 
@@ -93,7 +93,7 @@
 .statvars-tree .dropdown .dropdown-trigger.arrow.bottom:after {
   vertical-align: middle;
   line-height: 2em;
-  float:right;
+  float: right;
   content: "\e5c5" !important;
   font-family: "Material Icons";
   font-size: 1.5em;
@@ -103,7 +103,7 @@
 .statvars-tree .dropdown .dropdown-trigger.arrow.top:after {
   vertical-align: middle;
   line-height: 2em;
-  float:right;
+  float: right;
   content: "\e5c7" !important;
   font-family: "Material Icons";
   font-size: 1.5em;
@@ -199,4 +199,12 @@
   visibility: hidden;
 }
 
+/*Form helper text*/
+.tree-helper-text {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-left: 6px;
+  padding-right: 6px;
+  /*font-size: 3px;*/
+}
 
