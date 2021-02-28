@@ -86,7 +86,7 @@ export default function SettingsPopOver(props) {
             label="Include provenance"
           />
           <Tooltip
-            title="For each selected variable, it includes the corresponding data source as an additional column.">
+            title="For each selected variable, it includes the name of its source as an additional column.">
             <HelpOutlineIcon/>
           </Tooltip>
         </FormGroup>

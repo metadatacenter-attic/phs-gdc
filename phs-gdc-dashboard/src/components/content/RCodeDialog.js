@@ -70,7 +70,7 @@ export default function RCodeDialog(props) {
           <Tab label="API-based Data Retrieval"/>
         </Tabs>
         <div className={classes.codeOptions}>
-          <p class={classes.codeDescription}><b>Installation</b>: Run the code below to set up the required libraries (only once).</p>
+          <p className={classes.codeDescription}><b>Installation</b>: Run the code below to set up the required libraries (only once).</p>
           <CopyToClipboard
             text={generateRCodeForInstallation(snippetOption)}>
             <Tooltip title="Copy to clipboard">

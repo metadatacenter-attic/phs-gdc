@@ -22,7 +22,7 @@ import {
   INDEX_VARIABLE_CITY_NAME,
   INDEX_VARIABLE_COUNTY_NAME,
   INDEX_VARIABLE_STATE_NAME, INDEX_VARIABLE_ZIPCODE_NAME,
-  INDEX_VARIABLES, NOT_AVAILABLE_VALUE
+  INDEX_VARIABLES, NOT_AVAILABLE_VALUE, PROVENANCE_DOMAIN_CENSUS_GOV
 } from "../constants";
 
 
@@ -57,21 +57,29 @@ export function toTabularJsonData(jsonData, phsVariableName, indexVariableValues
         let dcVarName = dcVariableNames[i];
         let colName = dcVarName;
         // Check if there is any data for the given placeId and variable...
-        if (jsonData['placeData'][placeId]['statVarData'][dcVarName]['sourceSeries']) {
-          let date = getMostRecentDate(jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"]);
+        let sourceSeries = jsonData['placeData'][placeId]['statVarData'][dcVarName]['sourceSeries'];
+        if (sourceSeries) {
+
+          // Select the most relevant data source and the most recent date from it
+          let selectedDataSource = selectDataSource(sourceSeries);
+          let index =  selectedDataSource['sourceIndex'];
+          let date = selectedDataSource['mostRecentDateForSource'];
+          console.log('index', index);
+          console.log('date', date);
+
           // If requested, include temporal information in the column header
           if (includeDates && includeDatesOption === 'header') {
             colName = colName + '_' + date;
             colNamesIncludeDatesOptionHeader.add(colName);
           }
-          row[colName] = jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["val"][date];
+          row[colName] = sourceSeries[index]["val"][date];
           // If requested, include temporal information as an additional column
           if (includeDates && includeDatesOption === 'column') {
             row[colName + '_Date'] = date;
           }
           // If requested, include provenance information as an additional column
           if (includeProvenance) {
-            let provenanceDomain = jsonData['placeData'][placeId]['statVarData'][dcVarName]["sourceSeries"][0]["provenanceDomain"];
+            let provenanceDomain = sourceSeries[index]["provenanceDomain"];
             row[colName + '_Provenance'] = provenanceDomain;
           }
         } else { // no data
@@ -107,6 +115,41 @@ export function toTabularJsonData(jsonData, phsVariableName, indexVariableValues
 
   return tabularJsonData;
 };
+
+/**
+ * Selects the most appropriate data source, as well as the most recent year from that data source
+ * @param sourceSeries
+ */
+function selectDataSource(sourceSeries) {
+  let result = {
+    "sourceIndex": null,
+    "mostRecentDateForSource": null
+  }
+
+  // For the moment, we priority to census.gov.
+  for (let i=0; i<sourceSeries.length; i++) {
+    if (sourceSeries[i]['provenanceDomain'] === PROVENANCE_DOMAIN_CENSUS_GOV) {
+      result['sourceIndex'] = i;
+      result['mostRecentDateForSource'] = getMostRecentDate(sourceSeries[i]['val']);
+      return result;
+    }
+  }
+
+  // If there is no data from census.gov, we pick the source with the most recent data.
+  let mostRecentDataIndex = 0;
+  let mostRecentDate = -1;
+  let index;
+  for (index=0; index < sourceSeries.length; index++) {
+    let currentMostRecentDate = getMostRecentDate(sourceSeries[index]['val']);
+    if (currentMostRecentDate > mostRecentDate) {
+      mostRecentDate = currentMostRecentDate;
+      mostRecentDataIndex = index;
+    }
+  }
+  result['sourceIndex'] = mostRecentDataIndex;
+  result['mostRecentDateForSource'] = mostRecentDate;
+  return result;
+}
 
 /**
  * Given an object with key-value pairs, where each key is a date, retrieve the most recent date
