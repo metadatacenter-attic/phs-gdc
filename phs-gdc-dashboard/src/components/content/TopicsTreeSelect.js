@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React from "react";
 import statVarsTree from './../../resources/dc_statvars_tree_select.json';
 import '../../css/topicsTreeSelect.css'
 import 'react-dropdown-tree-select/dist/styles.css'

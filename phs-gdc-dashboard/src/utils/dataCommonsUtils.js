@@ -64,8 +64,6 @@ export function toTabularJsonData(jsonData, phsVariableName, indexVariableValues
           let selectedDataSource = selectDataSource(sourceSeries);
           let index =  selectedDataSource['sourceIndex'];
           let date = selectedDataSource['mostRecentDateForSource'];
-          console.log('index', index);
-          console.log('date', date);
 
           // If requested, include temporal information in the column header
           if (includeDates && includeDatesOption === 'header') {
@@ -137,11 +135,11 @@ function selectDataSource(sourceSeries) {
 
   // If there is no data from census.gov, we pick the source with the most recent data.
   let mostRecentDataIndex = 0;
-  let mostRecentDate = -1;
+  let mostRecentDate;
   let index;
   for (index=0; index < sourceSeries.length; index++) {
     let currentMostRecentDate = getMostRecentDate(sourceSeries[index]['val']);
-    if (currentMostRecentDate > mostRecentDate) {
+    if (!mostRecentDate || currentMostRecentDate > mostRecentDate) {
       mostRecentDate = currentMostRecentDate;
       mostRecentDataIndex = index;
     }
@@ -159,7 +157,12 @@ function selectDataSource(sourceSeries) {
  */
 function getMostRecentDate(data) {
   let mostRecentDate = Object.keys(data).sort().reverse()[0];
-  return parseInt(mostRecentDate);
+  if (Number.isInteger(mostRecentDate)) { // e.g., 2017
+    return parseInt(mostRecentDate);
+  }
+  else {
+    return mostRecentDate; // e.g., 2017-11
+  }
 };
 
 // /**
