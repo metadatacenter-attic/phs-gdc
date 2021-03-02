@@ -87,7 +87,7 @@ export default function RCodeDialog(props) {
           <p class={classes.codeDescription}>Run the code below to retrieve the DataCommons.org data and to merge it with your existing data frame. Replace the <tt>&#60;YOUR_DATA_FRAME&#62;</tt> and <tt>&#60;YOUR_COLUMN_NAME&#62;</tt> placeholders accordingly.</p>
           <CopyToClipboard
             text={generateRCodeForRetrieval(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
-              props.settingsState.includeDates)}>
+              props.settingsState.includeDates, props.settingsState.includeProvenance)}>
             <Tooltip title="Copy to clipboard">
               <IconButton><FileCopyIcon fontSize={"small"}/></IconButton>
             </Tooltip>
@@ -99,7 +99,7 @@ export default function RCodeDialog(props) {
         <div className={classes.codeContent}>
           <SyntaxHighlighter language="r" style={stackoverflowLight}>
             {generateRCodeForRetrieval(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
-              props.settingsState.includeDates)}
+              props.settingsState.includeDates, props.settingsState.includeProvenance)}
           </SyntaxHighlighter>
         </div>
       </DialogContent>

@@ -17,12 +17,12 @@ function getLibrariesForApiBasedDataRetrieval() {
   return snippetsR.snippetApiBasedDataRetrievalLibraries;
 }
 
-export function generateRCodeForRetrieval(option, indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
+export function generateRCodeForRetrieval(option, indexVariableName, indexVariableValues, dcVariableNames, includeDates, includeProvenance) {
 
   if (option === 0) {
     return getCodeForFileBasedDataRetrieval(indexVariableName);
   } else {
-    return getCodeForApiBasedDataRetrieval(indexVariableName, indexVariableValues, dcVariableNames, includeDates);
+    return getCodeForApiBasedDataRetrieval(indexVariableName, indexVariableValues, dcVariableNames, includeDates, includeProvenance);
   }
 }
 
@@ -32,12 +32,14 @@ function getCodeForFileBasedDataRetrieval(indexVariableName) {
   return snippet;
 }
 
-function getCodeForApiBasedDataRetrieval(indexVariableName, indexVariableValues, dcVariableNames, includeDates) {
+function getCodeForApiBasedDataRetrieval(indexVariableName, indexVariableValues, dcVariableNames, includeDates, includeProvenance) {
   let snippet = snippetsR.snippetApiBasedDataRetrievalCode;
   snippet = snippet.replace("$INDEX_VARIABLE_VALUES", arrayToWrappedCommaSeparated(indexVariableValues, 100));
   snippet = snippet.replace("$INDEX_VARIABLE_NAME", indexVariableName);
   snippet = snippet.replace("$DC_VARIABLE_NAMES", arrayToWrappedCommaSeparated(dcVariableNames, 100));
   snippet = snippet.replace("$LOCATION_TYPE", toCommonDataLocationType(indexVariableName));
+  snippet = snippet.replace("$INCLUDE_DATES", toBoolean(includeDates));
+  snippet = snippet.replace("$INCLUDE_PROVENANCE", toBoolean(includeProvenance));
   return snippet;
 }
 
@@ -47,6 +49,10 @@ function toCommonDataLocationType(locType) {
   } else {
     return locType;
   }
+}
+
+function toBoolean(bool) {
+  return (bool) ? "TRUE" : "FALSE";
 }
 
 /**
