@@ -29,6 +29,12 @@ def generate_data():
         if state_fips != '00' and state_fips != '72':  # 00 -> US; 72 -> Puerto Rico
             place_name = row['Name']
             state_abbr = fips_to_state_abbrv[state_fips]
+            # State to cities
+            if state_abbr not in state_to_cities:
+                state_to_cities[state_abbr] = []
+            # State to counties
+            if state_abbr not in state_to_counties:
+                state_to_counties[state_abbr] = []
             if is_city_name(place_name):
                 fips = state_fips + row['Place']
                 # Cities
@@ -37,9 +43,6 @@ def generate_data():
                 city_plus_state_abbr = city + ', ' + state_abbr
                 city_to_fips[city_plus_state_abbr_short.lower()] = fips
                 fips_to_city[fips] = city_plus_state_abbr
-                # State to cities
-                if state_abbr not in state_to_cities:
-                    state_to_cities[state_abbr] = []
                 state_to_cities[state_abbr].append(city_plus_state_abbr)
             elif is_county_name(place_name):
                 fips = state_fips + row['County']
@@ -49,9 +52,6 @@ def generate_data():
                 county_plus_state_abbr = county + ', ' + state_abbr
                 county_to_fips[county_plus_state_abbr_short.lower()] = fips
                 fips_to_county[fips] = county_plus_state_abbr
-                # State to counties
-                if state_abbr not in state_to_counties:
-                    state_to_counties[state_abbr] = []
                 state_to_counties[state_abbr].append(county_plus_state_abbr)
 
     with open('output_data/cityToFips.json', 'w', encoding='utf-8') as f:
