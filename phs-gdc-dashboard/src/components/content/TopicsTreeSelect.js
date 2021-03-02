@@ -29,7 +29,7 @@ export default function TopicsTreeSelect(props) {
         onChange={handleChange}
       />
       <FormHelperText className="tree-helper-text">Search for variables by name or browse the hierarchy. <i>(Note that
-        many variables may not have data. We will address this shortly)</i></FormHelperText>
+        many variables may not have data. We will address this shortly.)</i></FormHelperText>
     </div>
   );
 }

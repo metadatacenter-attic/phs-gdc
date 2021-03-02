@@ -83,7 +83,8 @@ export function toTabularJsonData(jsonData, phsVariableName, indexVariableValues
         } else { // no data
           if (includeDates) {
             if (includeDatesOption === 'header') {
-              // Can't do anything because I don't know the name(s) of the columns whose headers contain dates
+              // Can't do anything because I don't know the name(s) of the columns whose headers contain dates yet.
+              // We'll fill those columns with NA's later. See (*)
             } else if (includeDatesOption === 'column') {
               row[colName] = NOT_AVAILABLE_VALUE;
               row[colName + '_Date'] = NOT_AVAILABLE_VALUE;
@@ -105,6 +106,17 @@ export function toTabularJsonData(jsonData, phsVariableName, indexVariableValues
     else {
       console.error("PlaceId not found in json: ", placeId);
     }
+  }
+
+  // (*) Fill out the columns whose headers contain dates with NA's in the case that there is no value
+  if ((includeDates) && (includeDatesOption === 'header')) {
+    Object.keys(rows).forEach(rowKey => {
+      colNamesIncludeDatesOptionHeader.forEach(colKey => {
+        if (!(colKey in rows[rowKey])) {
+          rows[rowKey][colKey] = NOT_AVAILABLE_VALUE;
+        }
+      });
+    });
   }
 
   Object.keys(indexVariableValuesToDcidsMap).forEach(placeValue => {
