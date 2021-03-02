@@ -1,6 +1,6 @@
 {
-  "snippetFileBasedDataRetrievalLibraries": "# If error, then run \"install.packages('dplyr')\"\nlibrary('dplyr')",
-  "snippetApiBasedDataRetrievalLibraries": "# If error, then run \"install.packages('dplyr')\"\nlibrary('dplyr');\n\n# If error, then run \"install.packages('devtools')\"\nlibrary('devtools');\n\n# If error, then run \"install_github('johardi/commondata-r')\"\nlibrary('commondata')",
+  "snippetFileBasedDataRetrievalLibraries": "if (!require('dplyr')) install.packages('dplyr'); library('dplyr')",
+  "snippetApiBasedDataRetrievalLibraries": "if (!require('dplyr')) install.packages('dplyr'); library('dplyr')\nif (!require('devtools')) install.packages('devtools'); library('devtools')\nif (!require('commondata')) install_github('johardi/commondata-r'); library('commondata')",
   "snippetFileBasedDataRetrievalCode": "# Load the downloaded CSV file from the DC Wizard\nacquired_data <- read.csv(\"dcw_data.csv\", header=T)\n\n# Merge the two data frames using the appropriate column names\nmerged_data <- left_join(<YOUR_DATA_FRAME>, acquired_data, by=c(\"<YOUR_COLUMN_NAME>\"=\"$INDEX_VARIABLE_NAME\"))",
   "snippetApiBasedDataRetrievalCode": "# Get the latest statistical data from DataCommons.org\nlocations <- c($INDEX_VARIABLE_VALUES)\nstatvars <- c($DC_VARIABLE_NAMES)\nacquired_data <- latest_statistical_data(locations, location_type = \"$LOCATION_TYPE\", statvars)\n\n# Merge the two data frames using the appropriate column names\nmerged_data <- left_join(<YOUR_DATA_FRAME>, acquired_data, by=c(\"<YOUR_COLUMN_NAME>\"=\"geoName\"))"
 }
