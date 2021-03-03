@@ -7,8 +7,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {CopyToClipboard} from "react-copy-to-clipboard";
-import {generateRCodeForInstallation} from "../../services/codeGenerationService";
-import {generateRCodeForRetrieval} from "../../services/codeGenerationService";
+import {generateRCodeForInstallation, generateRCodeForRetrieval} from "../../services/codeGenerationService";
 import IconButton from "@material-ui/core/IconButton";
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 //import {SNIPPET_1_URL} from "../../constants";
@@ -84,7 +83,7 @@ export default function RCodeDialog(props) {
           </SyntaxHighlighter>
         </div>
         <div className={classes.codeOptions}>
-          <p class={classes.codeDescription}>Run the code below to retrieve the DataCommons.org data and to merge it with your existing data frame. Replace the <tt>&#60;YOUR_DATA_FRAME&#62;</tt> and <tt>&#60;YOUR_COLUMN_NAME&#62;</tt> placeholders accordingly.</p>
+          <p className={classes.codeDescription}>Run the code below to retrieve the DataCommons.org data and to merge it with your existing data frame. Replace the <tt>&#60;YOUR_DATA_FRAME&#62;</tt> and <tt>&#60;YOUR_COLUMN_NAME&#62;</tt> placeholders accordingly.</p>
           <CopyToClipboard
             text={generateRCodeForRetrieval(snippetOption, props.phsVariableName, props.phsVariableValues, props.dcVariableNames,
               props.settingsState.includeDates, props.settingsState.includeProvenance)}>

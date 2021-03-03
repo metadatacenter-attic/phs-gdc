@@ -199,12 +199,3 @@
   visibility: hidden;
 }
 
-/*Form helper text*/
-.tree-helper-text {
-  padding-top: 0px;
-  margin-top: 0px;
-  padding-left: 6px;
-  padding-right: 6px;
-  /*font-size: 3px;*/
-}
-

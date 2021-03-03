@@ -132,7 +132,7 @@ export default function Step1(props) {
           <TextField
             fullWidth
             id="standard-multiline-flexible"
-            label="Variable values"
+            label="Enter values (one per line)"
             multiline
             rowsMax={20}
             rows={6}
@@ -144,8 +144,8 @@ export default function Step1(props) {
               props.validateStep1VariableValues();
             }}
             error={props.showPhsVariableValuesError}
-            helperText={"Enter values (one per line)"}
           />
+          <FormHelperText className="helper-text">Example: <i>{INDEX_VARIABLES[variable]['uiValuesExample']}</i></FormHelperText>
         </>
         }
 

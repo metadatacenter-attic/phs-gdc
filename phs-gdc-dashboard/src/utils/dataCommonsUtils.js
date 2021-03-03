@@ -42,6 +42,7 @@ import {
  */
 export function toTabularJsonData(jsonData, phsVariableName, indexVariableValuesToDcidsMap, indexVariableDcidsToValuesMap,
                                   dcVariableNames, includeDates, includeDatesOption, includeProvenance) {
+
   let tabularJsonData = [];
 
   let rows = {}
@@ -59,7 +60,6 @@ export function toTabularJsonData(jsonData, phsVariableName, indexVariableValues
         // Check if there is any data for the given placeId and variable...
         let sourceSeries = jsonData['placeData'][placeId]['statVarData'][dcVarName]['sourceSeries'];
         if (sourceSeries) {
-
           // Select the most relevant data source and the most recent date from it
           let selectedDataSource = selectDataSource(sourceSeries);
           let index =  selectedDataSource['sourceIndex'];
@@ -79,19 +79,24 @@ export function toTabularJsonData(jsonData, phsVariableName, indexVariableValues
           if (includeProvenance) {
             let provenanceDomain = sourceSeries[index]["provenanceDomain"];
             row[colName + '_Provenance'] = provenanceDomain;
+            colNamesIncludeDatesOptionHeader.add(colName + '_Provenance');
           }
         } else { // no data
-          if (includeDates) {
+          if (includeDates && (includeProvenance || !includeProvenance)) { // for clarity
             if (includeDatesOption === 'header') {
-              // Can't do anything because I don't know the name(s) of the columns whose headers contain dates
+              // Can't do anything because I don't know the name(s) of the columns whose headers contain dates yet.
+              // We'll fill those columns with NA's later. See (*)
             } else if (includeDatesOption === 'column') {
               row[colName] = NOT_AVAILABLE_VALUE;
               row[colName + '_Date'] = NOT_AVAILABLE_VALUE;
+              if (includeProvenance) {
+                row[colName + '_Provenance'] = NOT_AVAILABLE_VALUE;
+              }
             } else {
               console.error('Invalid option: ' + includeDatesOption);
             }
           }
-          if (includeProvenance) {
+          else if (!includeDates && includeProvenance) {
             row[colName] = NOT_AVAILABLE_VALUE;
             row[colName + '_Provenance'] = NOT_AVAILABLE_VALUE;
           }
@@ -105,6 +110,17 @@ export function toTabularJsonData(jsonData, phsVariableName, indexVariableValues
     else {
       console.error("PlaceId not found in json: ", placeId);
     }
+  }
+
+  // (*) Fill out the columns whose headers contain dates with NA's in the case that there is no value
+  if ((includeDates) && (includeDatesOption === 'header')) {
+    Object.keys(rows).forEach(rowKey => {
+      colNamesIncludeDatesOptionHeader.forEach(colKey => {
+        if (!(colKey in rows[rowKey])) {
+          rows[rowKey][colKey] = NOT_AVAILABLE_VALUE;
+        }
+      });
+    });
   }
 
   Object.keys(indexVariableValuesToDcidsMap).forEach(placeValue => {
