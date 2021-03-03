@@ -9,7 +9,10 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import AboutDialog from "./content/AboutDialog";
 import ContactUsDialog from "./content/ContactUsDialog";
-//import GitHubIcon from '@material-ui/icons/GitHub';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import Tooltip from "@material-ui/core/Tooltip";
+import {GITHUB_REPO_URL} from "../constants";
+import SettingsIcon from "@material-ui/core/SvgIcon/SvgIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,8 +82,15 @@ export default function AppHeader() {
           <Typography variant="h6" className={classes.title}>
             Data Commons Wizard
           </Typography>
+
+          <Tooltip title="Go to GitHub repository">
+            <IconButton color="inherit" onClick={() => window.open(GITHUB_REPO_URL)}><GitHubIcon/></IconButton>
+          </Tooltip>
+
         </Toolbar>
       </AppBar>
+
+
 
       <AboutDialog openAboutDialog={openAboutDialog} handleCloseAboutDialog={handleCloseAboutDialog}/>
       <ContactUsDialog openContactUsDialog={openContactUsDialog} handleCloseContactUsDialog={handleCloseContactUsDialog}/>
