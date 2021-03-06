@@ -3,7 +3,8 @@
 This advanced prototype blends the talents of the Google Data Commons team, 
 the Stanford Center for Population Health Sciences (PHS) team, 
 and the Stanford Center for Biomedical Informatics Research (BMIR) team to create a low-friction tool
-to discover and use freely available research data.  
+to discover and use freely available research data.
+
 See the [Instructions](#instructions) section for information on using this tool. 
 
 ## Opportunity
@@ -85,8 +86,8 @@ Click on the gear menu in the third column to see the latest options.
 ### Providing feedback
 
 Three options are provided for your feedback. You can enter a ticket in the 
-[Data Commons Wizard GitHub repository](https://github.com/metadatacenter/phs-gdc/issues),
+[Wizard GitHub issues](https://github.com/metadatacenter/phs-gdc/issues),
 use the Feedback link in the lower right of the Wizard,
 or send email to jgraybeal (at) stanford.edu. 
-You can visit the Wizard's GitHub repository by clicking on the GitHub icon
+You can visit the [Wizard's GitHub repository](https://github.com/metadatacenter/phs-gdc) by clicking on the GitHub icon
 in the upper right of the third column.
