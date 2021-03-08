@@ -18,10 +18,9 @@ export default function AboutDialog(props) {
       <DialogTitle id="about-dialog-title">About this project</DialogTitle>
       <DialogContent>
 
-        <DialogContentText>This prototype blends the talents of the Google Data Commons team, the Stanford Center for
-          Population
-          Health Sciences (PHS) team, and the Stanford Center for Biomedical Informatics Research (BMIR) team to
-          create a low-friction tool to discover and use freely available research data.</DialogContentText>
+        <DialogContentText>This advanced prototype blends the talents of the Google Data Commons team, the Stanford
+          Center for Population Health Sciences (PHS) team, and the Stanford Center for Biomedical Informatics Research
+          (BMIR) team to create a low-friction tool to discover and use freely available research data.</DialogContentText>
         <h2>Opportunity</h2>
         <h3>The data</h3>
         <DialogContentText>The Google-provided <a href="https://datacommons.org/">Data Commons repository</a> provides
