@@ -48,6 +48,7 @@ export const DEFAULT_VALUE_OPTION = "optionEnter";
 export const SNIPPET_1_URL = "https://github.com/metadatacenter/phs-gdc/blob/develop/r/snippet-merge-csv/MergeSnippet.R";
 export const DC_GRAPH_BROWSER_BASE_URL = "https://datacommons.org/browser/";
 export const GITHUB_REPO_URL = "https://github.com/metadatacenter/phs-gdc/";
+export const STATVARS_AVAILABILITY_SHEET = "https://docs.google.com/spreadsheets/d/1s7jurDfn-c9iHyNQ6QnfnPGYV6j6bd75cF3fbvwf9Lc/edit#gid=155287420";
 
 // Provenance domains
 export const PROVENANCE_DOMAIN_CENSUS_GOV = 'census.gov';

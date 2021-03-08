@@ -4,6 +4,7 @@ import '../../css/topicsTreeSelect.css'
 import 'react-dropdown-tree-select/dist/styles.css'
 import {ReactDropdownTreeSelectMemoized} from "./dropdownTree.container";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import {STATVARS_AVAILABILITY_SHEET} from "../../constants";
 
 export default function TopicsTreeSelect(props) {
 
@@ -29,7 +30,8 @@ export default function TopicsTreeSelect(props) {
         onChange={handleChange}
       />
       <FormHelperText className="helper-text">Search for variables by name or browse the hierarchy. <i>(Note that
-        many variables may not have data. We will address this shortly.)</i></FormHelperText>
+        many variables may not have data. Please see <a href={STATVARS_AVAILABILITY_SHEET} target="_blank">variables-location
+          availability list</a>.)</i></FormHelperText>
     </div>
   );
 }
