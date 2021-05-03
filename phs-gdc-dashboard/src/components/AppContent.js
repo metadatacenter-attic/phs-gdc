@@ -65,7 +65,7 @@ export default function AppContent() {
         </Grid>
         <Grid item md={4}>
           <Card className={classes.card}>
-            <Step2 title={"Select Data Commons Variables"}
+            <Step2 title={"Select DC Variables"}
                    setDcVariableNames={setDcVariableNames}
                    showDcVariableNamesError={showDcVariableNamesError}
                    validateStep2DcVariableNames={validateStep2DcVariableNames}

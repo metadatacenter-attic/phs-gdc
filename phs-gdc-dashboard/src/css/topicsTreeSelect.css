@@ -1,0 +1,201 @@
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* statvars-tree is a custom classname to increases the specificity of our styles. It can be anything.
+ * The idea is that it is easy to extend/override builtin styles with very little effort.
+ */
+
+.statvars-tree {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.statvars-tree .dropdown {
+  width: 100%;
+}
+
+.statvars-tree .tag {
+  font-size: 0.8em;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.87);
+  overflow: hidden;
+  white-space: nowrap;
+  padding-left: 10px;
+  padding-right: 0px;
+  text-overflow: ellipsis;
+  border: none;
+  border-radius: 16px;
+  justify-content: center;
+  text-decoration: none;
+  background-color: #e0e0e0;
+  height: 2em;
+  vertical-align: middle;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.statvars-tree span.tag button.tag-remove {
+  visibility: hidden;
+}
+
+.statvars-tree span.tag button.tag-remove::after {
+  visibility: visible;
+  content: '\e5c9';
+  color: rgba(0, 0, 0, 0.26);
+  font-family: "Material Icons";
+  vertical-align: middle;
+  font-size: 2.3em;
+  font-weight: normal;
+  padding: 0px;
+}
+
+.statvars-tree span.tag button.tag-remove:hover::after {
+  color: #868686;
+}
+
+.statvars-tree .dropdown-content {
+  width: 100%;
+}
+
+.statvars-tree .dropdown-content {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.statvars-tree .dropdown-trigger {
+  width: 100%;
+  border-radius: 4px;
+  overflow-x: auto;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+
+.statvars-tree .dropdown-trigger input.search {
+  line-height: 2.4em;
+  font-size: 1em;
+  text-decoration: none;
+  border: none;
+}
+
+.statvars-tree .dropdown .dropdown-trigger.arrow.bottom:after {
+  vertical-align: middle;
+  line-height: 2em;
+  float: right;
+  content: "\e5c5" !important;
+  font-family: "Material Icons";
+  font-size: 1.5em;
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+
+.statvars-tree .dropdown .dropdown-trigger.arrow.top:after {
+  vertical-align: middle;
+  line-height: 2em;
+  float: right;
+  content: "\e5c7" !important;
+  font-family: "Material Icons";
+  font-size: 1.5em;
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+
+.statvars-tree .toggle {
+  font-family: "Material Icons";
+  font-size: 1.4em;
+  font-style: normal;
+  white-space: pre;
+  margin-right: 4px;
+  vertical-align: middle;
+  padding-top: 2px;
+}
+
+.statvars-tree .toggle.collapsed::after {
+  cursor: pointer;
+  content: "\E5CF";
+  display: flex;
+  align-items: center;
+}
+
+.statvars-tree .toggle.expanded::after {
+  cursor: pointer;
+  content: "\E5CE";
+  display: flex;
+  align-items: center;
+}
+
+
+/* checkbox styles */
+.statvars-tree .checkbox-item {
+  font-size: 1em;
+  vertical-align: middle;
+  position: relative;
+  /*height: 1.2em;*/
+  /*width: 1.2em;*/
+  margin-right: 0.75em;
+  cursor: pointer;
+  /*-webkit-appearance: none;*/
+  /*-moz-appearance: none;*/
+  /*appearance: none;*/
+  outline: 0;
+  padding: 0px;
+}
+
+/*.statvars-tree .checkbox-item:before {*/
+
+/*}*/
+
+/*.statvars-tree checkbox-item:checked {*/
+
+/*}*/
+
+/*.statvars-tree .checkbox-item:checked:before {*/
+/* */
+/*}*/
+
+/*Category nodes*/
+.statvars-tree li.node.tree {
+  padding-top: 8px;
+  padding-bottom: 0px;
+  line-height: 1.2em;
+  font-size: 1em;
+}
+
+.statvars-tree li.node.tree span.node-label {
+  /*color: #000000de;*/
+  /*font-weight: 500;*/
+}
+
+/*Leaf nodes*/
+.statvars-tree ul.root li.node.leaf {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  line-height: 0.5em;
+  /*color: #3f51b5;*/
+  color: #000000de;
+}
+
+.statvars-tree ul.root.searchModeOn li.node.leaf {
+  line-height: 1.6em;
+}
+
+.statvars-tree li.node.disabled i {
+  position: absolute;
+  width: 100%;
+  text-align: left;
+}
+
+.statvars-tree li.node.disabled input[type="checkbox"] {
+  visibility: hidden;
+}
+

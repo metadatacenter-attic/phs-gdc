@@ -6,6 +6,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabe
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
 
 export default function SettingsPopOver(props) {
 
@@ -23,28 +25,68 @@ export default function SettingsPopOver(props) {
 
   const classes = useStyles();
 
-  const handleOptionsChange = (event) => {
-    props.setOptionsState({...props.optionsState, [event.target.name]: event.target.checked});
+  const handleIncludeDatesCheckBoxChange = (event) => {
+    props.setSettingsState({...props.settingsState, 'includeDates': event.target.checked});
+  };
+
+  const handleIncludeDatesOptionRadioChange = (event) => {
+    props.setSettingsState({...props.settingsState, 'includeDatesOption': event.target.value});
+  };
+
+  const handleIncludeProvenanceCheckBoxChange = (event) => {
+    props.setSettingsState({...props.settingsState, 'includeProvenance': event.target.checked});
   };
 
   return (
     <div className={classes.settings}>
-      <h4>Settings</h4>
+      <h4>Export settings</h4>
       <FormControl component="fieldset" fullWidth>
         <FormGroup row className={classes.item}>
           <FormControlLabel
             control={
               <Checkbox
-                checked={props.optionsState.includeDates}
-                onChange={handleOptionsChange}
+                checked={props.settingsState.includeDates}
+                onChange={handleIncludeDatesCheckBoxChange}
                 name="includeDates"
                 color="primary"
               />
             }
             label="Include temporal information"
           />
-          <Tooltip flex
-            title="For each selected variable, it includes an additional column with the date (e.g., year) the data was collected.">
+          <Tooltip
+                   title="For each selected variable, it includes the date when the most recent data were collected,
+                   either as an additional column (e.g., Median_Income_Year) or in the column name (e.g., Median_Income_2018).">
+            <HelpOutlineIcon/>
+          </Tooltip>
+        </FormGroup>
+        <RadioGroup row
+                    aria-label="includeDatesOption"
+                    name="includeDatesOption"
+                    value={props.settingsState.includeDatesOption}
+                    onChange={handleIncludeDatesOptionRadioChange}>
+          <FormControlLabel
+            value="column"
+            control={<Radio disabled={!props.settingsState.includeDates} color={"primary"}/>}
+            label="As additional column"/>
+          <FormControlLabel
+            value="header"
+            control={<Radio disabled={!props.settingsState.includeDates} color={"primary"}/>}
+            label="In column name"/>
+        </RadioGroup>
+        <FormGroup row className={classes.item}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={props.settingsState.includeProvenance}
+                onChange={handleIncludeProvenanceCheckBoxChange}
+                name="includeProvenance"
+                color="primary"
+              />
+            }
+            label="Include provenance"
+          />
+          <Tooltip
+            title="For each selected variable, it includes the name of its source as an additional column.">
             <HelpOutlineIcon/>
           </Tooltip>
         </FormGroup>

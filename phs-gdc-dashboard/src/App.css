@@ -22,6 +22,15 @@ pre {
 
 }
 
+/*Form helper text*/
+.helper-text {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-left: 6px;
+  padding-right: 6px;
+  /*font-size: 3px;*/
+}
+
 /* STEP CARDS */
 
 .MuiCardHeader-root {
@@ -49,3 +58,6 @@ pre {
 .MuiCardContent-root {
   margin-top: 1.5em;
 }
+
+
+
