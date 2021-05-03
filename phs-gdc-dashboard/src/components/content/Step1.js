@@ -95,34 +95,34 @@ export default function Step1(props) {
                     >&nbsp;&nbsp;&nbsp;</IconButton>
                   }
       />
-      <p className={"stepSubHeader"}>Select the variable that will link your data to Data Commons</p>
+      <p className={"stepSubHeader"}>Select locations we can use to look up data in Data Commons</p>
       <CardContent>
         <FormControl className={classes.formControl} fullWidth
                      variant="outlined" /* if the variant is omitted here, the label of the select field is misaligned */>
-          <InputLabel id="variable-select-label">Variable</InputLabel>
+          <InputLabel id="location-type-select-label">Location Type</InputLabel>
           <Select
-            labelId="variable-select-label"
-            id="variable-select-id"
+            labelId="location-type-select-label"
+            id="location-type-select-id"
             value={variable}
             onChange={handleChangeVariableSelect}
             variant="outlined"
             className={classes.select}
-            label="Variable">
+            label="Location Type">
             {Object.keys(phsIndexVariables).map((varKey) =>
               <MenuItem key={varKey} value={varKey}
                         disabled={!phsIndexVariables[varKey].enabled}>{phsIndexVariables[varKey].uiLabel}</MenuItem>
             )};
           </Select>
-          <FormHelperText>Select a variable from the list</FormHelperText>
+          <FormHelperText>Select a location type from the list</FormHelperText>
         </FormControl>
         <div className={classes.separator}/>
 
         <FormControl className={classes.formControl} fullWidth>
-          <FormLabel component="legend">Variable values</FormLabel>
+          <FormLabel component="legend">Entering location values</FormLabel>
           <RadioGroup value={valueOptionRadio} onChange={handleChangeValuesOptionRadio}>
-            <FormControlLabel value="optionEnter" control={<Radio color={"primary"}/>} label="Enter values by hand"/>
+            <FormControlLabel value="optionEnter" control={<Radio color={"primary"}/>} label="Enter location values by hand"/>
             <FormControlLabel value="optionSelect" control={<Radio color={"primary"}/>}
-                              label="Use all values from selected locations"/>
+                              label="Use all values from selected region (US states)"/>
           </RadioGroup>
         </FormControl>
 
@@ -174,8 +174,8 @@ export default function Step1(props) {
             renderInput={(params) => (
               <TextField {...params}
                          error={props.showLocationsError}
-                         helperText={"Select locations (US states)"}
-                         variant="outlined" label="Location" placeholder=""/>
+                         helperText={"Select region (US states)"}
+                         variant="outlined" label="States" placeholder=""/>
             )}
           />
         </>

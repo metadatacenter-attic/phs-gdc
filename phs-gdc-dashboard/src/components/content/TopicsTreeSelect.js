@@ -29,8 +29,8 @@ export default function TopicsTreeSelect(props) {
         data={statVarsTree}
         onChange={handleChange}
       />
-      <FormHelperText className="helper-text">Search for variables by name or browse the hierarchy. <i>(Note that
-        many variables may not have data. Please see <a href={STATVARS_AVAILABILITY_SHEET} target="_blank">variables-location
+      <FormHelperText className="helper-text">Select from the hierarchy or begin typing variable name. <i>(Many variables 
+        may not have data. Please see <a href={STATVARS_AVAILABILITY_SHEET} target="_blank">variables-location
           availability list</a>.)</i></FormHelperText>
     </div>
   );
