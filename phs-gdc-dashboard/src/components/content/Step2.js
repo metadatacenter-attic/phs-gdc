@@ -34,7 +34,7 @@ export default function Step2(props) {
                     >&nbsp;&nbsp;&nbsp;</IconButton>
                   }
       />
-      <p className={"stepSubHeader"}>Select the Data Commons variables you want to retrieve values from</p>
+      <p className={"stepSubHeader"}>Select Data Commons variables to retrieve values from</p>
       <CardContent>
         <div className={classes.topics}>
 

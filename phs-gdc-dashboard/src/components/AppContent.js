@@ -52,7 +52,7 @@ export default function AppContent() {
         <Grid item md={4}>
           <Card className={classes.card}>
             <Step1
-              title={"Select Index Variable"}
+              title={"Select Locations"}
               setPhsVariableName={setPhsVariableName}
               setPhsVariableValues={setPhsVariableValues}
               showPhsVariableValuesError={showPhsVariableValuesError}
@@ -65,7 +65,7 @@ export default function AppContent() {
         </Grid>
         <Grid item md={4}>
           <Card className={classes.card}>
-            <Step2 title={"Select DC Variables"}
+            <Step2 title={"Select Data Variables"}
                    setDcVariableNames={setDcVariableNames}
                    showDcVariableNamesError={showDcVariableNamesError}
                    validateStep2DcVariableNames={validateStep2DcVariableNames}
