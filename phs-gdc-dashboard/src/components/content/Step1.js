@@ -36,6 +36,10 @@ export default function Step1(props) {
     separator: {
       margin: theme.spacing(2),
     },
+    locationValuesLabel: {
+      margin: theme.spacing(0, 0, 1.5, 0),
+      textAlign: 'left',
+    },
   }));
 
   const classes = useStyles();
@@ -129,23 +133,26 @@ export default function Step1(props) {
         <div className={classes.separator}/>
         {valueOptionRadio === "optionEnter" &&
         <>
-          <TextField
-            fullWidth
-            id="standard-multiline-flexible"
-            label="Enter values (one per line)"
-            multiline
-            rowsMax={20}
-            rows={6}
-            value={variableValues}
-            variant="outlined"
-            onChange={handleChangeValuesField}
-            onBlur={e => {
-              handleChangeValuesField(e);
-              props.validateStep1VariableValues();
-            }}
-            error={props.showPhsVariableValuesError}
-          />
-          <FormHelperText className="helper-text">Example: <i>{INDEX_VARIABLES[variable]['uiValuesExample']}</i></FormHelperText>
+          <FormControl fullWidth>
+            <FormLabel className={classes.locationValuesLabel}>Location list</FormLabel>
+            <TextField
+              fullWidth
+              id="standard-multiline-flexible"
+              label="Enter values (one per line)"
+              multiline
+              rowsMax={20}
+              rows={6}
+              value={variableValues}
+              variant="outlined"
+              onChange={handleChangeValuesField}
+              onBlur={e => {
+                handleChangeValuesField(e);
+                props.validateStep1VariableValues();
+              }}
+              error={props.showPhsVariableValuesError}
+            />
+            <FormHelperText className="helper-text">Example: <i>{INDEX_VARIABLES[variable]['uiValuesExample']}</i></FormHelperText>
+          </FormControl>
         </>
         }
 
