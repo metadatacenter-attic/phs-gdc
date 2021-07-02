@@ -6,6 +6,7 @@ export const INDEX_VARIABLE_STATE_NAME = 'state';
 export const INDEX_VARIABLE_COUNTY_NAME = 'county';
 export const INDEX_VARIABLE_CITY_NAME = 'city';
 export const INDEX_VARIABLE_ZIPCODE_NAME = 'zipCode';
+export const INDEX_VARIABLE_CENSUSTRACT_NAME = 'censusTract';
 
 export const INDEX_VARIABLES = {
   [INDEX_VARIABLE_STATE_NAME]: {
@@ -34,6 +35,13 @@ export const INDEX_VARIABLES = {
     "uiValuesExample": "94306",
     "dcid": "CensusZipCodeTabulationArea",
     "dcidValuePrefix": "zip/",
+    "enabled": true
+  },  
+  [INDEX_VARIABLE_CENSUSTRACT_NAME]: {
+    "uiLabel": "census tract",
+    "uiValuesExample": "06085512402",
+    "dcid": "CensusTract",
+    "dcidValuePrefix": "geoId/",
     "enabled": true
   }
 }
