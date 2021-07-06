@@ -15,12 +15,13 @@ import COUNTY_TO_FIPS from './../resources/locationData/countyToFips';
 import STATE_TO_ZIPS from '../resources/locationData/stateToZips';
 import STATE_TO_CITIES from '../resources/locationData/stateToCities';
 import STATE_TO_COUNTIES from "../resources/locationData/stateToCounties";
+import STATE_TO_CENSUSTRACTS from "../resources/locationData/stateToCensusTracts";
 
 
 
 import {
   INDEX_VARIABLE_CITY_NAME,
-  INDEX_VARIABLE_COUNTY_NAME,
+  INDEX_VARIABLE_COUNTY_NAME, INDEX_VARIABLE_CENSUSTRACT_NAME,
   INDEX_VARIABLE_STATE_NAME, INDEX_VARIABLE_ZIPCODE_NAME,
   INDEX_VARIABLES, NOT_AVAILABLE_VALUE, PROVENANCE_DOMAIN_CENSUS_GOV
 } from "../constants";
@@ -256,7 +257,7 @@ export function indexVariableValueToFips(indexVariable, indexVariableValue) {
       if (fips) {
         return fips;
       }
-    } else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
+    } else if ((indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) || (indexVariable === INDEX_VARIABLE_CENSUSTRACT_NAME)) {
       return indexVariableValue;
     }
   } else {
@@ -363,6 +364,10 @@ export function getAllVariableValuesByState(states, indexVariable) {
     } else if (indexVariable === INDEX_VARIABLE_ZIPCODE_NAME) {
       states.map(state => (
         values = values.concat(STATE_TO_ZIPS[state.abbreviation])
+      ));
+    } else if (indexVariable === INDEX_VARIABLE_CENSUSTRACT_NAME) {
+      states.map(state => (
+        values = values.concat(STATE_TO_CENSUSTRACTS[state.abbreviation])
       ));
     }
     return values;
