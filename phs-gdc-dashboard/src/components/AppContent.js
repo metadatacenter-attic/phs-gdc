@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     height: "100%",
-    padding: theme.spacing(1.5),
     color: theme.palette.text.secondary,
   },
 }));
@@ -48,7 +47,7 @@ export default function AppContent(props) {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid item md={4}>
+        <Grid item xs={12} md={6}>
           <Card className={classes.card}>
             <Step1
               title={"Select Locations"}
@@ -62,7 +61,7 @@ export default function AppContent(props) {
             />
           </Card>
         </Grid>
-        <Grid item md={4}>
+        <Grid item xs={12} md={6}>
           <Card className={classes.card}>
             <Step2 title={"Select Data Variables"}
                    setDcVariableNames={setDcVariableNames}
@@ -71,10 +70,9 @@ export default function AppContent(props) {
             />
           </Card>
         </Grid>
-        <Grid item md={4}>
+        <Grid item xs={12}>
           <Card className={classes.card}>
-            <Step3 title={"Export Data"}
-                   phsVariableName={phsVariableName}
+            <Step3 phsVariableName={phsVariableName}
                    phsVariableValues={phsVariableValues}
                    dcVariableNames={dcVariableNames}
                    validateStep1VariableValues={validateStep1VariableValues}

@@ -9,6 +9,7 @@ import {
 import {jsonToCsv} from "../../utils/utils";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import CardContent from "@material-ui/core/CardContent";
+import CardActions from '@material-ui/core/CardActions';
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import RCodeDialog from "./RCodeDialog";
@@ -17,11 +18,7 @@ export default function Step3(props) {
 
   const useStyles = makeStyles((theme) => ({
     buttons: {
-      marginTop: '2vh',
-      marginBottom: '3vh',
-    },
-    button: {
-      marginBottom: '1vh',
+      justifyContent: "flex-end",
     },
     codeOptions: {
       textAlign: "right",
@@ -34,7 +31,9 @@ export default function Step3(props) {
       fontWeight: 400,
       fontSize: "0.75rem",
       lineHeight: 1.66,
-      marginTop: theme.spacing(1),
+      paddingTop: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+      textAlign: "right",
     },
     codeContent: {
       minHeight: 450,
@@ -92,38 +91,40 @@ export default function Step3(props) {
   };
 
   return (
-    <>
-      <CardContent>
-        <Typography variant="h5">
-          {props.title}
-        </Typography>
-        <Typography className="stepSubHeader">
-          Generate and download the selected data
-        </Typography>
-        <div className={classes.buttons}>
-          <Button className={classes.button} disabled={showDownloadProgress} variant="outlined" color="primary"
-                  onClick={downloadDataFile} size={"large"}>
-            Download data
-          </Button>
-          <br/>
-          <br/>
-          <Button className={classes.button} variant="outlined" color="primary" onClick={handleClickOpenCodeDialog}
-                  disabled={false} size={"large"}>
-            Generate R code
-          </Button>
-        </div>
-        <div>
-          {showDownloadProgress && <CircularProgress/>}
-          {props.showValidationErrorMsg &&
-          <Typography className={classes.validationErrorMsg}>Please fill out all required fields</Typography>}
-        </div>
-        <RCodeDialog openCodeDialog={openCodeDialog}
-                     handleCloseCodeDialog={handleCloseCodeDialog}
-                     phsVariableName={props.phsVariableName}
-                     phsVariableValues={props.phsVariableValues}
-                     dcVariableNames={props.dcVariableNames}
-                     settingsState={props.settingsState}/>
-      </CardContent>
-    </>
+    <CardContent>
+      <CardActions className={classes.buttons}>
+        <Button className={classes.button} 
+                disabled={showDownloadProgress} 
+                variant="outlined" 
+                color="primary"
+                onClick={downloadDataFile} 
+                size={"large"}>
+          Download data
+        </Button>
+        <Button className={classes.button} 
+                variant="outlined" 
+                color="primary" 
+                onClick={handleClickOpenCodeDialog}
+                disabled={false} 
+                size={"large"}>
+          Generate R code
+        </Button>
+      </CardActions>
+      
+      <div>
+        {showDownloadProgress && <CircularProgress/>}
+        {props.showValidationErrorMsg &&
+        <Typography className={classes.validationErrorMsg}>Please fill out all required fields</Typography>}
+      </div>
+      
+      <RCodeDialog 
+        openCodeDialog={openCodeDialog}
+        handleCloseCodeDialog={handleCloseCodeDialog}
+        phsVariableName={props.phsVariableName}
+        phsVariableValues={props.phsVariableValues}
+        dcVariableNames={props.dcVariableNames}
+        settingsState={props.settingsState}>
+      </RCodeDialog>
+    </CardContent>
   );
 }
