@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppContent() {
+export default function AppContent(props) {
 
   const classes = useStyles();
 
@@ -81,6 +81,7 @@ export default function AppContent() {
                    validateStep1VariableValues={validateStep1VariableValues}
                    validateStep2DcVariableNames={validateStep2DcVariableNames}
                    showValidationErrorMsg={showLocationsError || showDcVariableNamesError}
+                   settingsState={props.settingsState}
             />
           </Card>
         </Grid>

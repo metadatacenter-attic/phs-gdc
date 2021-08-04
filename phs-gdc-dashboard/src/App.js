@@ -12,10 +12,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
+
+  const [settingsState, setSettingsState] = React.useState({
+    includeDates: true,
+    includeDatesOption: 'column',
+    includeProvenance: true,
+  });
+
   return (
     <div className={`${classes.root} content`}>
-      <AppHeader/>
-      <AppContent/>
+      <AppHeader
+        settingsState={settingsState} 
+        setSettingsState={setSettingsState}
+      />
+      <AppContent
+        settingsState={settingsState}
+      />
     </div>
   );
 }

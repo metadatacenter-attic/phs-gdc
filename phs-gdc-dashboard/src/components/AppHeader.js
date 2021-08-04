@@ -12,7 +12,9 @@ import ContactUsDialog from "./content/ContactUsDialog";
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Tooltip from "@material-ui/core/Tooltip";
 import {GITHUB_REPO_URL} from "../constants";
-import SettingsIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import SettingsIcon from '@material-ui/icons/Settings';
+import Popover from '@material-ui/core/Popover';
+import SettingsPopOver from "./content/SettingsPopOver";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,12 +31,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppHeader() {
+export default function AppHeader(props) {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openAboutDialog, setOpenAboutDialog] = React.useState(false);
   const [openContactUsDialog, setOpenContactUsDialog] = React.useState(false);
+
+  const [settingsPopoverAnchorEl, setSettingsPopoverAnchorEl] = React.useState(null);
+  const settingsPopoverOpen = Boolean(settingsPopoverAnchorEl);
+  const settingsPopoverID = settingsPopoverOpen ? 'settings-popover' : undefined;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -60,6 +66,14 @@ export default function AppHeader() {
     setOpenContactUsDialog(false);
   };
 
+  const handleClickSettings = (event) => {
+    setSettingsPopoverAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseSettings = () => {
+    setSettingsPopoverAnchorEl(null);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.bar}>
@@ -83,18 +97,36 @@ export default function AppHeader() {
             Data Commons Wizard
           </Typography>
 
+          <Tooltip title="Download settings">
+            <IconButton color="inherit" onClick={handleClickSettings}><SettingsIcon /></IconButton>
+          </Tooltip>
+
           <Tooltip title="Go to GitHub repository">
             <IconButton color="inherit" onClick={() => window.open(GITHUB_REPO_URL)}><GitHubIcon/></IconButton>
           </Tooltip>
-
         </Toolbar>
       </AppBar>
 
-
-
       <AboutDialog openAboutDialog={openAboutDialog} handleCloseAboutDialog={handleCloseAboutDialog}/>
       <ContactUsDialog openContactUsDialog={openContactUsDialog} handleCloseContactUsDialog={handleCloseContactUsDialog}/>
-
+      <Popover
+          id={settingsPopoverID}
+          open={settingsPopoverOpen}
+          anchorEl={settingsPopoverAnchorEl}
+          onClose={handleCloseSettings}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}>
+          <SettingsPopOver 
+            settingsState={props.settingsState} 
+            setSettingsState={props.setSettingsState}
+          />
+        </Popover>
     </div>
   );
 }

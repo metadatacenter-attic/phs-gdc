@@ -39,7 +39,7 @@ export default function SettingsPopOver(props) {
 
   return (
     <div className={classes.settings}>
-      <h4>Export settings</h4>
+      <h4>Download settings</h4>
       <FormControl component="fieldset" fullWidth>
         <FormGroup row className={classes.item}>
           <FormControlLabel

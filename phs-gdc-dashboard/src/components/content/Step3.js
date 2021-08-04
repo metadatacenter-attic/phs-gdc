@@ -7,18 +7,13 @@ import {
   toTabularJsonData
 } from "../../utils/dataCommonsUtils";
 import {jsonToCsv} from "../../utils/utils";
-import SettingsIcon from '@material-ui/icons/Settings';
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import IconButton from "@material-ui/core/IconButton";
-import Popover from "@material-ui/core/Popover";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import SettingsPopOver from "./SettingsPopOver";
 import RCodeDialog from "./RCodeDialog";
-import Tooltip from "@material-ui/core/Tooltip";
 
 export default function Step3(props) {
 
@@ -50,24 +45,8 @@ export default function Step3(props) {
 
   const classes = useStyles();
 
-  const [settingsState, setSettingsState] = React.useState({
-    includeDates: true,
-    includeDatesOption: 'column',
-    includeProvenance: true,
-  });
-
   const [openCodeDialog, setOpenCodeDialog] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null); // popover anchor
-  const openSettingsPopOver = Boolean(anchorEl);
   const [showDownloadProgress, setShowDownloadProgress] = React.useState(false);
-
-  const handleClickOpenSettingsPopOver = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleCloseSettingsPopOver = () => {
-    setAnchorEl(null);
-  };
 
   const handleClickOpenCodeDialog = () => {
     if (isValid()) {
@@ -85,17 +64,11 @@ export default function Step3(props) {
     let indexVariableValueDcids = Object.keys(indexVariableDcidsToValuesMap);
     return getPlaceStatistics(props.phsVariableName, indexVariableValueDcids, props.dcVariableNames).then((data) => {
       let tabJsonData = toTabularJsonData(data, props.phsVariableName, indexVariableValuesToDcidsMap, indexVariableDcidsToValuesMap, props.dcVariableNames,
-        settingsState.includeDates, settingsState.includeDatesOption, settingsState.includeProvenance);
+        props.settingsState.includeDates, props.settingsState.includeDatesOption, props.settingsState.includeProvenance);
       return jsonToCsv(tabJsonData);
     }).catch((error) => {
-        console.error(error);
-        //error.json().then((json) => {
-        // this.setState({
-        //   errors: json,
-        //   loading: false
-        // });
-        //})
-      });
+      console.error(error);
+    });
   };
 
   function isValid() {
@@ -105,7 +78,6 @@ export default function Step3(props) {
   }
 
   function downloadDataFile() {
-
     if (isValid()) {
       setShowDownloadProgress(true);
       getCsvData().then(data => {
@@ -123,39 +95,13 @@ export default function Step3(props) {
 
   return (
     <>
-      <CardHeader className={"stepHeader"} title={props.title}
-                  avatar={
-                    <Avatar aria-label="step3">3</Avatar>
-                  }
-                  action={
-                    <Tooltip title="Export settings">
-                      <IconButton
-                        aria-describedby={'settings-popover'}
-                        onClick={handleClickOpenSettingsPopOver}><SettingsIcon/></IconButton>
-                    </Tooltip>
-                  }
+      <CardHeader 
+        className={"stepHeader"} 
+        title={props.title} 
+        avatar={<Avatar aria-label="step3">3</Avatar>}
       />
       <p className={"stepSubHeader"}>Generate and download the selected data<br/></p>
       <CardContent>
-        <Popover
-          id={'settings-popover'}
-          open={openSettingsPopOver}
-          anchorEl={anchorEl}
-          onClose={handleCloseSettingsPopOver}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}>
-          <SettingsPopOver
-            settingsState={settingsState}
-            setSettingsState={setSettingsState}
-          />
-        </Popover>
-
         <div className={classes.buttons}>
           <Button className={classes.button} disabled={showDownloadProgress} variant="outlined" color="primary"
                   onClick={downloadDataFile} size={"large"}>
@@ -178,10 +124,8 @@ export default function Step3(props) {
                      phsVariableName={props.phsVariableName}
                      phsVariableValues={props.phsVariableValues}
                      dcVariableNames={props.dcVariableNames}
-                     settingsState={settingsState}/>
-
+                     settingsState={props.settingsState}/>
       </CardContent>
-
     </>
   );
 }
