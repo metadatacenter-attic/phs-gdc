@@ -16,12 +16,10 @@ import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import {removeDuplicates, removeEmpty} from "../../utils/utils";
-import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import Avatar from "@material-ui/core/Avatar";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import IconButton from "@material-ui/core/IconButton";
 import {getAllVariableValuesByState} from "../../utils/dataCommonsUtils";
+import { Typography } from "@material-ui/core";
 
 export default function Step1(props) {
 
@@ -30,11 +28,8 @@ export default function Step1(props) {
 
   const useStyles = makeStyles((theme) => ({
     formControl: {
+      marginTop: theme.spacing(4),
       textAlign: 'left',
-      margin: theme.spacing(1),
-    },
-    separator: {
-      margin: theme.spacing(2),
     },
     locationValuesLabel: {
       margin: theme.spacing(0, 0, 1.5, 0),
@@ -87,20 +82,14 @@ export default function Step1(props) {
   };
 
   return (
-    <div>
-      <CardHeader className={"stepHeader"}
-                  title={props.title}
-                  avatar={
-                    <Avatar aria-label="step1">1</Avatar>
-                  }
-                  action={
-                    <IconButton
-                      aria-describedby={'settings-popover'}
-                    >&nbsp;&nbsp;&nbsp;</IconButton>
-                  }
-      />
-      <p className={"stepSubHeader"}>Select locations we can use to look up data in Data Commons</p>
       <CardContent>
+        <Typography variant="h5">
+          {props.title}
+        </Typography>
+        <Typography className="stepSubHeader">
+          Select locations we can use to look up data in Data Commons
+        </Typography>
+
         <FormControl className={classes.formControl} fullWidth
                      variant="outlined" /* if the variant is omitted here, the label of the select field is misaligned */>
           <InputLabel id="location-type-select-label">Location Type</InputLabel>
@@ -119,8 +108,7 @@ export default function Step1(props) {
           </Select>
           <FormHelperText>Select a location type from the list</FormHelperText>
         </FormControl>
-        <div className={classes.separator}/>
-
+        
         <FormControl className={classes.formControl} fullWidth>
           <FormLabel component="legend">Entering location values</FormLabel>
           <RadioGroup value={valueOptionRadio} onChange={handleChangeValuesOptionRadio}>
@@ -130,10 +118,9 @@ export default function Step1(props) {
           </RadioGroup>
         </FormControl>
 
-        <div className={classes.separator}/>
         {valueOptionRadio === "optionEnter" &&
         <>
-          <FormControl fullWidth>
+          <FormControl className={classes.formControl} fullWidth>
             <FormLabel className={classes.locationValuesLabel}>Location list</FormLabel>
             <TextField
               fullWidth
@@ -190,6 +177,5 @@ export default function Step1(props) {
 
       </CardContent>
 
-    </div>
   );
 }

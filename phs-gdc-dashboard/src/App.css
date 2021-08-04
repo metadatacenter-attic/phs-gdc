@@ -19,7 +19,6 @@ h2 {
 pre {
   font-family: Consolas, Monaco, "Lucida Console", "Liberation Mono", "Nimbus Mono L", "Courier New", Courier, monospace;
   font-size: 0.8rem;
-
 }
 
 /*Form helper text*/
@@ -42,22 +41,6 @@ pre {
   font-size: 3em !important
 }
 
-.stepHeader {
-  font-size: 0.4em;
-}
-
 .stepSubHeader {
-  margin-top: 0;
-  font-size: 0.9em;
-  text-align: center;
-  padding-left: 16px;
-  padding-right: 16px;
+  margin-bottom: 25px;
 }
-
-/* Card content */
-.MuiCardContent-root {
-  margin-top: 1.5em;
-}
-
-
-

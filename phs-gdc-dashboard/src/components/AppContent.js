@@ -14,8 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     height: "100%",
-    padding: theme.spacing(2),
-    textAlign: 'center',
+    padding: theme.spacing(1.5),
     color: theme.palette.text.secondary,
   },
 }));

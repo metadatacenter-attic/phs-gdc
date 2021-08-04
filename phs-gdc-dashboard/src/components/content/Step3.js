@@ -8,9 +8,7 @@ import {
 } from "../../utils/dataCommonsUtils";
 import {jsonToCsv} from "../../utils/utils";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import RCodeDialog from "./RCodeDialog";
@@ -95,13 +93,13 @@ export default function Step3(props) {
 
   return (
     <>
-      <CardHeader 
-        className={"stepHeader"} 
-        title={props.title} 
-        avatar={<Avatar aria-label="step3">3</Avatar>}
-      />
-      <p className={"stepSubHeader"}>Generate and download the selected data<br/></p>
       <CardContent>
+        <Typography variant="h5">
+          {props.title}
+        </Typography>
+        <Typography className="stepSubHeader">
+          Generate and download the selected data
+        </Typography>
         <div className={classes.buttons}>
           <Button className={classes.button} disabled={showDownloadProgress} variant="outlined" color="primary"
                   onClick={downloadDataFile} size={"large"}>

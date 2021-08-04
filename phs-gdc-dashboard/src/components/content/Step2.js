@@ -1,10 +1,8 @@
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import TopicsTreeSelect from "./TopicsTreeSelect";
+import { Typography } from "@material-ui/core";
 
 export default function Step2(props) {
 
@@ -15,7 +13,7 @@ export default function Step2(props) {
       textAlign: 'center'
     },
     topicsTree: {
-      marginTop: theme.spacing(1),
+      marginTop: theme.spacing(4),
     }
   }));
 
@@ -23,23 +21,15 @@ export default function Step2(props) {
 
   return (
     <>
-      <CardHeader className={"stepHeader"}
-                  title={props.title}
-                  avatar={
-                    <Avatar aria-label="step2">2</Avatar>
-                  }
-                  action={
-                    <IconButton
-                      aria-describedby={'settings-popover'}
-                    >&nbsp;&nbsp;&nbsp;</IconButton>
-                  }
-      />
-      <p className={"stepSubHeader"}>Select Data Commons variables to retrieve values from</p>
       <CardContent>
+        <Typography variant="h5">
+          {props.title}
+        </Typography>
+        <Typography className="stepSubHeader">
+          Select Data Commons variables to retrieve values from
+        </Typography>
         <div className={classes.topics}>
-
           <div className={classes.topicsTree}>
-
             <TopicsTreeSelect
               setDcVariableNames={props.setDcVariableNames}
               showDcVariableNamesError={props.showDcVariableNamesError}
