@@ -26,7 +26,7 @@ export default function Step2(props) {
           {props.title}
         </Typography>
         <Typography className="stepSubHeader">
-          Select Data Commons variables to retrieve values from
+          Specify statistical variables for Data Commons data retrieval
         </Typography>
         <div className={classes.topics}>
           <div className={classes.topicsTree}>

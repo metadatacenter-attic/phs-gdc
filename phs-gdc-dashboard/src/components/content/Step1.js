@@ -87,7 +87,7 @@ export default function Step1(props) {
           {props.title}
         </Typography>
         <Typography className="stepSubHeader">
-          Select locations we can use to look up data in Data Commons
+          Specify locations for Data Commons data retrieval
         </Typography>
 
         <FormControl className={classes.formControl} fullWidth
