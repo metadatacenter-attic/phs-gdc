@@ -110,46 +110,32 @@ export default function Step1(props) {
         </FormControl>
         
         <FormControl className={classes.formControl} fullWidth>
-          <FormLabel component="legend">Entering location values</FormLabel>
           <RadioGroup value={valueOptionRadio} onChange={handleChangeValuesOptionRadio}>
-            <FormControlLabel value="optionEnter" control={<Radio color={"primary"}/>} label="Enter location values by hand"/>
-            <FormControlLabel value="optionSelect" control={<Radio color={"primary"}/>}
-                              label="Use all values from selected region (US states)"/>
-          </RadioGroup>
-        </FormControl>
-
-        {valueOptionRadio === "optionEnter" &&
-        <>
-          <FormControl className={classes.formControl} fullWidth>
-            <FormLabel className={classes.locationValuesLabel}>Location list</FormLabel>
-            <TextField
-              fullWidth
-              id="standard-multiline-flexible"
-              label="Enter values (one per line)"
-              multiline
-              rowsMax={20}
-              rows={6}
-              value={variableValues}
-              variant="outlined"
-              onChange={handleChangeValuesField}
-              onBlur={e => {
-                handleChangeValuesField(e);
-                props.validateStep1VariableValues();
-              }}
-              error={props.showPhsVariableValuesError}
-            />
-            <FormHelperText className="helper-text">Example: <i>{INDEX_VARIABLES[variable]['uiValuesExample']}</i></FormHelperText>
-          </FormControl>
-        </>
-        }
-
-        {valueOptionRadio === "optionSelect" &&
-        <>
+          <FormControlLabel value="optionEnter" control={<Radio color={"primary"}/>} label="Enter location values by hand"/>
+          <TextField
+            fullWidth
+            id="standard-multiline-flexible"
+            label="Enter values (one per line)"
+            multiline
+            rowsMax={20}
+            rows={6}
+            value={variableValues}
+            variant="outlined"
+            disabled={valueOptionRadio === "optionSelect"}
+            onChange={handleChangeValuesField}
+            onBlur={e => {
+              handleChangeValuesField(e);
+              props.validateStep1VariableValues();
+            }}
+            error={props.showPhsVariableValuesError} />
+          <FormHelperText className="helper-text">Example: <i>{INDEX_VARIABLES[variable]['uiValuesExample']}</i></FormHelperText>
+          <FormControlLabel value="optionSelect" control={<Radio color={"primary"}/>} label="Use all values from selected states"/>
           <Autocomplete
             multiple
             id="state-autocomplete-id"
             options={states}
             disableCloseOnSelect
+            disabled={valueOptionRadio === "optionEnter"}
             onChange={(event, values) => handleChangeLocationSelect(values, variable)}
             onBlur={props.validateStep1VariableValues}
             getOptionLabel={(option) => option.name}
@@ -167,15 +153,11 @@ export default function Step1(props) {
             )}
             renderInput={(params) => (
               <TextField {...params}
-                         error={props.showLocationsError}
-                         helperText={"Select region (US states)"}
-                         variant="outlined" label="States" placeholder=""/>
-            )}
-          />
-        </>
-        }
-
+                        error={props.showLocationsError}
+                        variant="outlined" label="Select states..." placeholder=""/>
+            )}/>
+          </RadioGroup>
+        </FormControl>
       </CardContent>
-
   );
 }
