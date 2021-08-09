@@ -106,7 +106,7 @@ export default function Step1(props) {
                         disabled={!phsIndexVariables[varKey].enabled}>{phsIndexVariables[varKey].uiLabel}</MenuItem>
             )};
           </Select>
-          <FormHelperText>Choose a location type for grouping variable data</FormHelperText>
+          <FormHelperText>Choose a location type for finding variable data</FormHelperText>
         </FormControl>
         
         <FormControl className={classes.formControl} fullWidth>
