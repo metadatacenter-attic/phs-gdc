@@ -92,7 +92,7 @@ export default function Step1(props) {
 
         <FormControl className={classes.formControl} fullWidth
                      variant="outlined" /* if the variant is omitted here, the label of the select field is misaligned */>
-          <InputLabel id="location-type-select-label">Location Type</InputLabel>
+          <InputLabel id="location-type-select-label">Location type</InputLabel>
           <Select
             labelId="location-type-select-label"
             id="location-type-select-id"
@@ -106,7 +106,7 @@ export default function Step1(props) {
                         disabled={!phsIndexVariables[varKey].enabled}>{phsIndexVariables[varKey].uiLabel}</MenuItem>
             )};
           </Select>
-          <FormHelperText>Select a location type from the list</FormHelperText>
+          <FormHelperText>Choose a location type for grouping variable data</FormHelperText>
         </FormControl>
         
         <FormControl className={classes.formControl} fullWidth>
