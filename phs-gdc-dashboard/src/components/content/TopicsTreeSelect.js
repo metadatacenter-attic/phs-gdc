@@ -30,8 +30,8 @@ export default function TopicsTreeSelect(props) {
         onChange={handleChange}
       />
       <FormHelperText className="helper-text">
-        Browse hierarchy or start typing to choose variables. 
-        <i>(Many variables may not have data. Please see <a href={STATVARS_AVAILABILITY_SHEET} target="_blank" rel="noreferrer">variables-location availability list</a>.)</i>
+        Browse hierarchy or start typing to choose statistical variables. 
+        <i>(Many statistical variables may not have data. Please see <a href={STATVARS_AVAILABILITY_SHEET} target="_blank" rel="noreferrer">variables-location availability list</a>.)</i>
       </FormHelperText>
     </div>
   );
