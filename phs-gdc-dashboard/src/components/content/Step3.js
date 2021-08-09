@@ -18,7 +18,7 @@ export default function Step3(props) {
 
   const useStyles = makeStyles((theme) => ({
     buttons: {
-      justifyContent: "flex-end",
+      justifyContent: "center",
     },
     codeOptions: {
       textAlign: "right",
