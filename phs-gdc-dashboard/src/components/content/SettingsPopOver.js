@@ -2,6 +2,7 @@ import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup/FormGroup";
+import FormLabel from "@material-ui/core/FormLabel";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
@@ -41,6 +42,7 @@ export default function SettingsPopOver(props) {
     <div className={classes.settings}>
       <h4>Settings</h4>
       <FormControl component="fieldset" fullWidth>
+        <FormLabel>Download settings</FormLabel>
         <FormGroup row className={classes.item}>
           <FormControlLabel
             control={
