@@ -95,14 +95,14 @@ export default function Step3(props) {
       <CardActions className={classes.buttons}>
         <Button className={classes.button} 
                 disabled={showDownloadProgress} 
-                variant="outlined" 
+                variant="contained"
                 color="primary"
                 onClick={downloadDataFile} 
                 size={"large"}>
           Download data
         </Button>
         <Button className={classes.button} 
-                variant="outlined" 
+                variant="contained" 
                 color="primary" 
                 onClick={handleClickOpenCodeDialog}
                 disabled={false} 
