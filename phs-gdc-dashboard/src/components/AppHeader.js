@@ -97,7 +97,7 @@ export default function AppHeader(props) {
             Data Commons Wizard
           </Typography>
 
-          <Tooltip title="Download settings">
+          <Tooltip title="Settings">
             <IconButton color="inherit" onClick={handleClickSettings}><SettingsIcon /></IconButton>
           </Tooltip>
 
