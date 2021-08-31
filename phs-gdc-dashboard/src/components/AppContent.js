@@ -6,6 +6,9 @@ import Step2 from "./content/Step2";
 import Step3 from "./content/Step3";
 import {DEFAULT_INDEX_VARIABLE_NAME} from "../constants";
 import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,10 +22,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AppContent(props) {
-
   const classes = useStyles();
 
-  // Step 1
   const [phsVariableValues, setPhsVariableValues] = React.useState('');
   const [phsVariableName, setPhsVariableName] = React.useState(DEFAULT_INDEX_VARIABLE_NAME);
   const [showPhsVariableValuesError, setShowPhsVariableValuesError] = React.useState(false);
@@ -34,7 +35,6 @@ export default function AppContent(props) {
     return isValid;
   };
 
-  // Step 2
   const [dcVariableNames, setDcVariableNames] = React.useState();
   const [showDcVariableNamesError, setShowDcVariableNamesError] = React.useState(false);
   const validateStep2DcVariableNames = () => {
@@ -43,44 +43,61 @@ export default function AppContent(props) {
     return isValid;
   };
 
-  // Step 3
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
+        
+        {/* Locations card */}
         <Grid item xs={12} md={6}>
           <Card className={classes.card}>
-            <Step1
-              title={"Locations"}
-              setPhsVariableName={setPhsVariableName}
-              setPhsVariableValues={setPhsVariableValues}
-              showPhsVariableValuesError={showPhsVariableValuesError}
-              setShowPhsVariableValuesError={setShowPhsVariableValuesError}
-              showLocationsError={showLocationsError}
-              setShowLocationsError={setShowLocationsError}
-              validateStep1VariableValues={validateStep1VariableValues}
+            <CardHeader
+              title="Locations"
+              subheader="Specify locations for Data Commons data retrieval"
             />
+            <CardContent>
+              <Step1
+                setPhsVariableName={setPhsVariableName}
+                setPhsVariableValues={setPhsVariableValues}
+                showPhsVariableValuesError={showPhsVariableValuesError}
+                setShowPhsVariableValuesError={setShowPhsVariableValuesError}
+                showLocationsError={showLocationsError}
+                setShowLocationsError={setShowLocationsError}
+                validateStep1VariableValues={validateStep1VariableValues}
+              />
+            </CardContent>
           </Card>
         </Grid>
+        
+        {/* Statistical variables card */}
         <Grid item xs={12} md={6}>
           <Card className={classes.card}>
-            <Step2 title={"Variables"}
-                   setDcVariableNames={setDcVariableNames}
-                   showDcVariableNamesError={showDcVariableNamesError}
-                   validateStep2DcVariableNames={validateStep2DcVariableNames}
+            <CardHeader
+              title="Variables"
+              subheader="Specify statistical variables for Data Commons data retrieval"
             />
+            <CardContent>
+              <Step2
+                setDcVariableNames={setDcVariableNames}
+                showDcVariableNamesError={showDcVariableNamesError}
+                validateStep2DcVariableNames={validateStep2DcVariableNames}
+              />
+            </CardContent>
           </Card>
         </Grid>
+        
+        {/* Bottom button panel */}
         <Grid item xs={12}>
-          <Card className={classes.card}>
-            <Step3 phsVariableName={phsVariableName}
-                   phsVariableValues={phsVariableValues}
-                   dcVariableNames={dcVariableNames}
-                   validateStep1VariableValues={validateStep1VariableValues}
-                   validateStep2DcVariableNames={validateStep2DcVariableNames}
-                   showValidationErrorMsg={showLocationsError || showDcVariableNamesError}
-                   settingsState={props.settingsState}
+          <Paper>
+            <Step3 
+              phsVariableName={phsVariableName}
+              phsVariableValues={phsVariableValues}
+              dcVariableNames={dcVariableNames}
+              validateStep1VariableValues={validateStep1VariableValues}
+              validateStep2DcVariableNames={validateStep2DcVariableNames}
+              showValidationErrorMsg={showLocationsError || showDcVariableNamesError}
+              settingsState={props.settingsState}
             />
-          </Card>
+          </Paper>
         </Grid>
       </Grid>
     </div>

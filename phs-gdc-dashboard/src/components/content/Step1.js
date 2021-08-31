@@ -8,7 +8,6 @@ import TextField from "@material-ui/core/TextField";
 import {DEFAULT_INDEX_VARIABLE_NAME, DEFAULT_VALUE_OPTION, INDEX_VARIABLES} from "../../constants";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormLabel from "@material-ui/core/FormLabel";
 import Radio from "@material-ui/core/Radio";
 import states from './../../resources/locationData/allStates.json';
 import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
@@ -16,10 +15,8 @@ import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import {removeDuplicates, removeEmpty} from "../../utils/utils";
-import CardContent from "@material-ui/core/CardContent";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import {getAllVariableValuesByState} from "../../utils/dataCommonsUtils";
-import { Typography } from "@material-ui/core";
 
 export default function Step1(props) {
 
@@ -82,14 +79,7 @@ export default function Step1(props) {
   };
 
   return (
-      <CardContent>
-        <Typography variant="h5">
-          {props.title}
-        </Typography>
-        <Typography className="stepSubHeader">
-          Specify locations for Data Commons data retrieval
-        </Typography>
-
+      <React.Fragment>
         <FormControl className={classes.formControl} fullWidth
                      variant="outlined" /* if the variant is omitted here, the label of the select field is misaligned */>
           <InputLabel id="location-type-select-label">Location type</InputLabel>
@@ -158,6 +148,6 @@ export default function Step1(props) {
             )}/>
           </RadioGroup>
         </FormControl>
-      </CardContent>
+      </React.Fragment>
   );
 }

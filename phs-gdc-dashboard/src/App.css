@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  /*background-color: red;*/
 }
 
 h1 {
@@ -33,14 +32,6 @@ pre {
 /* STEP CARDS */
 
 .MuiCardHeader-root {
+  background-color: #E6E8F4;
   color: #263238;
-}
-
-/* Card title when the avatar is used */
-.MuiTypography-body2 {
-  font-size: 3em !important
-}
-
-.stepSubHeader {
-  margin-bottom: 25px;
 }
