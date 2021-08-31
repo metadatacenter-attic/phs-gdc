@@ -6,8 +6,7 @@ export default function Step2(props) {
 
   const useStyles = makeStyles((theme) => ({
     topics: {
-      marginLeft: 'auto',
-      marginRight: 'auto',
+      marginRight: theme.spacing(1),
       textAlign: 'center'
     },
     topicsTree: {
