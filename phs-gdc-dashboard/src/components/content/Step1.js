@@ -75,28 +75,31 @@ export default function Step1(props) {
   };
 
   return (
-      <React.Fragment>
-        <FormControl className={classes.formControl} fullWidth
-                     variant="outlined" /* if the variant is omitted here, the label of the select field is misaligned */>
-          <InputLabel id="location-type-select-label">Location type</InputLabel>
-          <Select
-            labelId="location-type-select-label"
-            id="location-type-select-id"
-            value={variable}
-            onChange={handleChangeVariableSelect}
-            variant="outlined"
-            className={classes.select}
-            label="Location Type">
-            {Object.keys(phsIndexVariables).map((varKey) =>
-              <MenuItem key={varKey} value={varKey}
-                        disabled={!phsIndexVariables[varKey].enabled}>{phsIndexVariables[varKey].uiLabel}</MenuItem>
-            )};
-          </Select>
-          <FormHelperText>Choose a location type for finding variable data</FormHelperText>
-        </FormControl>
+    <React.Fragment>
+      <FormControl className={classes.formControl} fullWidth variant="outlined">
+        <InputLabel id="location-type-select-label">Location type</InputLabel>
+        <Select
+          labelId="location-type-select-label"
+          id="location-type-select-id"
+          value={variable}
+          onChange={handleChangeVariableSelect}
+          variant="outlined"
+          className={classes.select}
+          label="Location Type">
+          {Object.keys(phsIndexVariables).map((varKey) =>
+            <MenuItem 
+              key={varKey} 
+              value={varKey}
+              disabled={!phsIndexVariables[varKey].enabled}>{phsIndexVariables[varKey].uiLabel}
+            </MenuItem>
+          )};
+        </Select>
+        <FormHelperText>Choose a location type for finding variable data</FormHelperText>
+      </FormControl>
         
-        <FormControl className={classes.formControl} fullWidth>
-          <RadioGroup value={valueOptionRadio} onChange={handleChangeValuesOptionRadio}>
+      <FormControl className={classes.formControl} fullWidth>
+        <RadioGroup value={valueOptionRadio} onChange={handleChangeValuesOptionRadio}>
+          {/* Option to enter location values by hand */}
           <FormControlLabel value="optionEnter" control={<Radio color={"primary"}/>} label="Enter location values by hand"/>
           <TextField
             fullWidth
@@ -115,6 +118,8 @@ export default function Step1(props) {
             }}
             error={props.showPhsVariableValuesError} />
           <FormHelperText className="helper-text">Example: <i>{INDEX_VARIABLES[variable]['uiValuesExample']}</i></FormHelperText>
+
+          {/* Option to use location values from one or more states */}
           <FormControlLabel value="optionSelect" control={<Radio color={"primary"}/>} label="Use all values from selected states"/>
           <Autocomplete
             multiple
@@ -139,11 +144,15 @@ export default function Step1(props) {
             )}
             renderInput={(params) => (
               <TextField {...params}
-                        error={props.showLocationsError}
-                        variant="outlined" label="Select states..." placeholder=""/>
-            )}/>
-          </RadioGroup>
-        </FormControl>
-      </React.Fragment>
+                error={props.showLocationsError}
+                variant="outlined" 
+                label="Select states..." 
+                placeholder=""
+              />
+            )}
+          />
+        </RadioGroup>
+      </FormControl>
+    </React.Fragment>
   );
 }
