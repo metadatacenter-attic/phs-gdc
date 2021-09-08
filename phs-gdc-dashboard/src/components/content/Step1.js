@@ -121,7 +121,8 @@ export default function Step1(props) {
                 handleChangeValuesField(e);
                 props.validateStep1VariableValues();
               }}
-              error={props.showPhsVariableValuesError} />
+              error={props.showPhsVariableValuesError}
+            />
             <FormHelperText className="helper-text">Example: <i>{INDEX_VARIABLES[variable]['uiValuesExample']}</i></FormHelperText>
           </Box>
 
