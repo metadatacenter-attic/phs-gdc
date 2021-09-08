@@ -28,10 +28,6 @@ export default function Step1(props) {
       marginTop: theme.spacing(4),
       textAlign: 'left',
     },
-    locationValuesLabel: {
-      margin: theme.spacing(0, 0, 1.5, 0),
-      textAlign: 'left',
-    },
   }));
 
   const classes = useStyles();
