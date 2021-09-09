@@ -29,9 +29,6 @@ export default function Step1(props) {
       marginTop: theme.spacing(4),
       textAlign: 'left',
     },
-    extraIndent: {
-      marginLeft: theme.spacing(3.5),
-    }
   }));
 
   const classes = useStyles();
@@ -105,7 +102,7 @@ export default function Step1(props) {
         <RadioGroup value={valueOptionRadio} onChange={handleChangeValuesOptionRadio}>
           {/* Option to enter location values by hand */}
           <FormControlLabel value="optionEnter" control={<Radio color={"primary"}/>} label="Enter location values by hand"/>
-          <Box className={classes.extraIndent}>
+          <Box ml={3.5}>
             <TextField
               fullWidth
               id="standard-multiline-flexible"
@@ -128,7 +125,7 @@ export default function Step1(props) {
 
           {/* Option to use location values from one or more states */}
           <FormControlLabel value="optionSelect" control={<Radio color={"primary"}/>} label="Use all values from selected states"/>
-          <Box className={classes.extraIndent}>
+          <Box ml={3.5}>
             <Autocomplete
               multiple
               id="state-autocomplete-id"
