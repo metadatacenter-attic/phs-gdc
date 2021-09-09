@@ -93,20 +93,22 @@ export default function Step3(props) {
   return (
     <CardContent>
       <CardActions className={classes.buttons}>
-        <Button className={classes.button} 
-                disabled={showDownloadProgress} 
-                variant="contained"
-                color="primary"
-                onClick={downloadDataFile} 
-                size={"large"}>
+        <Button
+          className={classes.button} 
+          disabled={showDownloadProgress} 
+          variant="contained"
+          color="primary"
+          onClick={downloadDataFile} 
+          size={"large"}>
           Download data
         </Button>
-        <Button className={classes.button} 
-                variant="contained" 
-                color="primary" 
-                onClick={handleClickOpenCodeDialog}
-                disabled={false} 
-                size={"large"}>
+        <Button 
+          className={classes.button} 
+          variant="contained" 
+          color="default" 
+          onClick={handleClickOpenCodeDialog}
+          disabled={false} 
+          size={"large"}>
           Generate R code
         </Button>
       </CardActions>
