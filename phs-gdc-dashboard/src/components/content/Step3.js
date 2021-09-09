@@ -1,4 +1,5 @@
 import React from "react";
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import {getPlaceStatistics} from "../../services/dataCommonsService";
 import {
@@ -113,11 +114,16 @@ export default function Step3(props) {
         </Button>
       </CardActions>
       
-      <div>
-        {showDownloadProgress && <CircularProgress/>}
+      <Box display="flex" justifyContent="center">
+        {showDownloadProgress &&
+          <Box pt={3}>
+            <CircularProgress/>
+          </Box>
+        }
         {props.showValidationErrorMsg &&
-        <Typography className={classes.validationErrorMsg}>Please fill out all required fields</Typography>}
-      </div>
+          <Typography className={classes.validationErrorMsg}>Please fill out all required fields</Typography>
+        }
+      </Box>
       
       <RCodeDialog 
         openCodeDialog={openCodeDialog}
